@@ -20,21 +20,32 @@
 
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchNav('archive')">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-700 flex items-center justify-center shadow-lg shadow-cyan-900/30 text-white font-bold text-lg">
           📊
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-lg sm:text-xl font-extrabold text-white tracking-tight">석유화학 시황 리포트 허브</h1>
+            <h1 class="text-base sm:text-lg font-extrabold text-white tracking-tight">석유화학 시황 리포트 허브</h1>
             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-400 border border-cyan-800 uppercase">GitHub Pages</span>
           </div>
-          <p class="text-xs text-slate-400">아시아 원유·석유화학 일간 / 주간 / 월간 / 스페셜 기획 리포트 공개 아카이브</p>
+          <p class="text-[11px] text-slate-400">일간 · 주간 · 월간 · 스페셜 리포트 보관소 및 HTML 생성기</p>
         </div>
       </div>
-      <div class="flex items-center gap-3 text-xs">
-        <a href="https://github.com/Jduck02/petro-report" target="_blank" rel="noreferrer" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 font-semibold transition">
+
+      <!-- Navigation Tabs -->
+      <div class="flex items-center gap-2">
+        <button id="navBtnArchive" onclick="switchNav('archive')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md transition flex items-center gap-1.5">
+          <span>📑 보관소</span>
+          <span id="navReportCount" class="px-1.5 py-0.5 rounded-full text-[10px] bg-white/20">0</span>
+        </button>
+
+        <button id="navBtnCreator" onclick="switchNav('creator')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-600/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-600 hover:text-white transition flex items-center gap-1.5">
+          <span>➕ 새 리포트 생성 (HTML 입력)</span>
+        </button>
+
+        <a href="https://github.com/Jduck02/petro-report" target="_blank" rel="noreferrer" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1 transition">
           <span>GitHub 저장소</span> ↗
         </a>
       </div>
@@ -42,43 +53,188 @@
   </header>
 
   <!-- Main Container -->
-  <main class="max-w-6xl w-full mx-auto px-4 sm:px-6 py-8 flex-1 space-y-6">
+  <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 flex-1">
 
-    <!-- Category Tabs -->
-    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-2 sm:p-3 shadow-lg flex flex-wrap gap-2">
-      <button onclick="setCategory('all')" id="tab-all" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white transition flex items-center gap-2">
-        전체 보고서 <span id="count-all" class="px-2 py-0.5 rounded-full text-[11px] bg-white/20">0</span>
-      </button>
-      <button onclick="setCategory('daily')" id="tab-daily" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
-        ☀️ 일간 보고서 <span id="count-daily" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-emerald-400">0</span>
-      </button>
-      <button onclick="setCategory('weekly')" id="tab-weekly" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
-        📊 주간 보고서 <span id="count-weekly" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-cyan-400">0</span>
-      </button>
-      <button onclick="setCategory('monthly')" id="tab-monthly" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
-        📅 월간 보고서 <span id="count-monthly" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-amber-400">0</span>
-      </button>
-      <button onclick="setCategory('special')" id="tab-special" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
-        💡 스페셜 기획 <span id="count-special" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-purple-400">0</span>
-      </button>
-    </div>
-
-    <!-- Search Toolbar -->
-    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="relative w-full sm:flex-1">
-        <input type="text" id="searchInput" oninput="renderReports()" placeholder="제목, 키워드, 유종 검색 (예: 나프타, 에틸렌, Brent, BEP, 마진)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+    <!-- VIEW 1: ARCHIVE VIEW -->
+    <div id="viewArchive" class="space-y-6">
+      <!-- Category Tabs -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-2 sm:p-3 shadow-lg flex flex-wrap gap-2">
+        <button onclick="setCategory('all')" id="tab-all" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white transition flex items-center gap-2">
+          전체 보고서 <span id="count-all" class="px-2 py-0.5 rounded-full text-[11px] bg-white/20">0</span>
+        </button>
+        <button onclick="setCategory('daily')" id="tab-daily" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
+          ☀️ 일간 보고서 <span id="count-daily" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-emerald-400">0</span>
+        </button>
+        <button onclick="setCategory('weekly')" id="tab-weekly" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
+          📊 주간 보고서 <span id="count-weekly" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-cyan-400">0</span>
+        </button>
+        <button onclick="setCategory('monthly')" id="tab-monthly" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
+          📅 월간 보고서 <span id="count-monthly" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-amber-400">0</span>
+        </button>
+        <button onclick="setCategory('special')" id="tab-special" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
+          💡 스페셜 기획 <span id="count-special" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-purple-400">0</span>
+        </button>
       </div>
-      <div id="resultsCount" class="text-xs text-slate-400 whitespace-nowrap shrink-0"></div>
+
+      <!-- Search Toolbar -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="relative w-full sm:flex-1">
+          <input type="text" id="searchInput" oninput="renderReports()" placeholder="제목, 키워드, 유종 검색 (예: 나프타, 에틸렌, Brent, BEP, 마진)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+          <div id="resultsCount" class="text-xs text-slate-400 whitespace-nowrap"></div>
+          <button onclick="switchNav('creator')" class="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs flex items-center gap-1 transition">
+            ➕ 새 리포트 작성
+          </button>
+        </div>
+      </div>
+
+      <!-- Vertically Stacked Bars List -->
+      <div id="reportsList" class="space-y-3.5"></div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden bg-slate-900/60 border border-dashed border-slate-800 rounded-2xl p-12 text-center space-y-3">
+        <div class="text-3xl">🔍</div>
+        <h3 class="text-base font-bold text-white">해당 조건의 보고서가 없습니다</h3>
+        <p class="text-xs text-slate-400">검색어를 변경하거나 다른 카테고리를 선택해보세요.</p>
+        <button onclick="switchNav('creator')" class="px-4 py-2 bg-cyan-600 text-white rounded-xl text-xs font-bold">
+          새 HTML 리포트 생성하기
+        </button>
+      </div>
     </div>
 
-    <!-- Vertically Stacked Bars List -->
-    <div id="reportsList" class="space-y-3.5"></div>
+    <!-- VIEW 2: REPORT CREATOR VIEW -->
+    <div id="viewCreator" class="hidden space-y-6">
+      <!-- Creator Banner -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+              <span>새 석유화학 리포트 생성 (HTML 직접 입력)</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">
+              작성하신 HTML 코드를 입력하면 온전한 보고서로 렌더링되어 보관소에 저장되고 GitHub에 커밋됩니다.
+            </p>
+          </div>
 
-    <!-- Empty State -->
-    <div id="emptyState" class="hidden bg-slate-900/60 border border-dashed border-slate-800 rounded-2xl p-12 text-center space-y-3">
-      <div class="text-3xl">🔍</div>
-      <h3 class="text-base font-bold text-white">해당 조건의 보고서가 없습니다</h3>
-      <p class="text-xs text-slate-400">검색어를 변경하거나 다른 카테고리를 선택해보세요.</p>
+          <!-- Quick Templates & Upload -->
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-[11px] text-slate-400 font-semibold mr-1">빠른 템플릿:</span>
+            <button type="button" onclick="loadTemplate('daily')" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-950/60 text-emerald-400 border border-emerald-800/80 hover:bg-emerald-900/60 transition">
+              ☀️ 데일리 템플릿
+            </button>
+            <button type="button" onclick="loadTemplate('weekly')" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-950/60 text-cyan-400 border border-cyan-800/80 hover:bg-cyan-900/60 transition">
+              📊 위클리 템플릿
+            </button>
+            <button type="button" onclick="loadTemplate('special')" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-purple-950/60 text-purple-400 border border-purple-800/80 hover:bg-purple-900/60 transition">
+              💡 스페셜 템플릿
+            </button>
+            <label class="cursor-pointer px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1 transition">
+              <span>📁 .html 업로드</span>
+              <input type="file" accept=".html,.htm" onchange="handleFileUpload(event)" class="hidden">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Split Layout: Editor (Left) & Preview (Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left: HTML Input & Form (6 cols) -->
+        <div class="lg:col-span-6 space-y-4">
+          <!-- Code Box -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3 shadow-lg">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-bold text-slate-300 uppercase tracking-wider">HTML 소스 코드 입력</label>
+              <button type="button" onclick="autoAnalyzeHtml()" class="px-3 py-1 rounded-lg text-xs font-bold bg-cyan-600 hover:bg-cyan-500 text-white shadow-sm transition">
+                ⚡ 스마트 HTML 자동 분석
+              </button>
+            </div>
+            <textarea id="htmlCodeInput" oninput="updateLivePreview()" rows="14" placeholder="<!DOCTYPE html>&#10;<html>&#10;<head><title>석유화학 시황 리포트</title></head>&#10;<body>&#10;  <!-- 직접 작성한 HTML 코드를 붙여넣으세요 -->&#10;</body>&#10;</html>" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-cyan-300 placeholder-slate-600 focus:outline-none focus:border-cyan-500 leading-relaxed resize-y"></textarea>
+          </div>
+
+          <!-- Metadata Form -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-lg">
+            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider pb-2 border-b border-slate-800">
+              리포트 정보 설정 (자동 분석 또는 직접 수정)
+            </h3>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">보고서 제목 *</label>
+              <input type="text" id="reportTitleInput" placeholder="예: 아시아 원유·석유화학 데일리 시황 | 2026-10-27" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">리포트 분류 *</label>
+                <select id="reportCategoryInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                  <option value="daily">☀️ 일간 보고서 (Daily)</option>
+                  <option value="weekly">📊 주간 보고서 (Weekly)</option>
+                  <option value="monthly">📅 월간 보고서 (Monthly)</option>
+                  <option value="special">💡 스페셜 기획 보고서 (Special)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">발행일 / 기준일 *</label>
+                <input type="date" id="reportDateInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">핵심 요약 / 브리프</label>
+              <textarea id="reportSummaryInput" rows="2" placeholder="원유·나프타 강세 지속 및 NCC 에틸렌 마진 점검." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500"></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">태그 (쉼표 구분)</label>
+                <input type="text" id="reportTagsInput" placeholder="나프타, 에틸렌, Brent, BEP" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">작성자 / 부서</label>
+                <input type="text" id="reportAuthorInput" value="석유화학시황팀" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+              </div>
+            </div>
+
+            <!-- GitHub PAT for direct commit -->
+            <div class="pt-2 border-t border-slate-800">
+              <label class="block text-xs font-semibold text-slate-300 mb-1">
+                GitHub Token (저장소 직접 커밋 시 필요)
+              </label>
+              <input type="password" id="ghPatInput" placeholder="ghp_xxxxxxxxxxxx (GitHub에 직접 커밋하려면 입력)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono">
+            </div>
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="flex flex-wrap items-center gap-3">
+            <button type="button" onclick="saveReport(false)" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-900/30 transition">
+              💾 보관소에 저장
+            </button>
+            <button type="button" onclick="saveReport(true)" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-950/40 transition">
+              🐙 GitHub 저장소에 커밋 &amp; 보관
+            </button>
+            <button type="button" onclick="switchNav('archive')" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 text-xs sm:text-sm transition ml-auto">
+              취소
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Real-time Live Preview (6 cols) -->
+        <div class="lg:col-span-6 space-y-3">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col h-full min-h-[600px]">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-800 mb-2">
+              <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">👁️ 실시간 렌더링 미리보기</span>
+              <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
+                <button onclick="setViewport('100%')" class="px-2 py-0.5 rounded bg-blue-600 text-white">데스크톱</button>
+                <button onclick="setViewport('768px')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white">태블릿</button>
+                <button onclick="setViewport('375px')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white">모바일</button>
+              </div>
+            </div>
+            <div class="flex-1 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 p-1 flex justify-center">
+              <iframe id="livePreviewFrame" class="w-full h-full min-h-[550px] bg-white rounded-lg border-none" sandbox="allow-scripts allow-same-origin"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
   </main>
@@ -103,9 +259,14 @@
       </div>
       <!-- Modal Iframe -->
       <div class="flex-1 bg-white relative w-full h-full overflow-hidden">
-        <iframe id="modalIframe" src="" class="w-full h-full border-none"></iframe>
+        <iframe id="modalIframe" src="" class="w-full h-full border-none" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
       </div>
     </div>
+  </div>
+
+  <!-- Toast Message -->
+  <div id="toast" class="hidden fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl text-xs sm:text-sm font-semibold text-white animate-fade-in flex items-center gap-2">
+    <span id="toastText"></span>
   </div>
 
   <!-- Footer -->
@@ -114,7 +275,7 @@
   </footer>
 
   <script>
-    const ALL_REPORTS = [
+    const INITIAL_REPORTS = [
   {
     "id": "plattsai-daily-2026-10-26",
     "title": "아시아 원유·석유화학 데일리 시황 | 2026-10-26",
@@ -130,7 +291,8 @@
       "FOB Korea"
     ],
     "author": "PlattsAI Intelligence",
-    "filePath": "./reports/daily/2026-10-26_아시아_원유석유화학_데일리_시황_2026-10-26.html"
+    "filePath": "./reports/daily/2026-10-26_아시아_원유석유화학_데일리_시황_2026-10-26.html",
+    "htmlContent": "<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>아시아 원유·석유화학 데일리 시황 | 2026-10-26</title>\n  <style>\n    :root {\n      --navy: #0b192c;\n      --blue: #1e3e62;\n      --teal: #087f85;\n      --bg: #f1f5f9;\n      --card: #ffffff;\n      --line: #e2e8f0;\n      --text: #243247;\n      --muted: #64748b;\n      --up: #087b52;\n      --down: #b42346;\n    }\n    * { box-sizing: border-box; }\n    html { scroll-behavior: smooth; }\n    body {\n      margin: 0;\n      background: var(--bg);\n      color: var(--text);\n      font-family: \"Apple SD Gothic Neo\", \"Malgun Gothic\", Arial, sans-serif;\n      line-height: 1.6;\n    }\n    a { color: inherit; }\n    button { font: inherit; }\n    .container { width: min(1240px, calc(100% - 32px)); margin: auto; }\n    .header { background: var(--navy); color: #fff; }\n    .header-inner {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      gap: 20px;\n      padding: 17px 0;\n    }\n    .brand { font-size: 21px; font-weight: 800; letter-spacing: -.03em; }\n    .brand span { color: #6ee7df; }\n    .header-meta { margin-left: auto; text-align: right; font-size: 12px; color: #cbd5e1; }\n    .header-meta strong { display: block; color: #fff; font-size: 13px; }\n    .print-button {\n      padding: 8px 11px;\n      border: 1px solid #64748b;\n      border-radius: 8px;\n      background: var(--blue);\n      color: #fff;\n      cursor: pointer;\n      white-space: nowrap;\n    }\n    .subheader { background: #fff; border-bottom: 1px solid var(--line); }\n    .subheader-inner {\n      display: flex;\n      justify-content: space-between;\n      gap: 12px;\n      padding: 10px 0;\n      color: var(--muted);\n      font-size: 12px;\n    }\n    .updated { margin-left: auto; text-align: right; font-weight: 700; color: #475569; }\n    main { padding-top: 22px; padding-bottom: 30px; }\n    .hero {\n      border-radius: 15px;\n      padding: 25px 27px;\n      color: #fff;\n      background: linear-gradient(115deg, var(--navy), var(--blue));\n      box-shadow: 0 8px 24px #0b192c18;\n    }\n    .eyebrow { color: #98f0e7; font-size: 11px; font-weight: 800; letter-spacing: .08em; }\n    h1 { margin: 9px 0; font-size: clamp(21px, 3vw, 29px); line-height: 1.35; }\n    .hero p { max-width: 940px; margin: 0; color: #dbe7f4; font-size: 14px; }\n    .nav {\n      position: sticky;\n      top: 0;\n      z-index: 20;\n      display: flex;\n      flex-wrap: wrap;\n      align-items: center;\n      gap: 8px;\n      margin: 15px 0 24px;\n      padding: 11px;\n      background: #ffffffef;\n      border: 1px solid var(--line);\n      border-radius: 12px;\n      box-shadow: 0 5px 15px #0b192c12;\n      backdrop-filter: blur(9px);\n    }\n    .nav-label { font-size: 12px; font-weight: 800; color: var(--navy); margin-right: 4px; }\n    .nav a {\n      padding: 8px 11px;\n      border-radius: 8px;\n      background: #edf2f7;\n      text-decoration: none;\n      color: var(--navy);\n      font-size: 12px;\n      font-weight: 700;\n    }\n    .nav a:hover, .nav a:focus-visible { background: var(--navy); color: #fff; }\n    .nav a.top-link { margin-left: auto; background: var(--teal); color: #fff; }\n    .block-title { margin: 0 0 13px; font-size: 16px; color: var(--navy); }\n    .kpis { margin-bottom: 24px; }\n    .kpis h2 { font-size: 16px; color: var(--navy); margin: 0 0 13px; }\n    .group {\n      background: var(--card);\n      border: 1px solid var(--line);\n      border-radius: 13px;\n      padding: 17px;\n      margin-bottom: 13px;\n      box-shadow: 0 2px 9px #0b192c08;\n    }\n    .group-head {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      gap: 10px;\n      margin-bottom: 12px;\n      padding-bottom: 8px;\n      border-bottom: 1px solid var(--line);\n      font-size: 14px;\n      font-weight: 700;\n      color: var(--navy);\n    }\n    .group-head small { color: var(--muted); font-weight: 400; }\n    .metrics { display: grid; gap: 9px; }\n    .metrics.seven { grid-template-columns: repeat(7, minmax(0, 1fr)); }\n    .metrics.eight { grid-template-columns: repeat(4, minmax(0, 1fr)); }\n    .metrics.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }\n    .metric {\n      min-width: 0;\n      padding: 12px;\n      border: 1px solid #e7edf4;\n      border-radius: 9px;\n      background: #f8fafc;\n    }\n    .metric .name { display: block; min-height: 34px; color: #52647a; font-size: 11px; font-weight: 700; line-height: 1.4; }\n    .metric .symbol { display: block; margin: 2px 0 4px; color: var(--muted); font-size: 10px; }\n    .metric .price { display: block; font-size: 18px; font-weight: 800; color: var(--navy); white-space: nowrap; }\n    .metric .price small { color: var(--muted); font-size: 11px; font-weight: 400; }\n    .metric .change { font-size: 11px; font-weight: 700; margin-top: 2px; }\n    .metric .change.up { color: var(--up); }\n    .metric .change.down { color: var(--down); }\n    .metric .change.flat { color: var(--muted); }\n    .note { margin-top: 10px; font-size: 11px; color: var(--muted); }\n    .section {\n      background: var(--card);\n      border: 1px solid var(--line);\n      border-radius: 13px;\n      overflow: hidden;\n      margin-top: 20px;\n      scroll-margin-top: 85px;\n      box-shadow: 0 2px 9px #0b192c08;\n    }\n    .section-head {\n      display: flex;\n      align-items: center;\n      gap: 12px;\n      padding: 16px 20px;\n      background: #f8fafc;\n      border-bottom: 1px solid var(--line);\n    }\n    .section-head .number {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      width: 26px;\n      height: 26px;\n      border-radius: 6px;\n      background: var(--navy);\n      color: #fff;\n      font-weight: 800;\n      font-size: 13px;\n    }\n    .section-head h2 { margin: 0; font-size: 18px; color: var(--navy); }\n    .section-head small { margin-left: auto; color: var(--muted); font-size: 12px; }\n    .section-body { padding: 19px 20px 23px; }\n    .section-body h3 { margin: 18px 0 10px; color: var(--blue); font-size: 14px; border-bottom: 1px solid #edf2f7; padding-bottom: 6px; }\n    .section-body h3:first-child { margin-top: 0; }\n    .comment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }\n    .comment {\n      padding: 13px 14px;\n      border: 1px solid var(--line);\n      border-radius: 9px;\n      background: #f8fafc;\n    }\n    .comment strong { display: block; margin-bottom: 6px; color: var(--navy); font-size: 13px; }\n    .comment p { margin: 0; font-size: 12.5px; line-height: 1.65; color: var(--text); }\n    .drivers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }\n    .driver { padding: 17px; border-radius: 10px; border: 1px solid var(--line); }\n    .driver.bull { background: #f0faf5; border-color: #bee7cf; }\n    .driver.bear { background: #fff3f5; border-color: #f3c9d0; }\n    .driver h3 { margin: 0 0 10px; font-size: 15px; color: var(--navy); border: none; padding: 0; }\n    .driver h4 { margin: 12px 0 5px; font-size: 12px; color: #334155; }\n    .driver ul { margin: 0; padding-left: 19px; }\n    .driver li { font-size: 12.5px; line-height: 1.65; }\n    .driver li + li { margin-top: 6px; }\n    .outlook-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }\n    .outlook {\n      padding: 13px 14px;\n      border: 1px solid var(--line);\n      border-radius: 9px;\n      background: #f8fafc;\n      font-size: 12.5px;\n      line-height: 1.65;\n    }\n    .outlook strong { color: var(--navy); }\n    .info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }\n    .info {\n      padding: 17px;\n      border: 1px solid var(--line);\n      border-radius: 9px;\n      background: #f8fafc;\n    }\n    .info h3 { margin: 0 0 10px; color: var(--navy); font-size: 14px; border: none; padding: 0; }\n    .info ul { margin: 0; padding-left: 19px; }\n    .info li { font-size: 12.5px; line-height: 1.65; }\n    .info li + li { margin-top: 6px; }\n    footer { padding: 19px 0; background: var(--navy); color: #cbd5e1; font-size: 12px; margin-top: 30px; }\n    @media (max-width: 1050px) {\n      .metrics.seven { grid-template-columns: repeat(4, minmax(0, 1fr)); }\n    }\n    @media (max-width: 650px) {\n      .container { width: min(100% - 24px, 1240px); }\n      .header-inner, .subheader-inner { flex-wrap: wrap; }\n      .header-meta { order: 3; width: 100%; text-align: right; }\n      .nav a.top-link { margin-left: 0; }\n      .metrics.seven, .metrics.eight, .metrics.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }\n      .comment-grid, .outlook-grid, .drivers, .info-grid { grid-template-columns: 1fr; }\n      .section-head { align-items: flex-start; flex-direction: column; }\n    }\n    @media print {\n      body { background: #fff; }\n      .container { width: 100%; max-width: none; }\n      .nav, .print-button { display: none; }\n      .group, .section, .comment, .outlook, .driver, .info { break-inside: avoid; box-shadow: none; }\n      .section { scroll-margin-top: 0; }\n    }\n  </style>\n<script src=\"/_aistudio-iframe.js?v=1f94f900\"></script></head>\n<body id=\"top\">\n  <header class=\"header\">\n    <div class=\"container header-inner\">\n      <div class=\"brand\">Platts<span>AI</span></div>\n      <div class=\"header-meta\">\n        <strong>발행일: 2026-10-26 (월)</strong>\n        아시아 원유·석유화학 데일리 시황\n      </div>\n      <button class=\"print-button\" type=\"button\" onclick=\"window.print()\">인쇄 / PDF</button>\n    </div>\n  </header>\n\n  <div class=\"subheader\">\n    <div class=\"container subheader-inner\">\n      <span>Asia-Pacific / Crude &amp; Petrochemicals</span>\n      <span class=\"updated\">최종 업데이트: 2026-10-26 09:51 (KST)</span>\n    </div>\n  </div>\n\n  <main class=\"container\">\n    <div class=\"hero\">\n      <div class=\"eyebrow\">MARKET PULSE · 최근 평가일 2026-10-26</div>\n      <h1>원유·원료 변동성 확대 속 주요 제품 차별화, 하류 유도품의 원가 전가는 제한적</h1>\n      <p>10월 26일 평가에서 나프타와 LPG 등 원료가는 강세를 이어갔으나 원유는 유종별 혼조세를 보였습니다. 방향족 및 유도품 일부가 지정학적 공급 제약과 재고 감소로 올랐으나, PE·PP의 실수요 저항은 지속되는 국면입니다. 아래 비교 기준은 직전 평가일 대비입니다.</p>\n    </div>\n\n    <nav class=\"nav\" aria-label=\"빠른 이동\">\n      <span class=\"nav-label\">빠른 이동</span>\n      <a href=\"#sec-1\">1. 일간 시황 요약</a>\n      <a href=\"#sec-2\">2. 핵심 변동 요인</a>\n      <a href=\"#sec-3\">3. 단기 가격 전망</a>\n      <a href=\"#sec-4\">4. 추가 주요 정보</a>\n      <a href=\"#top\" class=\"top-link\">↑ 한번에 보기</a>\n    </nav>\n\n    <div class=\"kpis\">\n      <h2>일간 주요 가격 및 지표 현황</h2>\n\n      <div class=\"group\">\n        <div class=\"group-head\"><span>① 원유 &amp; 원료 (Crude &amp; Feedstocks)</span><small>7개 품목 · 직전 평가일 대비</small></div>\n        <div class=\"metrics seven\">\n          <div class=\"metric\"><div class=\"name\">WTI Cushing M1</div><div class=\"symbol\">PCACG00</div><div class=\"price\">$101.76 <small>/bbl</small></div><div class=\"change down\">▼ $6.16 · −5.71%</div></div>\n          <div class=\"metric\"><div class=\"name\">Dated Brent</div><div class=\"symbol\">PCAAS00</div><div class=\"price\">$127.97 <small>/bbl</small></div><div class=\"change up\">▲ $1.28 · +1.01%</div></div>\n          <div class=\"metric\"><div class=\"name\">Dubai M1</div><div class=\"symbol\">PCAAT00</div><div class=\"price\">$115.74 <small>/bbl</small></div><div class=\"change down\">▼ $1.16 · −0.99%</div></div>\n          <div class=\"metric\"><div class=\"name\">Naphtha C+F Japan</div><div class=\"symbol\">PAAAD00</div><div class=\"price\">$1,046.25 <small>/mt</small></div><div class=\"change up\">▲ $15.75 · +1.53%</div></div>\n          <div class=\"metric\"><div class=\"name\">Ethane · Mont Belvieu M1</div><div class=\"symbol\">PMUDB05</div><div class=\"price\">31.25¢ <small>/gal</small></div><div class=\"change flat\">— 변동 없음</div></div>\n          <div class=\"metric\"><div class=\"name\">C3 LPG · CFR 북아시아 30–45일</div><div class=\"symbol\">AAVAK00</div><div class=\"price\">$1,025.00 <small>/mt</small></div><div class=\"change up\">▲ $41.00 · +4.17%</div></div>\n          <div class=\"metric\"><div class=\"name\">C4 LPG · CFR 북아시아 30–45일</div><div class=\"symbol\">AAVAN00</div><div class=\"price\">$1,115.00 <small>/mt</small></div><div class=\"change up\">▲ $41.00 · +3.82%</div></div>\n        </div>\n      </div>\n\n      <div class=\"group\">\n        <div class=\"group-head\"><span>② 제품 (Monomers &amp; Aromatics)</span><small>8개 품목</small></div>\n        <div class=\"metrics eight\">\n          <div class=\"metric\"><div class=\"name\">Ethylene CFR NE Asia</div><div class=\"symbol\">AAOTM00</div><div class=\"price\">$1,190.00 <small>/mt</small></div><div class=\"change flat\">— 변동 없음</div></div>\n          <div class=\"metric\"><div class=\"name\">Propylene PG FOB Korea</div><div class=\"symbol\">AAUXJ00</div><div class=\"price\">$1,310.00 <small>/mt</small></div><div class=\"change up\">▲ $10.00 · +0.77%</div></div>\n          <div class=\"metric\"><div class=\"name\">Butadiene FOB Korea</div><div class=\"symbol\">AAWWM00</div><div class=\"price\">$1,690.00 <small>/mt</small></div><div class=\"change flat\">— 변동 없음</div></div>\n          <div class=\"metric\"><div class=\"name\">MTBE FOB Singapore</div><div class=\"symbol\">PHALF11</div><div class=\"price\">$1,201.26 <small>/mt</small></div><div class=\"change up\">▲ $22.96 · +1.95%</div></div>\n          <div class=\"metric\"><div class=\"name\">Styrene FOB Korea</div><div class=\"symbol\">AAMFL00</div><div class=\"price\">$1,502.00 <small>/mt</small></div><div class=\"change up\">▲ $29.50 · +2.00%</div></div>\n          <div class=\"metric\"><div class=\"name\">Benzene FOB Korea</div><div class=\"symbol\">PHASM05</div><div class=\"price\">$1,245.00 <small>/mt</small></div><div class=\"change up\">▲ $4.33 · +0.35%</div></div>\n          <div class=\"metric\"><div class=\"name\">Toluene FOB Korea</div><div class=\"symbol\">PHASO05</div><div class=\"price\">$1,254.50 <small>/mt</small></div><div class=\"change up\">▲ $13.00 · +1.05%</div></div>\n          <div class=\"metric\"><div class=\"name\">PX FOB Korea</div><div class=\"symbol\">PHASS05</div><div class=\"price\">$1,311.33 <small>/mt</small></div><div class=\"change up\">▲ $24.66 · +1.92%</div></div>\n        </div>\n      </div>\n\n      <div class=\"group\">\n        <div class=\"group-head\"><span>③ 유도품 (Derivatives / Polymers)</span><small>4개 품목</small></div>\n        <div class=\"metrics four\">\n          <div class=\"metric\"><div class=\"name\">HDPE Film CFR FE Asia</div><div class=\"symbol\">AATYE00</div><div class=\"price\">$1,105.00 <small>/mt</small></div><div class=\"change up\">▲ $5.00 · +0.45%</div></div>\n          <div class=\"metric\"><div class=\"name\">PP Raffia CFR FE Asia</div><div class=\"symbol\">PHBIK00</div><div class=\"price\">$1,300.00 <small>/mt</small></div><div class=\"change up\">▲ $10.00 · +0.78%</div></div>\n          <div class=\"metric\"><div class=\"name\">LLDPE Butene CFR FE Asia</div><div class=\"symbol\">PHAGZ00</div><div class=\"price\">$1,200.00 <small>/mt</small></div><div class=\"change up\">▲ $50.00 · +4.35%</div></div>\n          <div class=\"metric\"><div class=\"name\">LDPE G-P CFR FE Asia</div><div class=\"symbol\">PHAHT00</div><div class=\"price\">$1,400.00 <small>/mt</small></div><div class=\"change up\">▲ $35.00 · +2.56%</div></div>\n        </div>\n      </div>\n\n      <p class=\"note\">C3·C4는 지바현 인도 기준을 적용한 CFR 북아시아 30–45일 냉동화물 평가입니다. 원유·에탄·제품별 평가 시점과 거래 조건은 서로 다릅니다.</p>\n    </div>\n\n    <section id=\"sec-1\" class=\"section\">\n      <div class=\"section-head\"><span class=\"number\">1</span><h2>일간 시황 요약 (Daily Market Commentary)</h2><small>원유·원료 7 / 제품 8 / 유도품 4</small></div>\n      <div class=\"section-body\">\n        <h3>원유 &amp; 원료</h3>\n        <div class=\"comment-grid\">\n          <article class=\"comment\"><strong>WTI Cushing M1 · $101.76/bbl, −$6.16</strong><p>직전 평가일 대비 큰 폭 하락하며 Dated Brent와 다른 방향을 보였습니다.<br />중동 관련 위험 프리미엄과 미·이란 외교 신호가 단기 변동성을 높이는 국면입니다.</p></article>\n          <article class=\"comment\"><strong>Dated Brent · $127.97/bbl, +$1.28</strong><p>현물 Dated Brent 평가는 상승세를 이어갔습니다.<br />중동 원유 수송 차질과 높은 운임이 물리적 원유 조달비 부담을 유지하고 있습니다.</p></article>\n          <article class=\"comment\"><strong>Dubai M1 · $115.74/bbl, −$1.16</strong><p>중동산 원유 평가가 하락했고, 현물 Dubai의 같은 달 선물 대비 프리미엄도 축소됐습니다.<br />아시아 정유사의 조달 수요와 중동 수송 리스크를 함께 점검할 필요가 있습니다.</p></article>\n          <article class=\"comment\"><strong>Naphtha C+F Japan · $1,046.25/mt, +$15.75</strong><p>높은 원유 가격과 중동발 공급 우려가 가격 상승을 지지했습니다.<br />원료비 급등에 대응한 아시아 크래커의 감산은 추가 매수 확대를 제약하고 있습니다.</p></article>\n          <article class=\"comment\"><strong>Ethane · Mont Belvieu M1 · 31.25¢/gal, 보합</strong><p>미국산 에탄 월물 가격은 직전 평가일과 같았습니다.<br />수출 물량 증가가 가격을 지지하는 가운데 아시아 나프타와는 서로 다른 원료비 흐름을 보였습니다.</p></article>\n          <article class=\"comment\"><strong>C3 LPG · CFR 북아시아 30–45일 · $1,025/mt, +$41</strong><p>수입 가능한 현물 공급이 빠듯한 가운데 상승세를 이어갔습니다.<br />중국 PDH 가동률 회복이 수요를 뒷받침했으나 높은 가격은 추가 구매를 억제할 수 있습니다.</p></article>\n          <article class=\"comment\"><strong>C4 LPG · CFR 북아시아 30–45일 · $1,115/mt, +$41</strong><p>프로판과 같은 폭으로 상승했으며 프로판 대비 $90/mt의 프리미엄을 유지했습니다.<br />중동발 물량 제약과 동절기 블렌딩 수요가 공급 부담을 높이고 있습니다.</p></article>\n        </div>\n\n        <h3>기초유분 및 주요 제품</h3>\n        <div class=\"comment-grid\">\n          <article class=\"comment\"><strong>Ethylene CFR NE Asia · $1,190/mt, 보합</strong><p>평가 가격이 움직이지 않는 사이 나프타는 상승했습니다.<br />에틸렌–나프타 가격 차이가 축소돼 크래커 채산성 부담이 커졌으며, 감산이 현물 공급을 지지하고 있습니다.</p></article>\n          <article class=\"comment\"><strong>Propylene PG FOB Korea · $1,310/mt, +$10</strong><p>원료비 상승과 역내 공급 제약 속 소폭 올랐습니다.<br />PP 등 유도품의 원가 전가 부담이 남아 있어 추가 상승 폭은 하류 구매 강도에 달려 있습니다.</p></article>\n          <article class=\"comment\"><strong>Butadiene FOB Korea · $1,690/mt, 보합</strong><p>중국 내수 가격 상승에도 수출 기준가는 직전 평가일 수준을 유지했습니다.<br />역내 크래커 저율 가동으로 공급은 빠듯하지만 타이어·고무 부문의 신중한 구매가 상승세를 제한했습니다.</p></article>\n          <article class=\"comment\"><strong>MTBE FOB Singapore · $1,201.26/mt, +$22.96</strong><p>원유 및 싱가포르산 제품 가치 상승을 반영해 $1,200/mt를 넘어섰습니다.<br />중국산 MTBE 가격은 오히려 하락하고 역내 블렌딩 구매는 부진해 지역별 온도 차가 큽니다.</p></article>\n          <article class=\"comment\"><strong>Styrene FOB Korea · $1,502/mt, +$29.50</strong><p>중국 동부 항만 재고 감소와 빠듯한 현물 공급이 상승을 이끌었습니다.<br />PS 등 하류 수요는 약해 원료가 상승분의 지속적인 전가에는 제약이 있습니다.</p></article>\n          <article class=\"comment\"><strong>Benzene FOB Korea · $1,245/mt, +$4.33</strong><p>중국 동부 항만 재고 감소가 매수 심리를 지지했습니다.<br />낮은 재고와 한국발 현물 물량 제약이 가격 하단을 지지하는 반면 유도품 마진은 부담 요인입니다.</p></article>\n          <article class=\"comment\"><strong>Toluene FOB Korea · $1,254.50/mt, +$13</strong><p>현물 공급이 빠듯한 가운데 원유 관련 비용 상승을 반영했습니다.<br />가격이 높아 휘발유 블렌딩 수요는 약했고 적극적인 현물 거래도 제한적이었습니다.</p></article>\n          <article class=\"comment\"><strong>PX FOB Korea · $1,311.33/mt, +$24.66</strong><p>12월 인도 거래 수준 상승과 PTA 가격 강세에 동반 상승했습니다.<br />다만 중국 폴리에스터 재고 증가가 이어져 하류 수요의 지속성이 핵심 변수입니다.</p></article>\n        </div>\n\n        <h3>유도품</h3>\n        <div class=\"comment-grid\">\n          <article class=\"comment\"><strong>HDPE Film CFR FE Asia · $1,105/mt, +$5</strong><p>상류 비용 상승을 일부 반영하며 제한적으로 올랐습니다.<br />동북아 PE 전반의 수요가 예년 성수기보다 약해 가격 인상 폭은 작았습니다.</p></article>\n          <article class=\"comment\"><strong>PP Raffia CFR FE Asia · $1,300/mt, +$10</strong><p>프로필렌 상승과 역내 현물 공급 제약을 반영했습니다.<br />구매자의 높은 가격에 대한 저항과 중국 신규 공급 전망이 추가 상승을 제한하고 있습니다.</p></article>\n          <article class=\"comment\"><strong>LLDPE Butene CFR FE Asia · $1,200/mt, +$50</strong><p>유도품 중 가장 큰 일간 상승 폭을 기록하며 원료비 상승에 민감하게 반응했습니다.<br />높아진 호가가 실제 가공업체 구매로 이어지는지 확인이 필요한 국면입니다.</p></article>\n          <article class=\"comment\"><strong>LDPE G-P CFR FE Asia · $1,400/mt, +$35</strong><p>역내 공급 제약과 비용 상승에 힘입어 상승했습니다.<br />다만 동남아 LDPE 설비 재가동은 향후 공급 완화 요인으로 작용할 수 있습니다.</p></article>\n        </div>\n      </div>\n    </section>\n\n    <section id=\"sec-2\" class=\"section\">\n      <div class=\"section-head\"><span class=\"number\">2</span><h2>핵심 변동 요인 (Key Price Drivers)</h2><small>공급·수요별 상승 및 하락 압력</small></div>\n      <div class=\"section-body drivers\">\n        <div class=\"driver bull\">\n          <h3>↑ 상승 요인 (Bullish Drivers)</h3>\n          <h4>[공급 측면 / Supply Side]</h4>\n          <ul>\n            <li>중동 수송 차질과 높은 운임이 나프타·LPG의 아시아 도착 물량과 대체 조달 비용을 압박하고 있습니다.</li>\n            <li>여수 크래커의 11월 감산 계획과 한국·대만의 저율 가동이 올레핀 및 부타디엔 현물 공급을 제한하고 있습니다.</li>\n            <li>중국 동부 항만의 벤젠·스타이렌 재고 감소가 방향족 제품의 근월물 가격을 지지하고 있습니다.</li>\n          </ul>\n          <h4>[수요 측면 / Demand Side]</h4>\n          <ul>\n            <li>중국 PDH 가동률 상승은 수입 프로판의 실수요를 보강하고 있습니다.</li>\n            <li>PX 12월 인도 거래와 PTA 가격 상승이 PX 현물 가격에 상방 동력을 제공했습니다.</li>\n          </ul>\n        </div>\n        <div class=\"driver bear\">\n          <h3>↓ 하락 요인 (Bearish Drivers)</h3>\n          <h4>[공급 측면 / Supply Side]</h4>\n          <ul>\n            <li>동남아 LDPE 설비 재가동은 그동안 빠듯했던 수지 공급의 완화 가능성을 높이고 있습니다.</li>\n            <li>중국의 예정된 PP 증설과 PDH 정비 후 재가동은 향후 제품 공급 증가 요인입니다.</li>\n            <li>중국산 MTBE 호가의 약세가 싱가포르산 제품 상승 폭에 부담을 주고 있습니다.</li>\n          </ul>\n          <h4>[수요 측면 / Demand Side]</h4>\n          <ul>\n            <li>PS·PP·PE 가공업체의 가격 저항과 필요 물량 중심 구매가 원료비 전가를 제약하고 있습니다.</li>\n            <li>높은 톨루엔 가격으로 휘발유 블렌딩 수요가 약해졌고 MTBE의 역내 블렌딩 구매도 부진했습니다.</li>\n            <li>중국 폴리에스터 재고 증가와 타이어 부문의 더딘 수요 회복이 PX·부타디엔의 추가 강세를 제한합니다.</li>\n          </ul>\n        </div>\n      </div>\n    </section>\n\n    <section id=\"sec-3\" class=\"section\">\n      <div class=\"section-head\"><span class=\"number\">3</span><h2>단기 가격 전망 (Short-term Outlook)</h2><small>향후 1~2주 · 품목별 방향성 판단</small></div>\n      <div class=\"section-body\">\n        <div class=\"outlook-grid\">\n          <div class=\"outlook\"><strong>WTI - 보합 :</strong> 급락 이후 중동 위험 프리미엄 유지 여부와 외교 신호에 따라 변동성이 큰 흐름이 예상됩니다.</div>\n          <div class=\"outlook\"><strong>Dated Brent - 강보합 :</strong> 중동 물류 제약이 현물가를 지지하나 수송 정상화 신호에는 상승 폭이 둔화될 수 있습니다.</div>\n          <div class=\"outlook\"><strong>Dubai - 보합 :</strong> 중동산 원유 공급 리스크와 현물 프리미엄 축소가 맞서며 방향성 탐색이 예상됩니다.</div>\n          <div class=\"outlook\"><strong>Naphtha C+F Japan - 강보합 :</strong> 높은 운임과 제한적인 유입 물량이 지지하되 크래커 감산이 상승 폭을 제약할 전망입니다.</div>\n          <div class=\"outlook\"><strong>Ethane Mont Belvieu - 보합 :</strong> 미국 수출 증가가 가격을 받치는 가운데 최근 안정적인 월물 평가 흐름이 이어질 것으로 판단됩니다.</div>\n          <div class=\"outlook\"><strong>C3 LPG CFR 북아시아 - 강보합 :</strong> 제한된 수입 물량과 PDH 재가동 수요가 지지하나 높은 가격에 따른 구매 저항이 변수입니다.</div>\n          <div class=\"outlook\"><strong>C4 LPG CFR 북아시아 - 강보합 :</strong> 동절기 블렌딩 수요와 공급 제약이 받치지만 급등 이후 수요 둔화 가능성을 주시해야 합니다.</div>\n          <div class=\"outlook\"><strong>Ethylene CFR NE Asia - 보합 :</strong> 저율 가동이 공급을 제한하나 나프타 비용 상승과 PE 수요 부진이 가격 상승 여력을 좁힙니다.</div>\n          <div class=\"outlook\"><strong>Propylene PG FOB Korea - 강보합 :</strong> 타이트한 현물 공급과 원료비가 지지하되 PP 마진 부담으로 상승 폭은 제한될 전망입니다.</div>\n          <div class=\"outlook\"><strong>Butadiene FOB Korea - 보합 :</strong> 감산에 따른 공급 제약과 타이어 구매 부진이 균형을 이루며 높은 수준의 등락이 예상됩니다.</div>\n          <div class=\"outlook\"><strong>MTBE FOB Singapore - 보합 :</strong> 비용 상승은 지지 요인이지만 중국산 가격 약세와 블렌딩 구매 부진이 맞서고 있습니다.</div>\n          <div class=\"outlook\"><strong>Styrene FOB Korea - 강보합 :</strong> 항만 재고 감소와 공급 제약이 가격을 지지하나 PS 수요 부진이 추가 상승을 제한합니다.</div>\n          <div class=\"outlook\"><strong>Benzene FOB Korea - 강보합 :</strong> 중국의 낮은 항만 재고와 한국발 공급 제약이 지지하되 유도품 마진 압박을 점검해야 합니다.</div>\n          <div class=\"outlook\"><strong>Toluene FOB Korea - 보합 :</strong> 빠듯한 공급이 가격을 받치지만 높은 가격으로 약해진 블렌딩 수요가 상단을 제한합니다.</div>\n          <div class=\"outlook\"><strong>PX FOB Korea - 강보합 :</strong> 근월물 수급과 PTA 가격 상승이 지지하나 폴리에스터 재고 증가는 경계 요인입니다.</div>\n          <div class=\"outlook\"><strong>HDPE Film CFR FE Asia - 약보합 :</strong> 비용 지지에도 약한 가공 수요와 원가 전가 부담으로 상승세 유지가 어려울 전망입니다.</div>\n          <div class=\"outlook\"><strong>PP Raffia CFR FE Asia - 보합 :</strong> 원료비 상승과 구매 저항이 맞서며 중국의 신규 공급 일정이 추가 변수로 작용합니다.</div>\n          <div class=\"outlook\"><strong>LLDPE Butene CFR FE Asia - 보합 :</strong> 큰 폭 상승 이후 실수요의 가격 수용력이 확인될 때까지 변동성 높은 횡보가 예상됩니다.</div>\n          <div class=\"outlook\"><strong>LDPE G-P CFR FE Asia - 보합 :</strong> 공급 제약이 가격을 지지하지만 재가동 물량의 유입은 추가 상승을 제한할 수 있습니다.</div>\n        </div>\n      </div>\n    </section>\n\n    <section id=\"sec-4\" class=\"section\">\n      <div class=\"section-head\"><span class=\"number\">4</span><h2>추가 주요 정보 (Additional Market Information)</h2><small>스프레드 · 설비 · 물류·재고</small></div>\n      <div class=\"section-body\">\n        <div class=\"info-grid\">\n          <div class=\"info\">\n            <h3>주요 크랙·스프레드</h3>\n            <ul>\n              <li><strong>에틸렌 CFR NE Asia − 나프타 C+F Japan:</strong> $143.75/mt. 직전 평가일의 $159.50/mt에서 $15.75/mt 축소됐습니다.</li>\n              <li><strong>프로판 CFR 북아시아 30–45일 − 나프타 C+F Japan:</strong> −$21.25/mt. 직전 평가일의 −$46.50/mt에서 $25.25/mt 좁혀졌습니다.</li>\n              <li><strong>PX FOB Korea − 나프타 C+F Japan:</strong> $265.08/mt. 나프타 상승분을 웃돈 PX 가격 상승에도 원료비 부담은 높은 수준입니다.</li>\n            </ul>\n          </div>\n          <div class=\"info\">\n            <h3>설비 가동률 및 정기보수</h3>\n            <ul>\n              <li><strong>롯데케미칼 여수 크래커:</strong> 11월 가동률을 약 70%로 낮출 계획입니다. 기존 가동률은 약 70~75%입니다.</li>\n              <li><strong>YNCC 여수 1·2공장:</strong> 11월 가동률을 약 70%로 유지할 예정이며 3공장은 가동 중단 상태입니다.</li>\n              <li><strong>중국 PDH:</strong> 10월 26일 가동률 66.33%로 전주 65.49%보다 상승했으나 9월 평균 71.39%에는 못 미쳤습니다.</li>\n            </ul>\n          </div>\n          <div class=\"info\">\n            <h3>물류 및 재고 동향</h3>\n            <ul>\n              <li><strong>페르시아만→일본 VLGC 운임:</strong> 10월 26일 $253.15/mt로 직전 평가일보다 $1/mt 올랐습니다.</li>\n              <li><strong>중국 동부 항만 벤젠 재고:</strong> 10월 26일 약 27,000mt로 전주보다 17,000mt 감소했습니다.</li>\n              <li><strong>중국 동부 항만 스타이렌 재고:</strong> 10월 26일 약 24,700mt로 전주보다 8,400mt 감소했습니다.</li>\n              <li><strong>호르무즈 해협 통항:</strong> 10월 24~25일 하루 17척으로 10월 23일의 27척보다 적었습니다.</li>\n            </ul>\n          </div>\n        </div>\n      </div>\n    </section>\n  </main>\n\n  <footer>\n    <div class=\"container\">PlattsAI · 아시아 원유·석유화학 데일리 시황 · 2026-10-26</div>\n  </footer>\n</body>\n</html>"
   },
   {
     "id": "petrochem-weekly-2026-42w",
@@ -148,7 +310,8 @@
       "주간전망"
     ],
     "author": "PlattsAI Petrochemical Intelligence Group",
-    "filePath": "./reports/weekly/2026-10-23_아시아_원유석유화학_주간_시황_및_차주_전망_asia_crude_petrochemical_.html"
+    "filePath": "./reports/weekly/2026-10-23_아시아_원유석유화학_주간_시황_및_차주_전망_asia_crude_petrochemical_.html",
+    "htmlContent": "<!DOCTYPE html>\n<html lang=\"ko\" class=\"scroll-smooth\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>아시아 원유·석유화학 주간 시황 및 차주 전망 (Asia Crude & Petrochemical Weekly Market Report & Outlook)</title>\n    <!-- Tailwind CSS -->\n    <script src=\"https://cdn.tailwindcss.com\"></script>\n    <!-- Chart.js for Market Trend Visualizations -->\n    <script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>\n    <!-- FontAwesome Icons -->\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\n    <!-- Google Fonts Pretendard Alternative (Inter + Noto Sans KR) -->\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n    <link href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap\" rel=\"stylesheet\">\n    \n    <script>\n        tailwind.config = {\n            theme: {\n                extend: {\n                    fontFamily: {\n                        sans: ['\"Noto Sans KR\"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],\n                    },\n                    colors: {\n                        navy: {\n                            800: '#00264d',\n                            900: '#001a33',\n                            950: '#001020',\n                        },\n                        bullish: '#D32F2F',\n                        bearish: '#1976D2',\n                        neutral: '#388E3C',\n                    }\n                }\n            }\n        }\n    </script>\n    <style>\n        /* Custom Scrollbar */\n        ::-webkit-scrollbar {\n            width: 8px;\n            height: 8px;\n        }\n        ::-webkit-scrollbar-track {\n            background: #f1f5f9;\n        }\n        ::-webkit-scrollbar-thumb {\n            background: #cbd5e1;\n            border-radius: 4px;\n        }\n        ::-webkit-scrollbar-thumb:hover {\n            background: #94a3b8;\n        }\n        .glass-header {\n            background: rgba(255, 255, 255, 0.95);\n            backdrop-filter: blur(8px);\n        }\n    </style>\n<script src=\"/_aistudio-iframe.js?v=1f94f900\"></script></head>\n<body class=\"bg-slate-50 text-slate-800 font-sans antialiased pb-16\">\n\n    <!-- Header & Navigation -->\n    <header class=\"fixed top-0 left-0 right-0 z-50 glass-header border-b border-slate-200 shadow-sm transition-all duration-300\">\n        <!-- Top Bar -->\n        <div class=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row justify-between items-center border-b border-slate-100 gap-2\">\n            <div class=\"flex items-center gap-3\">\n                <div class=\"bg-navy-900 text-white p-2 rounded-lg font-black tracking-wider text-xs uppercase shadow-md flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-chart-line text-amber-400\"></i> PlattsAI Market Report\n                </div>\n                <h1 class=\"text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight\">\n                    아시아 원유·석유화학 주간 시황 및 차주 전망\n                </h1>\n            </div>\n            <div class=\"flex items-center gap-4 text-xs font-semibold text-slate-500\">\n                <span class=\"inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full border border-emerald-200\">\n                    <span class=\"w-2 h-2 rounded-full bg-emerald-500 animate-pulse\"></span> 실시간 데이터 연동\n                </span>\n                <span><i class=\"fa-regular fa-clock mr-1\"></i> 2026년 10월 42주차 | 업데이트: 2026-10-23</span>\n            </div>\n        </div>\n\n        <!-- Sticky Navigation Bar -->\n        <nav class=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 overflow-x-auto whitespace-nowrap scrollbar-none\">\n            <div class=\"flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-600\">\n                <a href=\"#kpi-dashboard\" class=\"px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-navy-900 hover:text-white transition-all duration-200 flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-gauge-high\"></i> 주간 주요 가격 지표\n                </a>\n                <a href=\"#section1\" class=\"px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-navy-900 hover:text-white transition-all duration-200 flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-newspaper\"></i> 1. 전주 시황 요약\n                </a>\n                <a href=\"#section2\" class=\"px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-navy-900 hover:text-white transition-all duration-200 flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-scale-balanced\"></i> 2. 핵심 변동 요인\n                </a>\n                <a href=\"#section3\" class=\"px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-navy-900 hover:text-white transition-all duration-200 flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-compass\"></i> 3. 차주 시황/수급 전망\n                </a>\n                <a href=\"#section4\" class=\"px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-navy-900 hover:text-white transition-all duration-200 flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-calculator\"></i> 4. 주간 마진 분석\n                </a>\n                <a href=\"#\" class=\"ml-auto px-3 py-1.5 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-700 transition\">\n                    <i class=\"fa-solid fa-arrow-up\"></i> Top\n                </a>\n            </div>\n        </nav>\n    </header>\n\n    <!-- Main Content Container -->\n    <main class=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 sm:pt-32 space-y-8\">\n\n        <!-- Banner Announcement / Summary Highlight -->\n        <div class=\"bg-gradient-to-r from-navy-950 via-navy-900 to-slate-900 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden\">\n            <div class=\"absolute -right-10 -bottom-10 opacity-10 text-9xl text-white pointer-events-none\">\n                <i class=\"fa-solid fa-oil-well\"></i>\n            </div>\n            <div class=\"relative z-10 space-y-2\">\n                <div class=\"flex items-center gap-2\">\n                    <span class=\"bg-bullish text-white text-xs font-bold px-2.5 py-0.5 rounded-md uppercase tracking-wider\">Market Alert</span>\n                    <span class=\"text-slate-300 text-xs font-medium\">유가·나프타 강세 지속 & 지정학적 리스크 심화</span>\n                </div>\n                <h2 class=\"text-xl sm:text-2xl font-bold tracking-tight\">유가 폭등 및 공급 타이트로 아시아 석유화학 원가 부담 극대화</h2>\n                <p class=\"text-sm text-slate-300 max-w-4xl leading-relaxed\">\n                    ICE Brent $114/b 돌파 및 일본 나프타 $1,030/mt 달성으로 NCC 에틸렌 마진 마이너스 대폭 확대. 부타디엔 급등 및 PX/PTA 물류 차질 속 다운스트림 실거래 저항이 교차하는 복합적 약세-강세 혼재 장세.\n                </p>\n            </div>\n        </div>\n\n        <!-- Section: KPI Dashboard -->\n        <section id=\"kpi-dashboard\" class=\"bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6 scroll-mt-36\">\n            <div class=\"flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-4\">\n                <div>\n                    <h2 class=\"text-xl font-bold text-slate-900 flex items-center gap-2\">\n                        <i class=\"fa-solid fa-chart-simple text-blue-600\"></i> 주간 주요 가격 지표 (Weekly Price Indicators)\n                    </h2>\n                    <p class=\"text-xs text-slate-500 mt-1\">주요 원료, 기초유분, 아로마틱 및 폴리머 제품군의 전주 대비 가격 변동 추이</p>\n                </div>\n                <!-- Filter Search Bar -->\n                <div class=\"w-full sm:w-auto flex items-center gap-2\">\n                    <div class=\"relative w-full sm:w-64\">\n                        <i class=\"fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs\"></i>\n                        <input type=\"text\" id=\"kpiSearch\" onkeyup=\"filterKPIs()\" placeholder=\"품목명 검색 (예: Ethylene, Naphtha)\" class=\"w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-800\">\n                    </div>\n                </div>\n            </div>\n\n            <!-- Category 1: Crude & Feedstocks -->\n            <div class=\"space-y-3\">\n                <h3 class=\"text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-barrel-oil text-amber-600\"></i> ① 원유 & 원료 (Crude & Feedstocks)\n                </h3>\n                <div class=\"grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3\" id=\"kpi-group-1\">\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">WTI ($/b)</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">100.73</div>\n                        <div class=\"text-xs font-bold text-bullish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-up\"></i> ▲ $1.26 (+1.27%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">Brent ($/b)</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">114.27</div>\n                        <div class=\"text-xs font-bold text-bullish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-up\"></i> ▲ $2.06 (+1.84%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">Dubai ($/b)</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">111.85</div>\n                        <div class=\"text-xs font-bold text-bullish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-up\"></i> ▲ $1.95 (+1.77%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200 border-l-4 border-l-red-500\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">Naphtha CFR Japan</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,030.50</div>\n                        <div class=\"text-xs font-bold text-bullish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-up\"></i> ▲ $22.13 (+2.19%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">US MtB Ethane (¢/gal)</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">31.30</div>\n                        <div class=\"text-xs font-bold text-bearish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-down\"></i> ▼ 0.20 (-0.63%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">C3 LPG Propane ($/mt)</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">786.00</div>\n                        <div class=\"text-xs font-bold text-bearish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-down\"></i> ▼ $19.80 (-2.46%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">C4 LPG Butane ($/mt)</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">812.00</div>\n                        <div class=\"text-xs font-bold text-bearish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-down\"></i> ▼ $15.00 (-1.81%)\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <!-- Category 2: Olefins & Aromatics -->\n            <div class=\"space-y-3\">\n                <h3 class=\"text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-vial text-blue-600\"></i> ② 석유화학 기초유분 & 아로마틱 (Olefins & Aromatics)\n                </h3>\n                <div class=\"grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-3\">\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">Ethylene CFR NEA</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,190.00</div>\n                        <div class=\"text-xs font-bold text-bullish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-up\"></i> ▲ $20.00 (+1.71%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">Propylene FOB Korea</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,300.00</div>\n                        <div class=\"text-xs font-bold text-neutral flex items-center gap-1\">\n                            <i class=\"fa-solid fa-minus\"></i> ━ $0.00 (0.00%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200 bg-red-50/50 border-red-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">Butadiene FOB Korea</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,690.00</div>\n                        <div class=\"text-xs font-bold text-bullish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-up\"></i> ▲ $90.00 (+5.63%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">MTBE FOB Singapore</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,178.30</div>\n                        <div class=\"text-xs font-bold text-bullish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-up\"></i> ▲ $26.54 (+2.30%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">Styrene Monomer FOB Korea</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,472.50</div>\n                        <div class=\"text-xs font-bold text-bullish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-up\"></i> ▲ $18.50 (+1.27%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">Benzene FOB Korea</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,240.67</div>\n                        <div class=\"text-xs font-bold text-bullish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-up\"></i> ▲ $12.00 (+0.98%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">Toluene FOB Korea</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,241.50</div>\n                        <div class=\"text-xs font-bold text-bullish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-up\"></i> ▲ $18.00 (+1.47%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">Paraxylene CFR TW/China</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,307.67</div>\n                        <div class=\"text-xs font-bold text-bullish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-up\"></i> ▲ $22.00 (+1.71%)\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <!-- Category 3: Polymer & Chemical Derivatives -->\n            <div class=\"space-y-3\">\n                <h3 class=\"text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-boxes-packing text-purple-600\"></i> ③ 주요 유도품 (Polymer & Chemical Derivatives)\n                </h3>\n                <div class=\"grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-3\">\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">HDPE Film CFR FE Asia</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,095.00</div>\n                        <div class=\"text-xs font-bold text-bearish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-down\"></i> ▼ $5.00 (-0.45%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">PP Raffia CFR FE Asia</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,290.00</div>\n                        <div class=\"text-xs font-bold text-neutral flex items-center gap-1\">\n                            <i class=\"fa-solid fa-minus\"></i> ━ $0.00 (0.00%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">LLDPE Butene CFR FE Asia</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,140.00</div>\n                        <div class=\"text-xs font-bold text-bearish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-down\"></i> ▼ $5.00 (-0.44%)\n                        </div>\n                    </div>\n                    <div class=\"kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200\">\n                        <div class=\"text-xs font-bold text-slate-500 truncate kpi-name\">LDPE GP CFR FE Asia</div>\n                        <div class=\"text-lg font-extrabold text-slate-900 my-1\">$1,360.00</div>\n                        <div class=\"text-xs font-bold text-bearish flex items-center gap-1\">\n                            <i class=\"fa-solid fa-caret-down\"></i> ▼ $20.00 (-1.45%)\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </section>\n\n        <!-- Section 1: Weekly Market Summary -->\n        <section id=\"section1\" class=\"bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6 scroll-mt-36\">\n            <div class=\"border-b border-slate-200 pb-3 flex justify-between items-center\">\n                <h2 class=\"text-xl font-bold text-slate-900 flex items-center gap-2\">\n                    <i class=\"fa-solid fa-file-lines text-navy-800\"></i> 1. 전주 주간 시황 요약 (Weekly Summary)\n                </h2>\n                <span class=\"text-xs text-slate-400 font-medium\">품목별 상세 현황</span>\n            </div>\n\n            <div class=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4\">\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        원유 & 나프타 (Crude & Naphtha)\n                        <span class=\"text-xs text-bullish font-semibold\">강세</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        중동 지정학적 리스크 심화 및 러시아의 우크라이나 에너지 시설 재공격으로 국제유가가 강세를 보였습니다. ICE Brent는 배럴당 $114.27로 상승했으며, 아시아 나프타(CFR Japan)도 $1,030.50/mt로 상승해 강한 원가 압박을 가했습니다.\n                    </p>\n                </div>\n\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        에틸렌 (Ethylene)\n                        <span class=\"text-xs text-bullish font-semibold\">원가 상승</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        CFR 동북아 가격은 원료 나프타 급등에 힘입어 전주 대비 $20/mt 상승한 $1,190/mt를 기록했습니다. 공급 측 원가 부담이 지지했으나, 다운스트림 구매자들의 강한 가격 저항으로 원가 상승분을 완전히 반영하지는 못했습니다.\n                    </p>\n                </div>\n\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        프로필렌 (Propylene)\n                        <span class=\"text-xs text-neutral font-semibold\">보합</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        FOB 한국 및 CFR 중국 가격은 $1,300/mt, $1,350/mt 수준에서 보합세를 유지했습니다. 산둥 내수가격 상승에도 불확실성으로 거래가 조용했던 가운데 동남아는 고정가보다 연동가(Formula) 거래 선호 경향이 강했습니다.\n                    </p>\n                </div>\n\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-red-500 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        부타디엔 (Butadiene)\n                        <span class=\"text-xs text-bullish font-semibold\">급등</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        유럽 Shell 설비 차질 및 역외 물량 유입 지연, 동남아 공급 차질 우려로 주간 $70~$140/mt 급등했습니다. CFR 동북아 거래가 $1,800/mt 이상에서 체결되는 등 타이트한 수급 불균형이 주도했습니다.\n                    </p>\n                </div>\n\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        벤젠 (Benzene)\n                        <span class=\"text-xs text-bullish font-semibold\">상승</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        FOB 한국 가격은 $1,240.67/mt로 상승세를 이어갔습니다. 유가 상승 및 아로마틱 단지 전반의 강세가 지지했으나, 중국 하류 설비 가동률(66.41%) 하락 등 다운스트림 마진 압박으로 상승폭이 다소 제한되었습니다.\n                    </p>\n                </div>\n\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        톨루엔 (Toluene)\n                        <span class=\"text-xs text-bullish font-semibold\">상승</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        FOB 한국 가격은 $1,241.50/mt로 전일 대비 $18/mt 상승했습니다. 해상 운임 급등과 원유 상승이 호재였으나, 옥탄가 블렌딩 마진 약화로 가솔린 블렌딩 수요가 위축되며 아비트리지는 차단된 상태입니다.\n                    </p>\n                </div>\n\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        혼합자일렌 (MX)\n                        <span class=\"text-xs text-bullish font-semibold\">강보합</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        Isomer-MX FOB 한국 가격은 PX 연동으로 $1,200/mt로 상승했습니다. 가솔린 블렌딩 수요 위축으로 정제업체들의 수율 감축이 공급을 타이트하게 만들었습니다. Solvent-MX도 $1,165/mt로 강보합을 나타냈습니다.\n                    </p>\n                </div>\n\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        파라자일렌 (PX)\n                        <span class=\"text-xs text-bullish font-semibold\">상승</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        CFR 대만/중국 가격은 $1,307.67/mt로 상승했습니다. 태풍 샴피로 인한 동중국 물류 차질 및 12월 체결 수요 유입이 긍정적 영향으로 작용했습니다. 중국 내수 가동률은 82% 수준을 기록했습니다.\n                    </p>\n                </div>\n\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        스티렌 모노머 (SM)\n                        <span class=\"text-xs text-bullish font-semibold\">상승</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        FOB 한국 $1,472.50/mt, CFR 중국 $1,412.50/mt로 상승했습니다. 동중국 항구 재고가 31,500mt으로 주간 감소하고, 숏커버링 물량이 유입되며 선물 상승과 함께 가격을 견인했습니다.\n                    </p>\n                </div>\n\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-blue-500 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        MTBE\n                        <span class=\"text-xs text-bearish font-semibold\">혼조세</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        FOB 싱가포르는 원유 반등으로 $1,178.30/mt 반등했으나, FOB 중국은 블렌딩 수요 약화로 $1,100/mt까지 하락해 10월 최저치를 기록했습니다. 유럽향 아비트리지 닫힘으로 가동률 축소가 진행 중입니다.\n                    </p>\n                </div>\n\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-blue-500 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        폴리올레핀 (PE/PP)\n                        <span class=\"text-xs text-bearish font-semibold\">약보합</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        HDPE Film($1,095/mt), LDPE($1,360/mt)는 정기보수 종료 후 공급 증가 및 가공업체 가격 저항으로 약세를 보였습니다. PP Raffia($1,290/mt)는 높은 운임 부담 속에 동남아/중국 간 온도차를 보이며 보합했습니다.\n                    </p>\n                </div>\n\n                <div class=\"p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition\">\n                    <h4 class=\"font-bold text-navy-900 text-sm mb-2 flex justify-between items-center\">\n                        ABS & PVC & PTA\n                        <span class=\"text-xs text-bullish font-semibold\">강보합</span>\n                    </h4>\n                    <p class=\"text-xs text-slate-600 leading-relaxed\">\n                        ABS(CFR $1,700/mt)는 높은 원료가(SM/BD/ACN)로 가격 인상 시도가 지속되었습니다. PVC(인도 CFR $900/mt)는 중국 메이저 가동률 하락과 인도 디왈리 수요로 상승했습니다. PTA는 PX 상승 연동 $980/mt 기록.\n                    </p>\n                </div>\n            </div>\n        </section>\n\n        <!-- Section 2: Key Market Drivers -->\n        <section id=\"section2\" class=\"bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6 scroll-mt-36\">\n            <div class=\"border-b border-slate-200 pb-3 flex justify-between items-center\">\n                <h2 class=\"text-xl font-bold text-slate-900 flex items-center gap-2\">\n                    <i class=\"fa-solid fa-code-compare text-amber-600\"></i> 2. 주간 핵심 변동 요인 (Drivers Analysis)\n                </h2>\n                <span class=\"text-xs text-slate-400 font-medium\">수급 요인 다각 분석</span>\n            </div>\n\n            <div class=\"grid grid-cols-1 md:grid-cols-2 gap-6\">\n                <!-- Bullish Drivers -->\n                <div class=\"bg-red-50/60 border border-red-200 rounded-xl p-5 space-y-4\">\n                    <h3 class=\"text-base font-extrabold text-bullish flex items-center gap-2 border-b border-red-200 pb-2\">\n                        <i class=\"fa-solid fa-circle-arrow-up\"></i> 상승 요인 (Bullish Drivers)\n                    </h3>\n                    \n                    <div class=\"space-y-3\">\n                        <div>\n                            <h4 class=\"text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5 flex items-center gap-1\">\n                                <i class=\"fa-solid fa-industry text-red-500\"></i> [공급 측면 / Supply Side]\n                            </h4>\n                            <ul class=\"text-xs text-slate-700 space-y-2 list-disc pl-4 leading-relaxed\">\n                                <li><strong>중동 지정학적 리스크 및 유가 급등:</strong> 걸프 지역 긴장 고조와 러시아의 우크라이나 에너지 기반 시설 재공격으로 ICE Brent 원유가 $114/b 돌파, Naphtha 원가 급등.</li>\n                                <li><strong>기상 악화 및 물류 차질:</strong> 태풍 샴피(Champi) 영향으로 동중국 주요 항구의 PX/PTA 하역 지연 및 연안 물류 병목 현상 발생.</li>\n                                <li><strong>역외 및 역내 주요 설비 차질:</strong> 유럽 Shell의 11.5만mt/yr 부타디엔 설비 트러블, 말레이시아 PrefChem 전력 정전으로 인한 PE/PP 설비 셧다운 등 역내외 공급 타이트.</li>\n                                <li><strong>중국 제조사 가동률 하강:</strong> PVC 가동률이 10년래 최저치(카바이드 67%, 에틸렌계 48%)로 하락하였으며, MTBE 및 MX 생산자들도 마진 악화에 따라 가동률 감축.</li>\n                            </ul>\n                        </div>\n\n                        <div class=\"pt-2 border-t border-red-100\">\n                            <h4 class=\"text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5 flex items-center gap-1\">\n                                <i class=\"fa-solid fa-cart-shopping text-red-500\"></i> [수요 측면 / Demand Side]\n                            </h4>\n                            <ul class=\"text-xs text-slate-700 space-y-2 list-disc pl-4 leading-relaxed\">\n                                <li><strong>스티렌(SM) 숏커버링 및 항구 재고 감소:</strong> 동중국 SM 항구 재고가 31,500mt으로 주간 감소세를 보이며 장중 숏커버링 물량 유입.</li>\n                                <li><strong>인도 계절적 PVC 수요 집중:</strong> 디왈리(Diwali) 축제 앞두고 인프라 및 농업용 PVC 계절적 수요 성수기 진입으로 CFR India 가격 상승 견인.</li>\n                                <li><strong>ABS 제조사의 원가 전가 시도:</strong> 높은 원료가(SM/BD/ACN) 부담에 따른 재고 소진 후 최소한의 필수 현물 매수세 유입.</li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n\n                <!-- Bearish Drivers -->\n                <div class=\"bg-blue-50/60 border border-blue-200 rounded-xl p-5 space-y-4\">\n                    <h3 class=\"text-base font-extrabold text-bearish flex items-center gap-2 border-b border-blue-200 pb-2\">\n                        <i class=\"fa-solid fa-circle-arrow-down\"></i> 하락 요인 (Bearish Drivers)\n                    </h3>\n                    \n                    <div class=\"space-y-3\">\n                        <div>\n                            <h4 class=\"text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5 flex items-center gap-1\">\n                                <i class=\"fa-solid fa-warehouse text-blue-500\"></i> [공급 측면 / Supply Side]\n                            </h4>\n                            <ul class=\"text-xs text-slate-700 space-y-2 list-disc pl-4 leading-relaxed\">\n                                <li><strong>중국 정기보수 완료 설비 재가동:</strong> PE 및 PP 단지에 집중되었던 10월 정기보수 설비들이 순차 복귀하며 시장 공급 물량 증가.</li>\n                                <li><strong>중국 내수 산둥(Shandong) 프로필렌 수급 완화:</strong> 정제업체 공급 증가로 프로필렌 내수가격 상승세 상쇄.</li>\n                                <li><strong>미국산 물량의 역외 우회 유입:</strong> 관세 이슈로 미국산 PVC/PE 물량이 동남아 및 남미로 다량 우회 수출되며 지역 내 가격 인상 제한.</li>\n                            </ul>\n                        </div>\n\n                        <div class=\"pt-2 border-t border-blue-100\">\n                            <h4 class=\"text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5 flex items-center gap-1\">\n                                <i class=\"fa-solid fa-gas-pump text-blue-500\"></i> [수요 측면 / Demand Side]\n                            </h4>\n                            <ul class=\"text-xs text-slate-700 space-y-2 list-disc pl-4 leading-relaxed\">\n                                <li><strong>가솔린 블렌딩 마진 붕괴:</strong> 95 RON 가솔린과 Naphtha 스프레드가 $21.68/mt로 급감하면서 톨루엔 및 MX의 블렌딩 수요 전멸.</li>\n                                <li><strong>다운스트림 완제품 수주 부진 및 가격 저항:</strong> 고물가·고금리 여파로 PE/PP 가공업체들의 완제품 수주가 침체되었으며, 원료가 상승분 제품가 전가 불가능.</li>\n                                <li><strong>해상 컨테이너 운임 급등 부담:</strong> 동남아 및 중국발 해상 운임 급등으로 폴리머 수출 아비트리지 창구가 사실상 봉쇄되어 수입자 구매심리 위축.</li>\n                                <li><strong>나일론 및 폴리에스터 체인 고전:</strong> 캡롤락탐 및 텍스타일 하류 구매자들의 고가격 저항으로 폴리에스터/나일론 원사 거래 둔화.</li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </section>\n\n        <!-- Section 3: Next Week's Outlook (RESTRUCTURED BY CATEGORY & STRENGTH) -->\n        <section id=\"section3\" class=\"bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6 scroll-mt-36\">\n            <div class=\"border-b border-slate-200 pb-3 flex justify-between items-center\">\n                <h2 class=\"text-xl font-bold text-slate-900 flex items-center gap-2\">\n                    <i class=\"fa-solid fa-crystal-ball text-purple-600\"></i> 3. 차주 가격 및 수급 전망 (Weekly Outlook)\n                </h2>\n                <span class=\"text-xs text-slate-400 font-medium\">카테고리별 / 강세순 분류</span>\n            </div>\n\n            <div class=\"space-y-6\">\n\n                <!-- 3-1. 원유 & 원료 (Crude & Feedstocks) -->\n                <div class=\"space-y-3\">\n                    <h3 class=\"text-sm font-bold text-slate-800 uppercase tracking-wide flex items-center gap-2 bg-slate-100 p-2.5 rounded-lg border-l-4 border-amber-600\">\n                        <i class=\"fa-solid fa-barrel-oil text-amber-600\"></i> ① 원유 & 원료 (Crude & Feedstocks)\n                    </h3>\n                    <div class=\"grid grid-cols-1 md:grid-cols-2 gap-3\">\n                        <!-- 강세 -->\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-red-800 shadow-sm shrink-0\">강세</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>원유 & 나프타</u> :</strong> 중동 지정학적 불안 지속과 역외 유입 지연으로 나프타 가격의 추가 상승세가 불가피할 전망임.\n                            </div>\n                        </div>\n                    </div>\n                </div>\n\n                <!-- 3-2. 석유화학 기초유분 & 아로마틱 (Olefins & Aromatics) -->\n                <div class=\"space-y-3\">\n                    <h3 class=\"text-sm font-bold text-slate-800 uppercase tracking-wide flex items-center gap-2 bg-slate-100 p-2.5 rounded-lg border-l-4 border-blue-600\">\n                        <i class=\"fa-solid fa-vial text-blue-600\"></i> ② 석유화학 기초유분 & 아로마틱 (Olefins & Aromatics)\n                    </h3>\n                    <div class=\"grid grid-cols-1 md:grid-cols-2 gap-3\">\n                        <!-- 강세 -->\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-red-800 shadow-sm shrink-0\">강세</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>부타디엔 FOB KOREA</u> :</strong> 역내외 설비 셧다운에 따른 타이트한 현물 공급과 타이어용 고무 선물 상승이 추가 상승을 견인할 것으로 전망됨.\n                            </div>\n                        </div>\n                        <!-- 강보합 -->\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0\">강보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>에틸렌 CFR JAPAN / NEA</u> :</strong> 나프타 원가 상승 압력이 지속되는 가운데 크래커 감산 가능성이 하방을 지지할 것으로 전망됨.\n                            </div>\n                        </div>\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0\">강보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>벤젠 FOB KOREA</u> :</strong> 강한 유가 수준과 아로마틱 타이트 수급이 지지하나, 하류 가동률 하락이 상방을 제한할 것으로 전망됨.\n                            </div>\n                        </div>\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0\">강보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>Isomer-MX FOB KOREA</u> :</strong> PX 설비 가동을 위한 필수 원료 수요와 타이트한 공급으로 강보합 흐름이 이어질 것으로 전망됨.\n                            </div>\n                        </div>\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0\">강보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>파라자일렌 (PX) CFR TW/CHINA</u> :</strong> 동중국 항구 물류 차질 및 12월 리스타이밍 체결 수요로 우상향 트렌드가 유지될 것으로 전망됨.\n                            </div>\n                        </div>\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0\">강보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>스티렌 모노머 (SM) FOB KOREA</u> :</strong> 낮은 항구 재고 수준과 원료(벤젠)가 강세로 인해 강보합 흐름을 나타낼 것으로 전망됨.\n                            </div>\n                        </div>\n                        <!-- 보합 -->\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-emerald-600 shadow-sm shrink-0\">보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>프로필렌 FOB KOREA</u> :</strong> 원가 상승 압력에도 불구하고 다운스트림 PP 및 ACN의 가동률 정체로 수급 균형이 유지될 것으로 전망됨.\n                            </div>\n                        </div>\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-emerald-600 shadow-sm shrink-0\">보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>톨루엔 FOB KOREA</u> :</strong> 원유 강세에도 불구하고 가솔린 블렌딩 마진 붕괴에 따른 수요 부진으로 상방이 제한될 것으로 전망됨.\n                            </div>\n                        </div>\n                        <!-- 약보합 -->\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-blue-600 shadow-sm shrink-0\">약보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>MTBE FOB SINGAPORE</u> :</strong> 아비트리지 차단 및 가솔린 블렌딩 수요 위축으로 중국산 공급과잉 압박이 지속될 것으로 전망됨.\n                            </div>\n                        </div>\n                    </div>\n                </div>\n\n                <!-- 3-3. 주요 유도품 (Polymer & Chemical Derivatives) -->\n                <div class=\"space-y-3\">\n                    <h3 class=\"text-sm font-bold text-slate-800 uppercase tracking-wide flex items-center gap-2 bg-slate-100 p-2.5 rounded-lg border-l-4 border-purple-600\">\n                        <i class=\"fa-solid fa-boxes-packing text-purple-600\"></i> ③ 주요 유도품 (Polymer & Chemical Derivatives)\n                    </h3>\n                    <div class=\"grid grid-cols-1 md:grid-cols-2 gap-3\">\n                        <!-- 강보합 -->\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0\">강보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>PVC ETHYLENE FOB CHINA</u> :</strong> 중국 메이저 제조사의 10년래 최저 가동률에 따른 공급 축소로 가격 지지력이 강화될 것으로 전망됨.\n                            </div>\n                        </div>\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0\">강보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>ABS INJ CFR CHINA</u> :</strong> 부타디엔 및 ACN 등 원료가 폭등에 따른 손실 방어용 가격 인상 시도가 계속될 것으로 전망됨.\n                            </div>\n                        </div>\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0\">강보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>PTA CFR CHINA</u> :</strong> 상류 PX 강세 및 태풍으로 인한 동중국 설비 감산 영향으로 강보합세를 유지할 것으로 전망됨.\n                            </div>\n                        </div>\n                        <!-- 보합 -->\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-emerald-600 shadow-sm shrink-0\">보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>LLDPE BUTENE CFR FE ASIA</u> :</strong> 원가 부담이 하방을 지지하나 수요 개선 부진으로 보합권 박스권 형성이 전망됨.\n                            </div>\n                        </div>\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-emerald-600 shadow-sm shrink-0\">보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>PP RAFFIA CFR FE ASIA</u> :</strong> 해상 운임 부담과 역내 공급 여유로 인해 소폭의 가격 변동 내 보합 흐름이 유지될 것으로 전망됨.\n                            </div>\n                        </div>\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-emerald-600 shadow-sm shrink-0\">보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>PS GPPS CFR CHINA</u> :</strong> SM 원가 압력에도 불구하고 연말 수요 둔화 우려로 추가 가격 상승은 제한될 것으로 전망됨.\n                            </div>\n                        </div>\n                        <!-- 약보합 -->\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-blue-600 shadow-sm shrink-0\">약보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>HDPE FILM CFR FE ASIA</u> :</strong> 정기보수 종료 후 물량 증가 및 실수요 가공업체의 강한 가격 저항으로 약보합세가 예상됨.\n                            </div>\n                        </div>\n                        <div class=\"p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition\">\n                            <span class=\"px-2.5 py-1 text-xs font-bold rounded text-white bg-blue-600 shadow-sm shrink-0\">약보합</span>\n                            <div class=\"text-xs\">\n                                <strong class=\"text-navy-900\"><u>LDPE G-P CFR FE ASIA</u> :</strong> 고가격에 대한 하류 구매자 거부감과 계절적 성수기 종료로 약세 압력이 우세할 것으로 전망됨.\n                            </div>\n                        </div>\n                    </div>\n                </div>\n\n            </div>\n        </section>\n\n        <!-- Section 4: Margins Analysis (SIMPLIFIED & CLEANED) -->\n        <section id=\"section4\" class=\"bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6 scroll-mt-36\">\n            <div class=\"border-b border-slate-200 pb-3 flex justify-between items-center\">\n                <h2 class=\"text-xl font-bold text-slate-900 flex items-center gap-2\">\n                    <i class=\"fa-solid fa-calculator text-emerald-600\"></i> 4. 주간 마진 분석 (Margin Chain & BEP Analysis)\n                </h2>\n                <span class=\"text-xs text-slate-400 font-medium\">손익분기점(BEP) 현황</span>\n            </div>\n\n            <!-- Margin Chart Visualization & Summary Row Only -->\n            <div class=\"grid grid-cols-1 lg:grid-cols-3 gap-6\">\n                <!-- Margin Summary Card -->\n                <div class=\"lg:col-span-1 bg-slate-900 text-white rounded-xl p-5 space-y-4 flex flex-col justify-between shadow-md\">\n                    <div>\n                        <div class=\"text-xs font-bold text-amber-400 uppercase tracking-wider mb-2\">\n                            <i class=\"fa-solid fa-triangle-exclamation\"></i> 손익분기점(BEP) 점검\n                        </div>\n                        <h3 class=\"text-lg font-bold\">주간 마진 체인 주요 변화</h3>\n                        \n                        <ul class=\"text-xs text-slate-300 space-y-3 mt-4 leading-relaxed\">\n                            <li class=\"border-b border-slate-800 pb-2\">\n                                <strong class=\"text-white block\">• NCC (에틸렌/프로필렌 - 나프타)</strong>\n                                나프타 $1,030.50 급등으로 에틸렌-나프타 스프레드는 <span class=\"text-red-400 font-bold\">$159.50/mt</span>로 축소되어 BEP($300~$350/mt) 하회, 적자 확대.\n                            </li>\n                            <li class=\"border-b border-slate-800 pb-2\">\n                                <strong class=\"text-white block\">• PX - 나프타 체인</strong>\n                                PX-Naphtha 스프레드는 <span class=\"text-amber-400 font-bold\">$277.17/mt</span>로 BEP($280~$300) 수준 근접 경계선 위치.\n                            </li>\n                            <li>\n                                <strong class=\"text-white block\">• PE/PP - 에틸렌/프로필렌 체인</strong>\n                                HDPE-Ethylene 스프레드 <span class=\"text-red-400 font-bold\">-$95/mt</span> 반전, PP-Propylene <span class=\"text-red-400 font-bold\">-$10/mt</span>로 유도품 가공 마진 붕괴.\n                            </li>\n                        </ul>\n                    </div>\n\n                    <div class=\"text-[11px] text-slate-400 bg-slate-800/80 p-2.5 rounded-lg border border-slate-700\">\n                        <i class=\"fa-solid fa-circle-info mr-1 text-slate-300\"></i> 나프타 상승분이 유도품 가격에 반영되지 못하여 통합 마진 급감.\n                    </div>\n                </div>\n\n                <!-- Interactive Margin Chart -->\n                <div class=\"lg:col-span-2 bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col justify-between\">\n                    <div class=\"flex justify-between items-center mb-2\">\n                        <h4 class=\"text-xs font-bold text-slate-700 uppercase\">석유화학 스프레드 vs BEP 비교 ($/mt)</h4>\n                        <span class=\"text-[11px] text-slate-500\">붉은 점선: 최소 손익분기점 기준</span>\n                    </div>\n                    <div class=\"w-full h-64\">\n                        <canvas id=\"marginChart\"></canvas>\n                    </div>\n                </div>\n            </div>\n        </section>\n\n    </main>\n\n    <!-- Footer -->\n    <footer class=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 text-center text-xs text-slate-400 space-y-2\">\n        <p>© 2026 PlattsAI Petrochemical Intelligence Group. All rights reserved.</p>\n        <p>본 보고서는 시장 정보 제공을 목적으로 작성되었으며, 투자 및 거래에 따른 최종 책임은 본인에게 있습니다.</p>\n    </footer>\n\n    <!-- Interactive Scripts -->\n    <script>\n        // KPI Filter Functionality\n        function filterKPIs() {\n            const input = document.getElementById('kpiSearch');\n            const filter = input.value.toUpperCase();\n            const cards = document.getElementsByClassName('kpi-card');\n\n            for (let i = 0; i < cards.length; i++) {\n                const nameDiv = cards[i].getElementsByClassName('kpi-name')[0];\n                if (nameDiv) {\n                    const txtValue = nameDiv.textContent || nameDiv.innerText;\n                    if (txtValue.toUpperCase().indexOf(filter) > -1) {\n                        cards[i].style.display = \"\";\n                    } else {\n                        cards[i].style.display = \"none\";\n                    }\n                }\n            }\n        }\n\n        // Render Margin Chart using Chart.js\n        window.addEventListener('DOMContentLoaded', () => {\n            const ctx = document.getElementById('marginChart').getContext('2d');\n            new Chart(ctx, {\n                type: 'bar',\n                data: {\n                    labels: ['에틸렌-나프타', 'PX-나프타', 'HDPE-에틸렌', 'PP-프로필렌'],\n                    datasets: [\n                        {\n                            label: '현재 주간 스프레드 ($/mt)',\n                            data: [159.5, 277.17, -95, -10],\n                            backgroundColor: [\n                                'rgba(211, 47, 47, 0.85)',\n                                'rgba(255, 160, 0, 0.85)',\n                                'rgba(25, 118, 210, 0.85)',\n                                'rgba(25, 118, 210, 0.85)'\n                            ],\n                            borderRadius: 6,\n                        },\n                        {\n                            label: '최소 BEP (손익분기점) 기준 ($/mt)',\n                            data: [320, 290, 150, 150],\n                            type: 'line',\n                            borderColor: '#ef4444',\n                            borderDash: [5, 5],\n                            borderWidth: 2,\n                            fill: false,\n                            pointStyle: 'circle',\n                            pointRadius: 4,\n                            pointBackgroundColor: '#ef4444'\n                        }\n                    ]\n                },\n                options: {\n                    responsive: true,\n                    maintainAspectRatio: false,\n                    plugins: {\n                        legend: {\n                            position: 'top',\n                            labels: {\n                                font: {\n                                    size: 11,\n                                    family: \"'Noto Sans KR', sans-serif\"\n                                }\n                            }\n                        },\n                        tooltip: {\n                            callbacks: {\n                                label: function(context) {\n                                    return context.dataset.label + ': $' + context.raw;\n                                }\n                            }\n                        }\n                    },\n                    scales: {\n                        y: {\n                            beginAtZero: false,\n                            grid: {\n                                color: '#e2e8f0'\n                            },\n                            ticks: {\n                                font: {\n                                    size: 10\n                                }\n                            }\n                        },\n                        x: {\n                            grid: {\n                                display: false\n                            },\n                            ticks: {\n                                font: {\n                                    size: 11,\n                                    weight: 'bold'\n                                }\n                            }\n                        }\n                    }\n                }\n            });\n        });\n    </script>\n</body>\n</html>"
   },
   {
     "id": "special-ncc-vs-ecc-2026",
@@ -165,7 +328,8 @@
       "마진분석"
     ],
     "author": "전략기획팀",
-    "filePath": "./reports/special/2026-10-18_기획_2026_하반기_글로벌_ncc_vs_미국중동_ecc_원가_경쟁력_및_에탄_크래커_영향.html"
+    "filePath": "./reports/special/2026-10-18_기획_2026_하반기_글로벌_ncc_vs_미국중동_ecc_원가_경쟁력_및_에탄_크래커_영향.html",
+    "htmlContent": "<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>[기획] 2026 하반기 글로벌 NCC vs 미국·중동 ECC 원가 경쟁력 및 에탄 크래커 영향 분석</title>\n  <script src=\"https://cdn.tailwindcss.com\"></script>\n  <link href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;800&display=swap\" rel=\"stylesheet\">\n  <style>\n    body { font-family: 'Noto Sans KR', sans-serif; background: #0f172a; color: #f8fafc; }\n  </style>\n</head>\n<body class=\"p-4 md:p-8\">\n  <div class=\"max-w-5xl mx-auto space-y-6\">\n    <div class=\"bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 p-6 md:p-8 rounded-2xl border border-slate-700 shadow-2xl\">\n      <div class=\"flex items-center gap-2 mb-2\">\n        <span class=\"bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs px-2.5 py-1 rounded-full font-bold\">심층 기획 리포트</span>\n        <span class=\"text-xs text-slate-400\">발행일: 2026-10-18 | PlattsAI 전략분석실</span>\n      </div>\n      <h1 class=\"text-2xl md:text-3xl font-extrabold text-white tracking-tight\">2026 하반기 글로벌 NCC vs ECC 원가 경쟁력 비교 및 아시아 석유화학 생존 전략</h1>\n      <p class=\"text-slate-300 text-sm mt-3 leading-relaxed\">\n        고유가 ($100+/b) 국면에서 아시아 나프타 분해설비(NCC)와 북미 에탄 분해설비(ECC) 간의 톤당 에틸렌 생산 현금원가 스프레드가 $450/mt 이상으로 확대됨에 따라 국내 석유화학사의 원가 구조 개편과 다운스트림 고부가화가 절실한 시점입니다.\n      </p>\n    </div>\n\n    <!-- Comparative Table -->\n    <div class=\"bg-slate-800/80 border border-slate-700 rounded-xl p-6\">\n      <h2 class=\"text-lg font-bold text-cyan-400 mb-4\">크래커 유형별 에틸렌 생산 현금원가 비교 (2026년 10월 기준)</h2>\n      <div class=\"overflow-x-auto\">\n        <table class=\"w-full text-xs text-left\">\n          <thead class=\"bg-slate-900 text-slate-300 uppercase\">\n            <tr>\n              <th class=\"p-3\">구분</th>\n              <th class=\"p-3\">원료</th>\n              <th class=\"p-3\">원료 단가</th>\n              <th class=\"p-3\">에틸렌 현금원가 (Cash Cost)</th>\n              <th class=\"p-3\">부산물 크레딧</th>\n              <th class=\"p-3\">경쟁력 평가</th>\n            </tr>\n          </thead>\n          <tbody class=\"divide-y divide-slate-700 text-slate-200\">\n            <tr class=\"hover:bg-slate-700/50\">\n              <td class=\"p-3 font-bold text-white\">아시아 NCC (한국/일본)</td>\n              <td class=\"p-3\">Naphtha</td>\n              <td class=\"p-3\">$1,030 /mt</td>\n              <td class=\"p-3 font-bold text-red-400\">$1,180 /mt</td>\n              <td class=\"p-3\">부타디엔, 프로필렌, BTX 등 높음</td>\n              <td class=\"p-3\"><span class=\"bg-red-900/50 text-red-300 px-2 py-0.5 rounded\">한계 마진 (적자 위험)</span></td>\n            </tr>\n            <tr class=\"hover:bg-slate-700/50\">\n              <td class=\"p-3 font-bold text-white\">북미 ECC (미국 걸프만)</td>\n              <td class=\"p-3\">Ethane</td>\n              <td class=\"p-3\">31.3 ¢/gal (~$230/mt)</td>\n              <td class=\"p-3 font-bold text-emerald-400\">$480 /mt</td>\n              <td class=\"p-3\">부산물 매우 적음</td>\n              <td class=\"p-3\"><span class=\"bg-emerald-900/50 text-emerald-300 px-2 py-0.5 rounded\">최상위 원가 우위</span></td>\n            </tr>\n            <tr class=\"hover:bg-slate-700/50\">\n              <td class=\"p-3 font-bold text-white\">중동 ECC (사우디/UAE)</td>\n              <td class=\"p-3\">에탄/메탄 고정가</td>\n              <td class=\"p-3\">$1.75 /MMBtu</td>\n              <td class=\"p-3 font-bold text-emerald-400\">$320 /mt</td>\n              <td class=\"p-3\">낮음</td>\n              <td class=\"p-3\"><span class=\"bg-emerald-900/50 text-emerald-300 px-2 py-0.5 rounded\">세계 최저 원가</span></td>\n            </tr>\n            <tr class=\"hover:bg-slate-700/50\">\n              <td class=\"p-3 font-bold text-white\">중국 CTO / MTO</td>\n              <td class=\"p-3\">석탄 / 메탄올</td>\n              <td class=\"p-3\">850 RMB/mt (석탄)</td>\n              <td class=\"p-3 font-bold text-amber-400\">$890 /mt</td>\n              <td class=\"p-3\">중간</td>\n              <td class=\"p-3\"><span class=\"bg-amber-900/50 text-amber-300 px-2 py-0.5 rounded\">국내 소비 중심 방어</span></td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n    </div>\n\n    <!-- Strategic Implications -->\n    <div class=\"grid grid-cols-1 md:grid-cols-2 gap-4\">\n      <div class=\"bg-slate-800/80 border border-slate-700 p-5 rounded-xl\">\n        <h3 class=\"text-base font-bold text-white mb-2\">📌 아시아 NCC의 단기 전략 과제</h3>\n        <ul class=\"text-xs text-slate-300 space-y-2 list-disc pl-4\">\n          <li><strong>에탄·LPG 투입 비중 최대화:</strong> 나프타 단가 급등에 대응하여 C3/C4 LPG 및 수입 에탄 혼사 비율을 설비 허용 한도(최대 20~25%)까지 상향.</li>\n          <li><strong>부타디엔 등 고부가 부산물 수율 최적화:</strong> 기초 올레핀 마진 적자를 아로마틱 및 부타디엔의 높은 스프레드로 보전하는 운전 모드 전환.</li>\n        </ul>\n      </div>\n      <div class=\"bg-slate-800/80 border border-slate-700 p-5 rounded-xl\">\n        <h3 class=\"text-base font-bold text-white mb-2\">🚀 중장기 사업 재편 방향</h3>\n        <ul class=\"text-xs text-slate-300 space-y-2 list-disc pl-4\">\n          <li><strong>범용 폴리머(PE/PP) 축소 및 스페셜티 강화:</strong> 범용 수지는 중동/미국산 저가 물량과의 수출 경쟁 지양, 배터리 소재 및 반도체용 고순도 화학품으로의 전환.</li>\n          <li><strong>정유-석화 통합(COTC) 가속화:</strong> 독립계 석화사의 통합 또는 전략적 얼라이언스 구축을 통한 원료 조달비용 절감.</li>\n        </ul>\n      </div>\n    </div>\n  </div>\n</body>\n</html>"
   },
   {
     "id": "monthly-northeast-asia-2026-10",
@@ -181,10 +345,55 @@
       "아로마틱"
     ],
     "author": "시장분석실",
-    "filePath": "./reports/monthly/2026-10-01_2026년_10월_아시아_올레핀아로마틱_월간_수급_및_설비_정기보수_총람.html"
+    "filePath": "./reports/monthly/2026-10-01_2026년_10월_아시아_올레핀아로마틱_월간_수급_및_설비_정기보수_총람.html",
+    "htmlContent": "<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>2026년 10월 아시아 올레핀·아로마틱 월간 수급 및 설비 정기보수 총람</title>\n  <script src=\"https://cdn.tailwindcss.com\"></script>\n  <link href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;800&display=swap\" rel=\"stylesheet\">\n</head>\n<body class=\"bg-slate-900 text-slate-100 p-6 font-['Noto_Sans_KR']\">\n  <div class=\"max-w-5xl mx-auto space-y-6\">\n    <div class=\"border-b border-slate-700 pb-4\">\n      <div class=\"text-xs text-amber-400 font-bold uppercase tracking-wider\">Monthly Intelligence · 2026년 10월호</div>\n      <h1 class=\"text-2xl font-black mt-1 text-white\">2026년 10월 아시아 올레핀·아로마틱 월간 수급 및 설비 정기보수 총람</h1>\n      <p class=\"text-slate-400 text-xs mt-2\">동북아 크래커 감산 및 정기보수 집중으로 단기 수급 긴축, 그러나 다운스트림 수요 회복 지연으로 스프레드 회복은 제한적</p>\n    </div>\n\n    <div class=\"grid grid-cols-1 md:grid-cols-3 gap-4 text-xs\">\n      <div class=\"bg-slate-800 p-4 rounded-xl border border-slate-700\">\n        <div class=\"text-slate-400 font-semibold\">10월 평균 에틸렌 가동률</div>\n        <div class=\"text-xl font-bold text-amber-400 mt-1\">71.5% (▼ 3.2%p MoM)</div>\n        <div class=\"text-slate-400 mt-2\">나프타 원가 압박으로 여수 및 대만 주요 설비 감산 진행</div>\n      </div>\n      <div class=\"bg-slate-800 p-4 rounded-xl border border-slate-700\">\n        <div class=\"text-slate-400 font-semibold\">동북아 정기보수 영향 물량</div>\n        <div class=\"text-xl font-bold text-white mt-1\">월간 385만톤/연 생산능력</div>\n        <div class=\"text-slate-400 mt-2\">한국 1개 라인, 일본 2개 라인, 중국 3개 설비 집중</div>\n      </div>\n      <div class=\"bg-slate-800 p-4 rounded-xl border border-slate-700\">\n        <div class=\"text-slate-400 font-semibold\">월간 평균 에틸렌-나프타 스프레드</div>\n        <div class=\"text-xl font-bold text-red-400 mt-1\">$162.30 /mt</div>\n        <div class=\"text-slate-400 mt-2\">BEP($300/mt) 대비 -$137.7/mt 역마진 국면 지속</div>\n      </div>\n    </div>\n  </div>\n</body>\n</html>"
   }
 ];
+    const STORAGE_KEY = 'petro_gh_pages_custom_reports_v1';
+    const PAT_STORAGE_KEY = 'petro_gh_pat_v1';
+
     let currentCategory = 'all';
+
+    function getCustomReports() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch(e) { return []; }
+    }
+
+    function getAllReports() {
+      const customs = getCustomReports();
+      return [...customs, ...INITIAL_REPORTS];
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastText').innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3500);
+    }
+
+    function switchNav(tab) {
+      if (tab === 'archive') {
+        document.getElementById('viewArchive').classList.remove('hidden');
+        document.getElementById('viewCreator').classList.add('hidden');
+        document.getElementById('navBtnArchive').className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md transition flex items-center gap-1.5';
+        document.getElementById('navBtnCreator').className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-600/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-600 hover:text-white transition flex items-center gap-1.5';
+        updateCounts();
+        renderReports();
+      } else {
+        document.getElementById('viewArchive').classList.add('hidden');
+        document.getElementById('viewCreator').classList.remove('hidden');
+        document.getElementById('navBtnArchive').className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-slate-300 hover:text-white transition flex items-center gap-1.5';
+        document.getElementById('navBtnCreator').className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-600 text-white shadow-md transition flex items-center gap-1.5';
+        if (!document.getElementById('reportDateInput').value) {
+          document.getElementById('reportDateInput').value = new Date().toISOString().split('T')[0];
+        }
+        const savedPat = localStorage.getItem(PAT_STORAGE_KEY);
+        if (savedPat) document.getElementById('ghPatInput').value = savedPat;
+        updateLivePreview();
+      }
+    }
 
     function getCategoryBadge(cat) {
       switch(cat) {
@@ -197,11 +406,13 @@
     }
 
     function updateCounts() {
-      document.getElementById('count-all').innerText = ALL_REPORTS.length;
-      document.getElementById('count-daily').innerText = ALL_REPORTS.filter(r => r.category === 'daily').length;
-      document.getElementById('count-weekly').innerText = ALL_REPORTS.filter(r => r.category === 'weekly').length;
-      document.getElementById('count-monthly').innerText = ALL_REPORTS.filter(r => r.category === 'monthly').length;
-      document.getElementById('count-special').innerText = ALL_REPORTS.filter(r => r.category === 'special').length;
+      const all = getAllReports();
+      document.getElementById('navReportCount').innerText = all.length;
+      document.getElementById('count-all').innerText = all.length;
+      document.getElementById('count-daily').innerText = all.filter(r => r.category === 'daily').length;
+      document.getElementById('count-weekly').innerText = all.filter(r => r.category === 'weekly').length;
+      document.getElementById('count-monthly').innerText = all.filter(r => r.category === 'monthly').length;
+      document.getElementById('count-special').innerText = all.filter(r => r.category === 'special').length;
     }
 
     function setCategory(cat) {
@@ -220,8 +431,9 @@
       const q = (document.getElementById('searchInput').value || '').toLowerCase().trim();
       const list = document.getElementById('reportsList');
       const emptyState = document.getElementById('emptyState');
+      const all = getAllReports();
 
-      const filtered = ALL_REPORTS.filter(r => {
+      const filtered = all.filter(r => {
         if (currentCategory !== 'all' && r.category !== currentCategory) return false;
         if (q) {
           const matchTitle = r.title.toLowerCase().includes(q);
@@ -245,15 +457,17 @@
       list.innerHTML = filtered.map(r => {
         const badge = getCategoryBadge(r.category);
         const tagsHtml = (r.tags || []).map(t => '<span class="px-2 py-0.5 rounded-md text-[11px] bg-slate-950 text-slate-400 border border-slate-800">#' + t + '</span>').join('');
+        const isCustom = Boolean(r.isCustom);
 
         return `
-          <div onclick="openModal('${r.filePath}', '${r.title.replace(/'/g, "\\'")}')" class="group w-full bg-slate-900/90 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-200 cursor-pointer flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-l-4 ${badge.borderL} hover:shadow-cyan-950/20 hover:-translate-y-0.5">
+          <div onclick="openReportModal('${r.id}')" class="group w-full bg-slate-900/90 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-200 cursor-pointer flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-l-4 ${badge.borderL} hover:shadow-cyan-950/20 hover:-translate-y-0.5">
             <div class="flex flex-col sm:flex-row sm:items-start gap-4 flex-1 min-w-0">
               <div class="flex sm:flex-col items-center sm:items-start gap-2 sm:gap-1.5 shrink-0 sm:w-36">
                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${badge.bg} ${badge.color} ${badge.border}">
                   <span>${badge.icon}</span> ${badge.name}
                 </span>
                 <span class="text-xs text-slate-400 font-mono">🕒 ${r.date}</span>
+                ${isCustom ? '<span class="px-1.5 py-0.5 rounded text-[10px] bg-cyan-950 text-cyan-300 border border-cyan-800 font-medium">직접 추가됨</span>' : ''}
               </div>
               <div class="flex-1 min-w-0 space-y-1.5">
                 <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-1">${r.title}</h3>
@@ -266,10 +480,12 @@
               </div>
             </div>
             <div class="flex items-center justify-between lg:justify-end gap-2 pt-3 lg:pt-0 border-t border-slate-800/80 lg:border-t-0 shrink-0" onclick="event.stopPropagation()">
-              <a href="${r.filePath}" target="_blank" title="새 탭에서 전체화면 보기" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
-                새 창 열기 ↗
-              </a>
-              <button onclick="openModal('${r.filePath}', '${r.title.replace(/'/g, "\\'")}')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-900/30 transition">
+              <button onclick="downloadReportById('${r.id}')" title="HTML 다운로드" class="p-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+                💾 다운로드
+              </button>
+              ${r.filePath ? '<a href="' + r.filePath + '" target="_blank" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">새 창 열기 ↗</a>' : ''}
+              ${isCustom ? '<button onclick="deleteCustomReport(\'' + r.id + '\')" title="삭제" class="p-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-red-400 hover:bg-slate-800 transition">🗑️</button>' : ''}
+              <button onclick="openReportModal('${r.id}')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-900/30 transition">
                 <span>열람하기</span> →
               </button>
             </div>
@@ -278,10 +494,26 @@
       }).join('');
     }
 
-    function openModal(filePath, title) {
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalIframe').src = filePath;
-      document.getElementById('modalExternalLink').href = filePath;
+    function openReportModal(reportId) {
+      const all = getAllReports();
+      const report = all.find(r => r.id === reportId);
+      if (!report) return;
+
+      document.getElementById('modalTitle').innerText = report.title;
+      const iframe = document.getElementById('modalIframe');
+      const extLink = document.getElementById('modalExternalLink');
+
+      if (report.filePath) {
+        iframe.src = report.filePath;
+        iframe.removeAttribute('srcdoc');
+        extLink.href = report.filePath;
+        extLink.classList.remove('hidden');
+      } else if (report.htmlContent) {
+        iframe.removeAttribute('src');
+        iframe.srcdoc = report.htmlContent;
+        extLink.classList.add('hidden');
+      }
+
       document.getElementById('readerModal').classList.remove('hidden');
     }
 
@@ -296,6 +528,276 @@
         iframe.contentWindow.focus();
         iframe.contentWindow.print();
       }
+    }
+
+    function downloadReportById(reportId) {
+      const all = getAllReports();
+      const report = all.find(r => r.id === reportId);
+      if (!report) return;
+
+      if (report.htmlContent) {
+        const blob = new Blob([report.htmlContent], { type: 'text/html;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = report.date + '_' + report.title.replace(/[^a-zA-Z0-9가-힣_-]/g, '_') + '.html';
+        a.click();
+        URL.revokeObjectURL(url);
+      } else if (report.filePath) {
+        window.open(report.filePath, '_blank');
+      }
+    }
+
+    function deleteCustomReport(reportId) {
+      if (!confirm('이 보고서를 삭제하시겠습니까?')) return;
+      const customs = getCustomReports().filter(r => r.id !== reportId);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(customs));
+      updateCounts();
+      renderReports();
+      showToast('보고서가 삭제되었습니다.');
+    }
+
+    // --- REPORT CREATOR FUNCTIONS ---
+    function updateLivePreview() {
+      const html = document.getElementById('htmlCodeInput').value;
+      const frame = document.getElementById('livePreviewFrame');
+      frame.srcdoc = html || '<div style="font-family:sans-serif;color:#64748b;text-align:center;padding:40px;">HTML 코드를 입력하면 실시간으로 렌더링됩니다.</div>';
+    }
+
+    function setViewport(w) {
+      document.getElementById('livePreviewFrame').style.maxWidth = w;
+    }
+
+    function autoAnalyzeHtml() {
+      const html = document.getElementById('htmlCodeInput').value;
+      if (!html.trim()) {
+        showToast('먼저 HTML 코드를 입력해주세요.');
+        return;
+      }
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      // Title
+      let t = '';
+      const titleTag = doc.querySelector('title');
+      if (titleTag && titleTag.textContent) t = titleTag.textContent.trim();
+      else {
+        const h1 = doc.querySelector('h1');
+        if (h1 && h1.textContent) t = h1.textContent.trim();
+      }
+      if (t) document.getElementById('reportTitleInput').value = t;
+
+      // Date
+      const dateMatch = html.match(/(\d{4})[-./](\d{1,2})[-./](\d{1,2})/);
+      if (dateMatch) {
+        document.getElementById('reportDateInput').value = dateMatch[1] + '-' + dateMatch[2].padStart(2, '0') + '-' + dateMatch[3].padStart(2, '0');
+      }
+
+      // Category
+      const low = (t + ' ' + html.slice(0, 3000)).toLowerCase();
+      let cat = 'daily';
+      if (low.includes('데일리') || low.includes('일간') || low.includes('daily')) cat = 'daily';
+      else if (low.includes('주간') || low.includes('위클리') || low.includes('weekly')) cat = 'weekly';
+      else if (low.includes('스페셜') || low.includes('기획') || low.includes('special')) cat = 'special';
+      else if (low.includes('월간') || low.includes('monthly')) cat = 'monthly';
+      document.getElementById('reportCategoryInput').value = cat;
+
+      // Summary
+      let s = '';
+      const meta = doc.querySelector('meta[name="description"]');
+      if (meta && meta.content) s = meta.content;
+      else {
+        const p = doc.querySelector('.hero p, p');
+        if (p && p.textContent) s = p.textContent.trim().replace(/\s+/g, ' ');
+      }
+      if (s) document.getElementById('reportSummaryInput').value = s.slice(0, 180);
+
+      // Tags
+      const tags = [];
+      ['원유', '나프타', '에틸렌', '프로필렌', '부타디엔', '벤젠', 'PX', 'SM', 'PE', 'PP', 'BEP', 'Dated Brent', 'WTI'].forEach(item => {
+        if (html.includes(item)) tags.push(item);
+      });
+      if (tags.length) document.getElementById('reportTagsInput').value = tags.join(', ');
+
+      showToast('⚡ HTML 분석이 완료되어 정보가 자동으로 채워졌습니다!');
+    }
+
+    function handleFileUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        document.getElementById('htmlCodeInput').value = event.target.result;
+        updateLivePreview();
+        autoAnalyzeHtml();
+      };
+      reader.readAsText(file);
+    }
+
+    const SAMPLE_TEMPLATES = {
+      daily: `<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>아시아 원유·석유화학 데일리 시황 | ${new Date().toISOString().split('T')[0]}</title>
+  <style>
+    body { font-family: -apple-system, sans-serif; background: #f8fafc; color: #1e293b; padding: 24px; line-height: 1.6; }
+    .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+    .header { background: #0b192c; color: #fff; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+    .kpi { display: inline-block; padding: 12px 16px; background: #f1f5f9; border-radius: 8px; margin-right: 10px; margin-bottom: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div style="font-size:12px;color:#94a3b8;">PlattsAI Daily Market Report · ${new Date().toISOString().split('T')[0]}</div>
+    <h1 style="margin:8px 0;font-size:22px;">원유·원료 변동성 속 아시아 석유화학 주요 기초유분 시황</h1>
+    <p style="margin:0;font-size:13px;color:#cbd5e1;">나프타 및 LPG 가격 동향과 올레핀·아로마틱 일간 가격 평가 분석</p>
+  </div>
+  <div class="card">
+    <h3>주요 가격 지표</h3>
+    <div class="kpi">Dated Brent: $128.00/b (▲)</div>
+    <div class="kpi">Naphtha Japan: $1,045.00/mt (▲)</div>
+    <div class="kpi">Ethylene CFR NEA: $1,190.00/mt (━)</div>
+    <div class="kpi">Propylene FOB Korea: $1,310.00/mt (▲)</div>
+  </div>
+  <div class="card">
+    <h3>1. 시황 요약</h3>
+    <p>중동 정세 불안으로 나프타 강세 지속. 크래커 감산 지지에도 불구하고 다운스트림 수지 수요 부진으로 에틸렌 마진 압박 확대.</p>
+  </div>
+</body>
+</html>`,
+      weekly: `<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>아시아 원유·석유화학 주간 시황 및 차주 전망</title>
+  <script src="https://cdn.tailwindcss.com"><\/script>
+</head>
+<body class="bg-slate-900 text-slate-100 p-6 font-sans">
+  <div class="max-w-4xl mx-auto space-y-6">
+    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+      <div class="text-xs text-cyan-400 font-bold uppercase">Weekly Market Report</div>
+      <h1 class="text-2xl font-black mt-1 text-white">아시아 원유·석유화학 주간 시황 및 차주 전망</h1>
+      <p class="text-slate-300 text-sm mt-2">유가 폭등 및 원료 공급 타이트로 아시아 석유화학 원가 부담 극대화</p>
+    </div>
+    <div class="grid grid-cols-2 gap-4 text-xs">
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <div class="font-bold text-red-400">상승 요인 (Bullish)</div>
+        <p class="mt-1 text-slate-300">• 중동 지정학적 리스크 및 나프타 원가 상승<br>• 동북아 주요 크래커 11월 감산 계획</p>
+      </div>
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <div class="font-bold text-blue-400">하락 요인 (Bearish)</div>
+        <p class="mt-1 text-slate-300">• PE/PP 가공업체 가격 저항 지속<br>• 가솔린 블렌딩 마진 약화</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`,
+      special: `<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>[기획] 글로벌 NCC vs ECC 원가 경쟁력 심층 분석</title>
+  <script src="https://cdn.tailwindcss.com"><\/script>
+</head>
+<body class="bg-slate-950 text-slate-100 p-6 font-sans">
+  <div class="max-w-4xl mx-auto space-y-4">
+    <div class="border-b border-slate-800 pb-4">
+      <span class="text-xs bg-purple-900/60 text-purple-300 px-2 py-0.5 rounded font-bold">심층 기획</span>
+      <h1 class="text-2xl font-bold mt-2">글로벌 NCC vs 북미 ECC 원가 경쟁력 및 에탄 크래커 영향 분석</h1>
+      <p class="text-slate-400 text-xs mt-1">고유가 국면에서 나프타 대비 저가 에탄 원가 우위 확대와 아시아 석화사 생존 전략</p>
+    </div>
+  </div>
+</body>
+</html>`
+    };
+
+    function loadTemplate(type) {
+      document.getElementById('htmlCodeInput').value = SAMPLE_TEMPLATES[type] || '';
+      updateLivePreview();
+      autoAnalyzeHtml();
+    }
+
+    async function saveReport(pushToGithub) {
+      const html = document.getElementById('htmlCodeInput').value;
+      const title = document.getElementById('reportTitleInput').value.trim();
+      const category = document.getElementById('reportCategoryInput').value;
+      const date = document.getElementById('reportDateInput').value || new Date().toISOString().split('T')[0];
+      const summary = document.getElementById('reportSummaryInput').value.trim() || title;
+      const tagsStr = document.getElementById('reportTagsInput').value;
+      const author = document.getElementById('reportAuthorInput').value.trim() || '석유화학시황팀';
+
+      if (!html.trim()) {
+        showToast('HTML 코드를 입력해주세요.');
+        return;
+      }
+      if (!title) {
+        showToast('보고서 제목을 입력해주세요.');
+        return;
+      }
+
+      const tags = tagsStr.split(',').map(t => t.trim().replace(/^#/, '')).filter(Boolean);
+      const newReport = {
+        id: 'user-' + Date.now(),
+        title,
+        category,
+        date,
+        summary,
+        htmlContent: html,
+        tags: tags.length ? tags : ['석유화학', '시황'],
+        author,
+        isCustom: true,
+      };
+
+      // 1. Save to localStorage
+      const customs = getCustomReports();
+      customs.unshift(newReport);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(customs));
+
+      // 2. Push to GitHub if requested
+      if (pushToGithub) {
+        const pat = document.getElementById('ghPatInput').value.trim();
+        if (!pat) {
+          showToast('GitHub에 커밋하려면 Token (PAT)을 입력해주세요.');
+          return;
+        }
+        localStorage.setItem(PAT_STORAGE_KEY, pat);
+
+        showToast('GitHub 저장소로 커밋 중...');
+        try {
+          const fileName = date + '_' + title.replace(/[^a-zA-Z0-9가-힣_-]/g, '_') + '.html';
+          const filePath = 'reports/' + category + '/' + fileName;
+          const contentBase64 = btoa(unescape(encodeURIComponent(html)));
+
+          const res = await fetch('https://api.github.com/repos/Jduck02/petro-report/contents/' + filePath, {
+            method: 'PUT',
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              'Content-Type': 'application/json',
+              'Authorization': 'token ' + pat,
+            },
+            body: JSON.stringify({
+              message: '[Petrochem Report] ' + title + ' (' + date + ')',
+              content: contentBase64,
+              branch: 'main',
+            }),
+          });
+
+          if (res.ok) {
+            showToast('GitHub 커밋 및 보관소 저장 완료! (' + filePath + ')');
+          } else {
+            const err = await res.json().catch(() => ({}));
+            showToast('로컬 저장은 완료되었으나 GitHub 커밋 실패: ' + (err.message || res.statusText));
+          }
+        } catch(e) {
+          showToast('GitHub 통신 오류: ' + e.message);
+        }
+      } else {
+        showToast('보고서가 보관소에 성공적으로 저장되었습니다!');
+      }
+
+      switchNav('archive');
     }
 
     document.addEventListener('keydown', (e) => {
