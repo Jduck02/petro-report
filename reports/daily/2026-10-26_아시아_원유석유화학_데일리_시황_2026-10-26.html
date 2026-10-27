@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>아시아 원유·석유화학 데일리 시황 | 2026-10-26</title>
+  <style>
+    :root {
+      --navy: #0b192c;
+      --blue: #1e3e62;
+      --teal: #087f85;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --line: #e2e8f0;
+      --text: #243247;
+      --muted: #64748b;
+      --up: #087b52;
+      --down: #b42346;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .container { width: min(1240px, calc(100% - 32px)); margin: auto; }
+    .header { background: var(--navy); color: #fff; }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 17px 0;
+    }
+    .brand { font-size: 21px; font-weight: 800; letter-spacing: -.03em; }
+    .brand span { color: #6ee7df; }
+    .header-meta { margin-left: auto; text-align: right; font-size: 12px; color: #cbd5e1; }
+    .header-meta strong { display: block; color: #fff; font-size: 13px; }
+    .print-button {
+      padding: 8px 11px;
+      border: 1px solid #64748b;
+      border-radius: 8px;
+      background: var(--blue);
+      color: #fff;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .subheader { background: #fff; border-bottom: 1px solid var(--line); }
+    .subheader-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .updated { margin-left: auto; text-align: right; font-weight: 700; color: #475569; }
+    main { padding-top: 22px; padding-bottom: 30px; }
+    .hero {
+      border-radius: 15px;
+      padding: 25px 27px;
+      color: #fff;
+      background: linear-gradient(115deg, var(--navy), var(--blue));
+      box-shadow: 0 8px 24px #0b192c18;
+    }
+    .eyebrow { color: #98f0e7; font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+    h1 { margin: 9px 0; font-size: clamp(21px, 3vw, 29px); line-height: 1.35; }
+    .hero p { max-width: 940px; margin: 0; color: #dbe7f4; font-size: 14px; }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin: 15px 0 24px;
+      padding: 11px;
+      background: #ffffffef;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 5px 15px #0b192c12;
+      backdrop-filter: blur(9px);
+    }
+    .nav-label { font-size: 12px; font-weight: 800; color: var(--navy); margin-right: 4px; }
+    .nav a {
+      padding: 8px 11px;
+      border-radius: 8px;
+      background: #edf2f7;
+      text-decoration: none;
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .nav a:hover, .nav a:focus-visible { background: var(--navy); color: #fff; }
+    .nav a.top-link { margin-left: auto; background: var(--teal); color: #fff; }
+    .block-title { margin: 0 0 13px; font-size: 16px; color: var(--navy); }
+    .kpis { margin-bottom: 24px; }
+    .kpis h2 { font-size: 16px; color: var(--navy); margin: 0 0 13px; }
+    .group {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 17px;
+      margin-bottom: 13px;
+      box-shadow: 0 2px 9px #0b192c08;
+    }
+    .group-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .group-head small { color: var(--muted); font-weight: 400; }
+    .metrics { display: grid; gap: 9px; }
+    .metrics.seven { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    .metrics.eight { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .metrics.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .metric {
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid #e7edf4;
+      border-radius: 9px;
+      background: #f8fafc;
+    }
+    .metric .name { display: block; min-height: 34px; color: #52647a; font-size: 11px; font-weight: 700; line-height: 1.4; }
+    .metric .symbol { display: block; margin: 2px 0 4px; color: var(--muted); font-size: 10px; }
+    .metric .price { display: block; font-size: 18px; font-weight: 800; color: var(--navy); white-space: nowrap; }
+    .metric .price small { color: var(--muted); font-size: 11px; font-weight: 400; }
+    .metric .change { font-size: 11px; font-weight: 700; margin-top: 2px; }
+    .metric .change.up { color: var(--up); }
+    .metric .change.down { color: var(--down); }
+    .metric .change.flat { color: var(--muted); }
+    .note { margin-top: 10px; font-size: 11px; color: var(--muted); }
+    .section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      overflow: hidden;
+      margin-top: 20px;
+      scroll-margin-top: 85px;
+      box-shadow: 0 2px 9px #0b192c08;
+    }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--line);
+    }
+    .section-head .number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .section-head h2 { margin: 0; font-size: 18px; color: var(--navy); }
+    .section-head small { margin-left: auto; color: var(--muted); font-size: 12px; }
+    .section-body { padding: 19px 20px 23px; }
+    .section-body h3 { margin: 18px 0 10px; color: var(--blue); font-size: 14px; border-bottom: 1px solid #edf2f7; padding-bottom: 6px; }
+    .section-body h3:first-child { margin-top: 0; }
+    .comment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .comment {
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #f8fafc;
+    }
+    .comment strong { display: block; margin-bottom: 6px; color: var(--navy); font-size: 13px; }
+    .comment p { margin: 0; font-size: 12.5px; line-height: 1.65; color: var(--text); }
+    .drivers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .driver { padding: 17px; border-radius: 10px; border: 1px solid var(--line); }
+    .driver.bull { background: #f0faf5; border-color: #bee7cf; }
+    .driver.bear { background: #fff3f5; border-color: #f3c9d0; }
+    .driver h3 { margin: 0 0 10px; font-size: 15px; color: var(--navy); border: none; padding: 0; }
+    .driver h4 { margin: 12px 0 5px; font-size: 12px; color: #334155; }
+    .driver ul { margin: 0; padding-left: 19px; }
+    .driver li { font-size: 12.5px; line-height: 1.65; }
+    .driver li + li { margin-top: 6px; }
+    .outlook-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .outlook {
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #f8fafc;
+      font-size: 12.5px;
+      line-height: 1.65;
+    }
+    .outlook strong { color: var(--navy); }
+    .info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .info {
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #f8fafc;
+    }
+    .info h3 { margin: 0 0 10px; color: var(--navy); font-size: 14px; border: none; padding: 0; }
+    .info ul { margin: 0; padding-left: 19px; }
+    .info li { font-size: 12.5px; line-height: 1.65; }
+    .info li + li { margin-top: 6px; }
+    footer { padding: 19px 0; background: var(--navy); color: #cbd5e1; font-size: 12px; margin-top: 30px; }
+    @media (max-width: 1050px) {
+      .metrics.seven { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    @media (max-width: 650px) {
+      .container { width: min(100% - 24px, 1240px); }
+      .header-inner, .subheader-inner { flex-wrap: wrap; }
+      .header-meta { order: 3; width: 100%; text-align: right; }
+      .nav a.top-link { margin-left: 0; }
+      .metrics.seven, .metrics.eight, .metrics.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .comment-grid, .outlook-grid, .drivers, .info-grid { grid-template-columns: 1fr; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+    }
+    @media print {
+      body { background: #fff; }
+      .container { width: 100%; max-width: none; }
+      .nav, .print-button { display: none; }
+      .group, .section, .comment, .outlook, .driver, .info { break-inside: avoid; box-shadow: none; }
+      .section { scroll-margin-top: 0; }
+    }
+  </style>
+<script src="/_aistudio-iframe.js?v=1f94f900"></script></head>
+<body id="top">
+  <header class="header">
+    <div class="container header-inner">
+      <div class="brand">Platts<span>AI</span></div>
+      <div class="header-meta">
+        <strong>발행일: 2026-10-26 (월)</strong>
+        아시아 원유·석유화학 데일리 시황
+      </div>
+      <button class="print-button" type="button" onclick="window.print()">인쇄 / PDF</button>
+    </div>
+  </header>
+
+  <div class="subheader">
+    <div class="container subheader-inner">
+      <span>Asia-Pacific / Crude &amp; Petrochemicals</span>
+      <span class="updated">최종 업데이트: 2026-10-26 09:51 (KST)</span>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="hero">
+      <div class="eyebrow">MARKET PULSE · 최근 평가일 2026-10-26</div>
+      <h1>원유·원료 변동성 확대 속 주요 제품 차별화, 하류 유도품의 원가 전가는 제한적</h1>
+      <p>10월 26일 평가에서 나프타와 LPG 등 원료가는 강세를 이어갔으나 원유는 유종별 혼조세를 보였습니다. 방향족 및 유도품 일부가 지정학적 공급 제약과 재고 감소로 올랐으나, PE·PP의 실수요 저항은 지속되는 국면입니다. 아래 비교 기준은 직전 평가일 대비입니다.</p>
+    </div>
+
+    <nav class="nav" aria-label="빠른 이동">
+      <span class="nav-label">빠른 이동</span>
+      <a href="#sec-1">1. 일간 시황 요약</a>
+      <a href="#sec-2">2. 핵심 변동 요인</a>
+      <a href="#sec-3">3. 단기 가격 전망</a>
+      <a href="#sec-4">4. 추가 주요 정보</a>
+      <a href="#top" class="top-link">↑ 한번에 보기</a>
+    </nav>
+
+    <div class="kpis">
+      <h2>일간 주요 가격 및 지표 현황</h2>
+
+      <div class="group">
+        <div class="group-head"><span>① 원유 &amp; 원료 (Crude &amp; Feedstocks)</span><small>7개 품목 · 직전 평가일 대비</small></div>
+        <div class="metrics seven">
+          <div class="metric"><div class="name">WTI Cushing M1</div><div class="symbol">PCACG00</div><div class="price">$101.76 <small>/bbl</small></div><div class="change down">▼ $6.16 · −5.71%</div></div>
+          <div class="metric"><div class="name">Dated Brent</div><div class="symbol">PCAAS00</div><div class="price">$127.97 <small>/bbl</small></div><div class="change up">▲ $1.28 · +1.01%</div></div>
+          <div class="metric"><div class="name">Dubai M1</div><div class="symbol">PCAAT00</div><div class="price">$115.74 <small>/bbl</small></div><div class="change down">▼ $1.16 · −0.99%</div></div>
+          <div class="metric"><div class="name">Naphtha C+F Japan</div><div class="symbol">PAAAD00</div><div class="price">$1,046.25 <small>/mt</small></div><div class="change up">▲ $15.75 · +1.53%</div></div>
+          <div class="metric"><div class="name">Ethane · Mont Belvieu M1</div><div class="symbol">PMUDB05</div><div class="price">31.25¢ <small>/gal</small></div><div class="change flat">— 변동 없음</div></div>
+          <div class="metric"><div class="name">C3 LPG · CFR 북아시아 30–45일</div><div class="symbol">AAVAK00</div><div class="price">$1,025.00 <small>/mt</small></div><div class="change up">▲ $41.00 · +4.17%</div></div>
+          <div class="metric"><div class="name">C4 LPG · CFR 북아시아 30–45일</div><div class="symbol">AAVAN00</div><div class="price">$1,115.00 <small>/mt</small></div><div class="change up">▲ $41.00 · +3.82%</div></div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-head"><span>② 제품 (Monomers &amp; Aromatics)</span><small>8개 품목</small></div>
+        <div class="metrics eight">
+          <div class="metric"><div class="name">Ethylene CFR NE Asia</div><div class="symbol">AAOTM00</div><div class="price">$1,190.00 <small>/mt</small></div><div class="change flat">— 변동 없음</div></div>
+          <div class="metric"><div class="name">Propylene PG FOB Korea</div><div class="symbol">AAUXJ00</div><div class="price">$1,310.00 <small>/mt</small></div><div class="change up">▲ $10.00 · +0.77%</div></div>
+          <div class="metric"><div class="name">Butadiene FOB Korea</div><div class="symbol">AAWWM00</div><div class="price">$1,690.00 <small>/mt</small></div><div class="change flat">— 변동 없음</div></div>
+          <div class="metric"><div class="name">MTBE FOB Singapore</div><div class="symbol">PHALF11</div><div class="price">$1,201.26 <small>/mt</small></div><div class="change up">▲ $22.96 · +1.95%</div></div>
+          <div class="metric"><div class="name">Styrene FOB Korea</div><div class="symbol">AAMFL00</div><div class="price">$1,502.00 <small>/mt</small></div><div class="change up">▲ $29.50 · +2.00%</div></div>
+          <div class="metric"><div class="name">Benzene FOB Korea</div><div class="symbol">PHASM05</div><div class="price">$1,245.00 <small>/mt</small></div><div class="change up">▲ $4.33 · +0.35%</div></div>
+          <div class="metric"><div class="name">Toluene FOB Korea</div><div class="symbol">PHASO05</div><div class="price">$1,254.50 <small>/mt</small></div><div class="change up">▲ $13.00 · +1.05%</div></div>
+          <div class="metric"><div class="name">PX FOB Korea</div><div class="symbol">PHASS05</div><div class="price">$1,311.33 <small>/mt</small></div><div class="change up">▲ $24.66 · +1.92%</div></div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-head"><span>③ 유도품 (Derivatives / Polymers)</span><small>4개 품목</small></div>
+        <div class="metrics four">
+          <div class="metric"><div class="name">HDPE Film CFR FE Asia</div><div class="symbol">AATYE00</div><div class="price">$1,105.00 <small>/mt</small></div><div class="change up">▲ $5.00 · +0.45%</div></div>
+          <div class="metric"><div class="name">PP Raffia CFR FE Asia</div><div class="symbol">PHBIK00</div><div class="price">$1,300.00 <small>/mt</small></div><div class="change up">▲ $10.00 · +0.78%</div></div>
+          <div class="metric"><div class="name">LLDPE Butene CFR FE Asia</div><div class="symbol">PHAGZ00</div><div class="price">$1,200.00 <small>/mt</small></div><div class="change up">▲ $50.00 · +4.35%</div></div>
+          <div class="metric"><div class="name">LDPE G-P CFR FE Asia</div><div class="symbol">PHAHT00</div><div class="price">$1,400.00 <small>/mt</small></div><div class="change up">▲ $35.00 · +2.56%</div></div>
+        </div>
+      </div>
+
+      <p class="note">C3·C4는 지바현 인도 기준을 적용한 CFR 북아시아 30–45일 냉동화물 평가입니다. 원유·에탄·제품별 평가 시점과 거래 조건은 서로 다릅니다.</p>
+    </div>
+
+    <section id="sec-1" class="section">
+      <div class="section-head"><span class="number">1</span><h2>일간 시황 요약 (Daily Market Commentary)</h2><small>원유·원료 7 / 제품 8 / 유도품 4</small></div>
+      <div class="section-body">
+        <h3>원유 &amp; 원료</h3>
+        <div class="comment-grid">
+          <article class="comment"><strong>WTI Cushing M1 · $101.76/bbl, −$6.16</strong><p>직전 평가일 대비 큰 폭 하락하며 Dated Brent와 다른 방향을 보였습니다.<br />중동 관련 위험 프리미엄과 미·이란 외교 신호가 단기 변동성을 높이는 국면입니다.</p></article>
+          <article class="comment"><strong>Dated Brent · $127.97/bbl, +$1.28</strong><p>현물 Dated Brent 평가는 상승세를 이어갔습니다.<br />중동 원유 수송 차질과 높은 운임이 물리적 원유 조달비 부담을 유지하고 있습니다.</p></article>
+          <article class="comment"><strong>Dubai M1 · $115.74/bbl, −$1.16</strong><p>중동산 원유 평가가 하락했고, 현물 Dubai의 같은 달 선물 대비 프리미엄도 축소됐습니다.<br />아시아 정유사의 조달 수요와 중동 수송 리스크를 함께 점검할 필요가 있습니다.</p></article>
+          <article class="comment"><strong>Naphtha C+F Japan · $1,046.25/mt, +$15.75</strong><p>높은 원유 가격과 중동발 공급 우려가 가격 상승을 지지했습니다.<br />원료비 급등에 대응한 아시아 크래커의 감산은 추가 매수 확대를 제약하고 있습니다.</p></article>
+          <article class="comment"><strong>Ethane · Mont Belvieu M1 · 31.25¢/gal, 보합</strong><p>미국산 에탄 월물 가격은 직전 평가일과 같았습니다.<br />수출 물량 증가가 가격을 지지하는 가운데 아시아 나프타와는 서로 다른 원료비 흐름을 보였습니다.</p></article>
+          <article class="comment"><strong>C3 LPG · CFR 북아시아 30–45일 · $1,025/mt, +$41</strong><p>수입 가능한 현물 공급이 빠듯한 가운데 상승세를 이어갔습니다.<br />중국 PDH 가동률 회복이 수요를 뒷받침했으나 높은 가격은 추가 구매를 억제할 수 있습니다.</p></article>
+          <article class="comment"><strong>C4 LPG · CFR 북아시아 30–45일 · $1,115/mt, +$41</strong><p>프로판과 같은 폭으로 상승했으며 프로판 대비 $90/mt의 프리미엄을 유지했습니다.<br />중동발 물량 제약과 동절기 블렌딩 수요가 공급 부담을 높이고 있습니다.</p></article>
+        </div>
+
+        <h3>기초유분 및 주요 제품</h3>
+        <div class="comment-grid">
+          <article class="comment"><strong>Ethylene CFR NE Asia · $1,190/mt, 보합</strong><p>평가 가격이 움직이지 않는 사이 나프타는 상승했습니다.<br />에틸렌–나프타 가격 차이가 축소돼 크래커 채산성 부담이 커졌으며, 감산이 현물 공급을 지지하고 있습니다.</p></article>
+          <article class="comment"><strong>Propylene PG FOB Korea · $1,310/mt, +$10</strong><p>원료비 상승과 역내 공급 제약 속 소폭 올랐습니다.<br />PP 등 유도품의 원가 전가 부담이 남아 있어 추가 상승 폭은 하류 구매 강도에 달려 있습니다.</p></article>
+          <article class="comment"><strong>Butadiene FOB Korea · $1,690/mt, 보합</strong><p>중국 내수 가격 상승에도 수출 기준가는 직전 평가일 수준을 유지했습니다.<br />역내 크래커 저율 가동으로 공급은 빠듯하지만 타이어·고무 부문의 신중한 구매가 상승세를 제한했습니다.</p></article>
+          <article class="comment"><strong>MTBE FOB Singapore · $1,201.26/mt, +$22.96</strong><p>원유 및 싱가포르산 제품 가치 상승을 반영해 $1,200/mt를 넘어섰습니다.<br />중국산 MTBE 가격은 오히려 하락하고 역내 블렌딩 구매는 부진해 지역별 온도 차가 큽니다.</p></article>
+          <article class="comment"><strong>Styrene FOB Korea · $1,502/mt, +$29.50</strong><p>중국 동부 항만 재고 감소와 빠듯한 현물 공급이 상승을 이끌었습니다.<br />PS 등 하류 수요는 약해 원료가 상승분의 지속적인 전가에는 제약이 있습니다.</p></article>
+          <article class="comment"><strong>Benzene FOB Korea · $1,245/mt, +$4.33</strong><p>중국 동부 항만 재고 감소가 매수 심리를 지지했습니다.<br />낮은 재고와 한국발 현물 물량 제약이 가격 하단을 지지하는 반면 유도품 마진은 부담 요인입니다.</p></article>
+          <article class="comment"><strong>Toluene FOB Korea · $1,254.50/mt, +$13</strong><p>현물 공급이 빠듯한 가운데 원유 관련 비용 상승을 반영했습니다.<br />가격이 높아 휘발유 블렌딩 수요는 약했고 적극적인 현물 거래도 제한적이었습니다.</p></article>
+          <article class="comment"><strong>PX FOB Korea · $1,311.33/mt, +$24.66</strong><p>12월 인도 거래 수준 상승과 PTA 가격 강세에 동반 상승했습니다.<br />다만 중국 폴리에스터 재고 증가가 이어져 하류 수요의 지속성이 핵심 변수입니다.</p></article>
+        </div>
+
+        <h3>유도품</h3>
+        <div class="comment-grid">
+          <article class="comment"><strong>HDPE Film CFR FE Asia · $1,105/mt, +$5</strong><p>상류 비용 상승을 일부 반영하며 제한적으로 올랐습니다.<br />동북아 PE 전반의 수요가 예년 성수기보다 약해 가격 인상 폭은 작았습니다.</p></article>
+          <article class="comment"><strong>PP Raffia CFR FE Asia · $1,300/mt, +$10</strong><p>프로필렌 상승과 역내 현물 공급 제약을 반영했습니다.<br />구매자의 높은 가격에 대한 저항과 중국 신규 공급 전망이 추가 상승을 제한하고 있습니다.</p></article>
+          <article class="comment"><strong>LLDPE Butene CFR FE Asia · $1,200/mt, +$50</strong><p>유도품 중 가장 큰 일간 상승 폭을 기록하며 원료비 상승에 민감하게 반응했습니다.<br />높아진 호가가 실제 가공업체 구매로 이어지는지 확인이 필요한 국면입니다.</p></article>
+          <article class="comment"><strong>LDPE G-P CFR FE Asia · $1,400/mt, +$35</strong><p>역내 공급 제약과 비용 상승에 힘입어 상승했습니다.<br />다만 동남아 LDPE 설비 재가동은 향후 공급 완화 요인으로 작용할 수 있습니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-2" class="section">
+      <div class="section-head"><span class="number">2</span><h2>핵심 변동 요인 (Key Price Drivers)</h2><small>공급·수요별 상승 및 하락 압력</small></div>
+      <div class="section-body drivers">
+        <div class="driver bull">
+          <h3>↑ 상승 요인 (Bullish Drivers)</h3>
+          <h4>[공급 측면 / Supply Side]</h4>
+          <ul>
+            <li>중동 수송 차질과 높은 운임이 나프타·LPG의 아시아 도착 물량과 대체 조달 비용을 압박하고 있습니다.</li>
+            <li>여수 크래커의 11월 감산 계획과 한국·대만의 저율 가동이 올레핀 및 부타디엔 현물 공급을 제한하고 있습니다.</li>
+            <li>중국 동부 항만의 벤젠·스타이렌 재고 감소가 방향족 제품의 근월물 가격을 지지하고 있습니다.</li>
+          </ul>
+          <h4>[수요 측면 / Demand Side]</h4>
+          <ul>
+            <li>중국 PDH 가동률 상승은 수입 프로판의 실수요를 보강하고 있습니다.</li>
+            <li>PX 12월 인도 거래와 PTA 가격 상승이 PX 현물 가격에 상방 동력을 제공했습니다.</li>
+          </ul>
+        </div>
+        <div class="driver bear">
+          <h3>↓ 하락 요인 (Bearish Drivers)</h3>
+          <h4>[공급 측면 / Supply Side]</h4>
+          <ul>
+            <li>동남아 LDPE 설비 재가동은 그동안 빠듯했던 수지 공급의 완화 가능성을 높이고 있습니다.</li>
+            <li>중국의 예정된 PP 증설과 PDH 정비 후 재가동은 향후 제품 공급 증가 요인입니다.</li>
+            <li>중국산 MTBE 호가의 약세가 싱가포르산 제품 상승 폭에 부담을 주고 있습니다.</li>
+          </ul>
+          <h4>[수요 측면 / Demand Side]</h4>
+          <ul>
+            <li>PS·PP·PE 가공업체의 가격 저항과 필요 물량 중심 구매가 원료비 전가를 제약하고 있습니다.</li>
+            <li>높은 톨루엔 가격으로 휘발유 블렌딩 수요가 약해졌고 MTBE의 역내 블렌딩 구매도 부진했습니다.</li>
+            <li>중국 폴리에스터 재고 증가와 타이어 부문의 더딘 수요 회복이 PX·부타디엔의 추가 강세를 제한합니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-3" class="section">
+      <div class="section-head"><span class="number">3</span><h2>단기 가격 전망 (Short-term Outlook)</h2><small>향후 1~2주 · 품목별 방향성 판단</small></div>
+      <div class="section-body">
+        <div class="outlook-grid">
+          <div class="outlook"><strong>WTI - 보합 :</strong> 급락 이후 중동 위험 프리미엄 유지 여부와 외교 신호에 따라 변동성이 큰 흐름이 예상됩니다.</div>
+          <div class="outlook"><strong>Dated Brent - 강보합 :</strong> 중동 물류 제약이 현물가를 지지하나 수송 정상화 신호에는 상승 폭이 둔화될 수 있습니다.</div>
+          <div class="outlook"><strong>Dubai - 보합 :</strong> 중동산 원유 공급 리스크와 현물 프리미엄 축소가 맞서며 방향성 탐색이 예상됩니다.</div>
+          <div class="outlook"><strong>Naphtha C+F Japan - 강보합 :</strong> 높은 운임과 제한적인 유입 물량이 지지하되 크래커 감산이 상승 폭을 제약할 전망입니다.</div>
+          <div class="outlook"><strong>Ethane Mont Belvieu - 보합 :</strong> 미국 수출 증가가 가격을 받치는 가운데 최근 안정적인 월물 평가 흐름이 이어질 것으로 판단됩니다.</div>
+          <div class="outlook"><strong>C3 LPG CFR 북아시아 - 강보합 :</strong> 제한된 수입 물량과 PDH 재가동 수요가 지지하나 높은 가격에 따른 구매 저항이 변수입니다.</div>
+          <div class="outlook"><strong>C4 LPG CFR 북아시아 - 강보합 :</strong> 동절기 블렌딩 수요와 공급 제약이 받치지만 급등 이후 수요 둔화 가능성을 주시해야 합니다.</div>
+          <div class="outlook"><strong>Ethylene CFR NE Asia - 보합 :</strong> 저율 가동이 공급을 제한하나 나프타 비용 상승과 PE 수요 부진이 가격 상승 여력을 좁힙니다.</div>
+          <div class="outlook"><strong>Propylene PG FOB Korea - 강보합 :</strong> 타이트한 현물 공급과 원료비가 지지하되 PP 마진 부담으로 상승 폭은 제한될 전망입니다.</div>
+          <div class="outlook"><strong>Butadiene FOB Korea - 보합 :</strong> 감산에 따른 공급 제약과 타이어 구매 부진이 균형을 이루며 높은 수준의 등락이 예상됩니다.</div>
+          <div class="outlook"><strong>MTBE FOB Singapore - 보합 :</strong> 비용 상승은 지지 요인이지만 중국산 가격 약세와 블렌딩 구매 부진이 맞서고 있습니다.</div>
+          <div class="outlook"><strong>Styrene FOB Korea - 강보합 :</strong> 항만 재고 감소와 공급 제약이 가격을 지지하나 PS 수요 부진이 추가 상승을 제한합니다.</div>
+          <div class="outlook"><strong>Benzene FOB Korea - 강보합 :</strong> 중국의 낮은 항만 재고와 한국발 공급 제약이 지지하되 유도품 마진 압박을 점검해야 합니다.</div>
+          <div class="outlook"><strong>Toluene FOB Korea - 보합 :</strong> 빠듯한 공급이 가격을 받치지만 높은 가격으로 약해진 블렌딩 수요가 상단을 제한합니다.</div>
+          <div class="outlook"><strong>PX FOB Korea - 강보합 :</strong> 근월물 수급과 PTA 가격 상승이 지지하나 폴리에스터 재고 증가는 경계 요인입니다.</div>
+          <div class="outlook"><strong>HDPE Film CFR FE Asia - 약보합 :</strong> 비용 지지에도 약한 가공 수요와 원가 전가 부담으로 상승세 유지가 어려울 전망입니다.</div>
+          <div class="outlook"><strong>PP Raffia CFR FE Asia - 보합 :</strong> 원료비 상승과 구매 저항이 맞서며 중국의 신규 공급 일정이 추가 변수로 작용합니다.</div>
+          <div class="outlook"><strong>LLDPE Butene CFR FE Asia - 보합 :</strong> 큰 폭 상승 이후 실수요의 가격 수용력이 확인될 때까지 변동성 높은 횡보가 예상됩니다.</div>
+          <div class="outlook"><strong>LDPE G-P CFR FE Asia - 보합 :</strong> 공급 제약이 가격을 지지하지만 재가동 물량의 유입은 추가 상승을 제한할 수 있습니다.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-4" class="section">
+      <div class="section-head"><span class="number">4</span><h2>추가 주요 정보 (Additional Market Information)</h2><small>스프레드 · 설비 · 물류·재고</small></div>
+      <div class="section-body">
+        <div class="info-grid">
+          <div class="info">
+            <h3>주요 크랙·스프레드</h3>
+            <ul>
+              <li><strong>에틸렌 CFR NE Asia − 나프타 C+F Japan:</strong> $143.75/mt. 직전 평가일의 $159.50/mt에서 $15.75/mt 축소됐습니다.</li>
+              <li><strong>프로판 CFR 북아시아 30–45일 − 나프타 C+F Japan:</strong> −$21.25/mt. 직전 평가일의 −$46.50/mt에서 $25.25/mt 좁혀졌습니다.</li>
+              <li><strong>PX FOB Korea − 나프타 C+F Japan:</strong> $265.08/mt. 나프타 상승분을 웃돈 PX 가격 상승에도 원료비 부담은 높은 수준입니다.</li>
+            </ul>
+          </div>
+          <div class="info">
+            <h3>설비 가동률 및 정기보수</h3>
+            <ul>
+              <li><strong>롯데케미칼 여수 크래커:</strong> 11월 가동률을 약 70%로 낮출 계획입니다. 기존 가동률은 약 70~75%입니다.</li>
+              <li><strong>YNCC 여수 1·2공장:</strong> 11월 가동률을 약 70%로 유지할 예정이며 3공장은 가동 중단 상태입니다.</li>
+              <li><strong>중국 PDH:</strong> 10월 26일 가동률 66.33%로 전주 65.49%보다 상승했으나 9월 평균 71.39%에는 못 미쳤습니다.</li>
+            </ul>
+          </div>
+          <div class="info">
+            <h3>물류 및 재고 동향</h3>
+            <ul>
+              <li><strong>페르시아만→일본 VLGC 운임:</strong> 10월 26일 $253.15/mt로 직전 평가일보다 $1/mt 올랐습니다.</li>
+              <li><strong>중국 동부 항만 벤젠 재고:</strong> 10월 26일 약 27,000mt로 전주보다 17,000mt 감소했습니다.</li>
+              <li><strong>중국 동부 항만 스타이렌 재고:</strong> 10월 26일 약 24,700mt로 전주보다 8,400mt 감소했습니다.</li>
+              <li><strong>호르무즈 해협 통항:</strong> 10월 24~25일 하루 17척으로 10월 23일의 27척보다 적었습니다.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">PlattsAI · 아시아 원유·석유화학 데일리 시황 · 2026-10-26</div>
+  </footer>
+</body>
+</html>
