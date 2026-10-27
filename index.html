@@ -9,11 +9,81 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif; }
+    body { font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif; transition: background-color 0.2s ease, color 0.2s ease; }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #0f172a; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    /* Light Mode (일반모드) Styling */
+    body.light-mode {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+    }
+    body.light-mode header {
+      background-color: rgba(255, 255, 255, 0.95) !important;
+      border-color: #e2e8f0 !important;
+      color: #0f172a !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+    }
+    body.light-mode .bg-slate-900/95,
+    body.light-mode .bg-slate-900/90,
+    body.light-mode .bg-slate-900 {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+    body.light-mode .bg-slate-950 {
+      background-color: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+    }
+    body.light-mode .bg-slate-800 {
+      background-color: #f1f5f9 !important;
+      border-color: #e2e8f0 !important;
+      color: #1e293b !important;
+    }
+    body.light-mode .border-slate-800,
+    body.light-mode .border-slate-700 {
+      border-color: #e2e8f0 !important;
+    }
+    body.light-mode .text-white {
+      color: #0f172a !important;
+    }
+    body.light-mode .text-slate-100,
+    body.light-mode .text-slate-200 {
+      color: #1e293b !important;
+    }
+    body.light-mode .text-slate-300,
+    body.light-mode .text-slate-400 {
+      color: #475569 !important;
+    }
+    body.light-mode .text-slate-500 {
+      color: #64748b !important;
+    }
+    body.light-mode input,
+    body.light-mode textarea,
+    body.light-mode select {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+    }
+    body.light-mode footer {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      color: #64748b !important;
+    }
+    body.light-mode .cat-tab:not(.bg-blue-600) {
+      color: #475569 !important;
+    }
+    body.light-mode .cat-tab:not(.bg-blue-600):hover {
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+    }
+    body.light-mode .bg-slate-950.text-slate-400 {
+      background-color: #f1f5f9 !important;
+      color: #475569 !important;
+      border-color: #e2e8f0 !important;
+    }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white">
@@ -48,6 +118,12 @@
         <a href="https://github.com/Jduck02/petro-report" target="_blank" rel="noreferrer" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1 transition">
           <span>GitHub 저장소</span> ↗
         </a>
+
+        <!-- Dark/Light Theme Toggle Button -->
+        <button id="themeToggleBtn" onclick="toggleTheme()" title="모드 전환 (다크모드 / 일반모드)" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+          <span id="themeIcon">☀️</span>
+          <span id="themeLabel" class="hidden sm:inline">일반모드</span>
+        </button>
       </div>
     </div>
   </header>
@@ -278,6 +354,39 @@
     const INITIAL_REPORTS = [{"id":"plattsai-daily-2026-10-26","title":"아시아 원유·석유화학 데일리 시황 | 2026-10-26","category":"daily","date":"2026-10-26","summary":"원유·원료 변동성 확대 속 주요 제품 차별화, 하류 유도품의 원가 전가는 제한적. 나프타와 LPG 등 원료가는 강세를 이어갔으나 원유는 유종별 혼조세를 보였습니다. 스프레드 및 설비 동향 분석.","tags":["원유","나프타","에틸렌","LPG","CFR NEA","FOB Korea"],"author":"PlattsAI Intelligence","filePath":"./reports/daily/2026-10-26_아시아_원유석유화학_데일리_시황_2026-10-26.html"},{"id":"petrochem-weekly-2026-42w","title":"아시아 원유·석유화학 주간 시황 및 차주 전망 (Asia Crude & Petrochemical Weekly Market Report & Outlook)","category":"weekly","date":"2026-10-23","summary":"유가 폭등 및 공급 타이트로 아시아 석유화학 원가 부담 극대화. ICE Brent $114/b 돌파 및 일본 나프타 $1,030/mt 달성으로 NCC 에틸렌 마진 마이너스 대폭 확대. 차주 수급 및 BEP 마진 체인 분석.","tags":["원유","나프타","에틸렌","부타디엔","PX","BEP분석","주간전망"],"author":"PlattsAI Petrochemical Intelligence Group","filePath":"./reports/weekly/2026-10-23_아시아_원유석유화학_주간_시황_및_차주_전망_asia_crude_petrochemical_.html"},{"id":"special-ncc-vs-ecc-2026","title":"[기획] 2026 하반기 글로벌 NCC vs 미국·중동 ECC 원가 경쟁력 및 에탄 크래커 영향 분석","category":"special","date":"2026-10-18","summary":"고유가($100+/b) 국면에서 아시아 나프타 분해설비(NCC)와 북미 에탄 분해설비(ECC) 간의 톤당 에틸렌 생산 현금원가 스프레드가 $450/mt 이상으로 확대됨에 따른 아시아 석화사 대응 전략.","tags":["스페셜기획","NCC","ECC","원가경쟁력","에탄크래커","마진분석"],"author":"전략기획팀","filePath":"./reports/special/2026-10-18_기획_2026_하반기_글로벌_ncc_vs_미국중동_ecc_원가_경쟁력_및_에탄_크래커_영향.html"},{"id":"monthly-northeast-asia-2026-10","title":"2026년 10월 아시아 올레핀·아로마틱 월간 수급 및 설비 정기보수 총람","category":"monthly","date":"2026-10-01","summary":"10~11월 동북아 NCC 정기보수 집중 일정과 주요 화학단지 가동률 변동 추이. 크래커 감산에 따른 기초유분 수급 긴축 및 다운스트림 폴리머 재고 변동 종합 진단.","tags":["월간수급","정기보수","가동률","크래커","아로마틱"],"author":"시장분석실","filePath":"./reports/monthly/2026-10-01_2026년_10월_아시아_올레핀아로마틱_월간_수급_및_설비_정기보수_총람.html"}];
     const STORAGE_KEY = 'petro_gh_pages_custom_reports_v1';
     const PAT_STORAGE_KEY = 'petro_gh_pat_v1';
+    const THEME_STORAGE_KEY = 'petro_gh_theme_v1';
+
+    let currentTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'dark';
+
+    function applyTheme(theme) {
+      currentTheme = theme;
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+      const btn = document.getElementById('themeToggleBtn');
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+
+      if (theme === 'light') {
+        document.body.classList.add('light-mode');
+        if (icon) icon.innerText = '🌙';
+        if (label) label.innerText = '다크모드';
+        if (btn) {
+          btn.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 transition flex items-center gap-1.5 shadow-sm';
+        }
+      } else {
+        document.body.classList.remove('light-mode');
+        if (icon) icon.innerText = '☀️';
+        if (label) label.innerText = '일반모드';
+        if (btn) {
+          btn.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 transition flex items-center gap-1.5 shadow-sm';
+        }
+      }
+    }
+
+    function toggleTheme() {
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+      showToast(nextTheme === 'light' ? '일반모드(라이트)로 전환되었습니다.' : '다크모드로 전환되었습니다.');
+    }
 
     let currentCategory = 'all';
 
