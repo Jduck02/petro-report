@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>석유화학 시황 리포트 허브 | GitHub Pages</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    };
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -15,74 +20,210 @@
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-    /* Light Mode (일반모드) Styling */
+    /* Comprehensive Light Mode (일반모드) Styling */
+    html.light,
     body.light-mode {
       background-color: #f8fafc !important;
       color: #0f172a !important;
     }
     body.light-mode header {
-      background-color: rgba(255, 255, 255, 0.95) !important;
+      background-color: #ffffff !important;
       border-color: #e2e8f0 !important;
       color: #0f172a !important;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
     }
-    body.light-mode .bg-slate-900/95,
-    body.light-mode .bg-slate-900/90,
-    body.light-mode .bg-slate-900 {
+    body.light-mode header h1 {
+      color: #0f172a !important;
+    }
+    body.light-mode .cat-tabs-bar,
+    body.light-mode #categoryTabsContainer {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      color: #0f172a !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    }
+    body.light-mode .cat-tabs-bar button.cat-tab:not(.bg-blue-600) {
+      color: #334155 !important;
+      background-color: transparent !important;
+    }
+    body.light-mode .cat-tabs-bar button.cat-tab:not(.bg-blue-600):hover {
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+    }
+    body.light-mode .search-toolbar,
+    body.light-mode #searchToolbarContainer {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    }
+    body.light-mode .report-card {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      color: #0f172a !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    }
+    body.light-mode .report-card:hover {
+      background-color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.08) !important;
+    }
+    body.light-mode .report-card h3 {
+      color: #0f172a !important;
+    }
+    body.light-mode .report-card p {
+      color: #475569 !important;
+    }
+
+    /* ALL CONTAINERS, CARDS, TOOLBARS & CREATOR BOXES IN LIGHT MODE */
+    body.light-mode [class*="bg-slate-9"],
+    body.light-mode #viewCreator > div,
+    body.light-mode .cat-tabs-bar,
+    body.light-mode #categoryTabsContainer,
+    body.light-mode .search-toolbar,
+    body.light-mode #searchToolbarContainer,
+    body.light-mode .report-card,
+    body.light-mode .creator-card,
+    body.light-mode .creator-box {
       background-color: #ffffff !important;
       border-color: #e2e8f0 !important;
       color: #0f172a !important;
     }
-    body.light-mode .bg-slate-950 {
-      background-color: #f8fafc !important;
-      border-color: #e2e8f0 !important;
-    }
-    body.light-mode .bg-slate-800 {
+
+    body.light-mode [class*="bg-slate-8"] {
       background-color: #f1f5f9 !important;
       border-color: #e2e8f0 !important;
       color: #1e293b !important;
     }
-    body.light-mode .border-slate-800,
-    body.light-mode .border-slate-700 {
+
+    body.light-mode [class*="border-slate-"] {
       border-color: #e2e8f0 !important;
     }
-    body.light-mode .text-white {
+
+    body.light-mode .text-white,
+    body.light-mode .text-slate-100 {
       color: #0f172a !important;
     }
-    body.light-mode .text-slate-100,
-    body.light-mode .text-slate-200 {
+    body.light-mode .text-slate-200,
+    body.light-mode .text-slate-300 {
       color: #1e293b !important;
     }
-    body.light-mode .text-slate-300,
-    body.light-mode .text-slate-400 {
-      color: #475569 !important;
-    }
+    body.light-mode .text-slate-400,
     body.light-mode .text-slate-500 {
       color: #64748b !important;
     }
-    body.light-mode input,
+    body.light-mode .text-cyan-300,
+    body.light-mode .text-cyan-400 {
+      color: #0369a1 !important;
+    }
+
+    /* INPUTS, TEXTAREAS, SELECTS IN LIGHT MODE */
+    body.light-mode input:not([type="checkbox"]):not([type="radio"]),
     body.light-mode textarea,
-    body.light-mode select {
+    body.light-mode select,
+    body.light-mode #reportTitleInput,
+    body.light-mode #reportCategoryInput,
+    body.light-mode #reportDateInput,
+    body.light-mode #reportSummaryInput,
+    body.light-mode #reportTagsInput,
+    body.light-mode #reportAuthorInput,
+    body.light-mode #ghPatInput,
+    body.light-mode #syncPatInput,
+    body.light-mode #searchInput {
       background-color: #ffffff !important;
       color: #0f172a !important;
       border-color: #cbd5e1 !important;
     }
+
+    body.light-mode #htmlCodeInput {
+      background-color: #ffffff !important;
+      color: #0369a1 !important;
+      border-color: #cbd5e1 !important;
+      font-family: monospace;
+    }
+
+    body.light-mode input::placeholder,
+    body.light-mode textarea::placeholder {
+      color: #94a3b8 !important;
+    }
+
+    body.light-mode select option {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+    }
+
+    /* Quick Template Buttons in Light Mode */
+    body.light-mode .bg-emerald-950/60 {
+      background-color: #ecfdf5 !important;
+      color: #047857 !important;
+      border-color: #a7f3d0 !important;
+    }
+    body.light-mode .bg-cyan-950/60 {
+      background-color: #f0f9ff !important;
+      color: #0369a1 !important;
+      border-color: #bae6fd !important;
+    }
+    body.light-mode .bg-purple-950/60 {
+      background-color: #faf5ff !important;
+      color: #7e22ce !important;
+      border-color: #e9d5ff !important;
+    }
+
+    /* Helper info blocks in Light Mode */
+    body.light-mode .bg-slate-950/60 {
+      background-color: #f1f5f9 !important;
+      border-color: #e2e8f0 !important;
+      color: #334155 !important;
+    }
+
+    /* Modals in Light Mode */
+    body.light-mode #readerModal > div,
+    body.light-mode #syncModal > div {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+    body.light-mode #readerModal .bg-slate-950,
+    body.light-mode #syncModal .bg-slate-950 {
+      background-color: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+    body.light-mode #syncModalReportList {
+      background-color: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+    }
+    body.light-mode #syncModalReportList > div {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+    }
+
+    /* Buttons in Light Mode */
+    body.light-mode button.bg-slate-800,
+    body.light-mode a.bg-slate-800,
+    body.light-mode label.bg-slate-800 {
+      background-color: #f1f5f9 !important;
+      color: #1e293b !important;
+      border-color: #cbd5e1 !important;
+    }
+    body.light-mode button.bg-slate-800:hover,
+    body.light-mode a.bg-slate-800:hover,
+    body.light-mode label.bg-slate-800:hover {
+      background-color: #e2e8f0 !important;
+    }
+    body.light-mode button.bg-slate-900 {
+      background-color: #f8fafc !important;
+      color: #475569 !important;
+      border-color: #cbd5e1 !important;
+    }
+    body.light-mode button.bg-slate-900:hover {
+      background-color: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+
     body.light-mode footer {
       background-color: #ffffff !important;
       border-color: #e2e8f0 !important;
       color: #64748b !important;
-    }
-    body.light-mode .cat-tab:not(.bg-blue-600) {
-      color: #475569 !important;
-    }
-    body.light-mode .cat-tab:not(.bg-blue-600):hover {
-      background-color: #f1f5f9 !important;
-      color: #0f172a !important;
-    }
-    body.light-mode .bg-slate-950.text-slate-400 {
-      background-color: #f1f5f9 !important;
-      color: #475569 !important;
-      border-color: #e2e8f0 !important;
     }
   </style>
 </head>
@@ -115,7 +256,26 @@
           <span>➕ 새 리포트 생성 (HTML 입력)</span>
         </button>
 
-        <a href="https://github.com/Jduck02/petro-report" target="_blank" rel="noreferrer" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1 transition">
+        <!-- Team/Mobile writer link button -->
+        <button id="navBtnShareWriter" onclick="copyTeamWriterLink()" title="타인의 핸드폰/PC에서 보고서를 작성할 수 있는 권한 링크 복사" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-cyan-950/60 text-cyan-300 border border-cyan-800/80 hover:bg-cyan-900/60 transition flex items-center gap-1.5 shadow-sm">
+          <span>🔗</span>
+          <span class="hidden md:inline">팀원/모바일 작성 링크</span>
+        </button>
+
+        <!-- Refresh / Sync remote button -->
+        <button id="navBtnRefresh" onclick="fetchRemoteReports(true)" title="GitHub 최신 보고서 실시간 동기화" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+          <span id="refreshIcon">🔄</span>
+          <span class="hidden md:inline">동기화</span>
+        </button>
+
+        <!-- Local uncommitted reports sync button -->
+        <button id="navBtnSyncLocal" onclick="openSyncModal()" title="이 PC의 로컬 보고서를 GitHub에 일괄 동기화" class="hidden px-3 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition flex items-center gap-1.5 shadow-md">
+          <span>☁️ 로컬</span>
+          <span id="navSyncLocalCount" class="px-1.5 py-0.5 rounded-full text-[10px] bg-slate-950 text-amber-300 font-mono">0</span>
+          <span class="hidden lg:inline">동기화</span>
+        </button>
+
+        <a href="https://github.com/jduck02/petro-report" target="_blank" rel="noreferrer" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1 transition">
           <span>GitHub 저장소</span> ↗
         </a>
 
@@ -133,8 +293,26 @@
 
     <!-- VIEW 1: ARCHIVE VIEW -->
     <div id="viewArchive" class="space-y-6">
+
+      <!-- Unsynced Local Reports Notice Banner -->
+      <div id="localSyncAlert" class="hidden bg-amber-950/40 border border-amber-600/50 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-amber-200 shadow-lg">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">⚠️</span>
+          <div>
+            <div class="font-bold text-xs sm:text-sm text-white flex items-center gap-2">
+              <span>현재 컴퓨터 브라우저에만 저장된 로컬 보고서가 있습니다</span>
+              <span id="localReportAlertCount" class="px-2 py-0.5 rounded-full text-[11px] bg-amber-500 text-slate-950 font-bold">0</span>
+            </div>
+            <p class="text-[11px] text-slate-300 mt-0.5">다른 기기(스마트폰, 다른 PC 등)에서도 이 보고서들을 보려면 GitHub 저장소 및 중앙 목록(reports.json)에 동기화해야 합니다.</p>
+          </div>
+        </div>
+        <button onclick="openSyncModal()" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shrink-0 flex items-center gap-1.5 shadow-md transition">
+          <span>☁️ 지금 GitHub에 일괄 동기화</span>
+        </button>
+      </div>
+
       <!-- Category Tabs -->
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-2 sm:p-3 shadow-lg flex flex-wrap gap-2">
+      <div id="categoryTabsContainer" class="cat-tabs-bar bg-slate-900/90 border border-slate-800 rounded-2xl p-2 sm:p-3 shadow-lg flex flex-wrap gap-2">
         <button onclick="setCategory('all')" id="tab-all" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white transition flex items-center gap-2">
           전체 보고서 <span id="count-all" class="px-2 py-0.5 rounded-full text-[11px] bg-white/20">0</span>
         </button>
@@ -153,7 +331,7 @@
       </div>
 
       <!-- Search Toolbar -->
-      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div id="searchToolbarContainer" class="search-toolbar bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="relative w-full sm:flex-1">
           <input type="text" id="searchInput" oninput="renderReports()" placeholder="제목, 키워드, 유종 검색 (예: 나프타, 에틸렌, Brent, BEP, 마진)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
         </div>
@@ -271,22 +449,35 @@
               </div>
             </div>
 
-            <!-- GitHub PAT for direct commit -->
-            <div class="pt-2 border-t border-slate-800">
-              <label class="block text-xs font-semibold text-slate-300 mb-1">
-                GitHub Token (저장소 직접 커밋 시 필요)
-              </label>
-              <input type="password" id="ghPatInput" placeholder="ghp_xxxxxxxxxxxx (GitHub에 직접 커밋하려면 입력)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono">
+            <!-- Author Authentication / Multi-device Sharing -->
+            <div class="pt-3 border-t border-slate-800 space-y-2">
+              <div class="flex items-center justify-between">
+                <label class="block text-xs font-bold text-cyan-300 flex items-center gap-1.5">
+                  <span>🔑 작성자 권한 (GitHub 연동 &amp; 전 기기 공유)</span>
+                </label>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="copyTeamWriterLink()" class="text-[11px] text-cyan-400 hover:text-cyan-300 font-semibold flex items-center gap-1 underline">
+                    <span>🔗 모바일/팀원 작성 링크 복사</span>
+                  </button>
+                  <a href="https://github.com/settings/tokens/new?scopes=repo&description=petro-report" target="_blank" class="text-[11px] text-slate-400 hover:text-slate-300">
+                    토큰 발급 ↗
+                  </a>
+                </div>
+              </div>
+              <input type="password" id="ghPatInput" placeholder="ghp_xxxxxxxxxxxx (작성 권한 토큰)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono">
+              <p class="text-[11px] text-slate-400 leading-relaxed bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
+                💡 <b>다른 사람의 핸드폰이나 새 컴퓨터에서 작성하시나요?</b> 관리자가 공유한 <b>[모바일/팀원 작성 링크]</b>로 접속하셨으면 이미 권한이 등록되어 있습니다. 등록되어 있지 않아도 아래 <span class="text-blue-400 font-bold">[🚀 중앙 보관소에 발행]</span>을 누르면 1회 인증 후 모든 기기에 즉시 저장됩니다!
+              </p>
             </div>
           </div>
 
           <!-- Submit Buttons -->
           <div class="flex flex-wrap items-center gap-3">
-            <button type="button" onclick="saveReport(false)" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-900/30 transition">
-              💾 보관소에 저장
+            <button type="button" onclick="saveReport(true)" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-900/40 transition flex items-center gap-1.5">
+              <span>🚀 중앙 보관소에 발행 (전 기기 실시간 공유)</span>
             </button>
-            <button type="button" onclick="saveReport(true)" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-950/40 transition">
-              🐙 GitHub 저장소에 커밋 &amp; 보관
+            <button type="button" onclick="saveReport(false)" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs sm:text-sm transition">
+              💾 이 기기 로컬에만 임시 저장
             </button>
             <button type="button" onclick="switchNav('archive')" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 text-xs sm:text-sm transition ml-auto">
               취소
@@ -340,6 +531,60 @@
     </div>
   </div>
 
+  <!-- Modal: Sync Local Reports to GitHub -->
+  <div id="syncModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-3 sm:p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl flex flex-col overflow-hidden shadow-2xl">
+      <div class="bg-slate-950 border-b border-slate-800 px-5 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">☁️</span>
+          <div>
+            <h3 class="text-base font-bold text-white">로컬 보고서 GitHub 일괄 동기화</h3>
+            <p class="text-xs text-slate-400">현재 PC에만 저장된 보고서를 GitHub에 업로드하여 모든 기기에 공유합니다.</p>
+          </div>
+        </div>
+        <button onclick="closeSyncModal()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-base font-bold">✕</button>
+      </div>
+      <div class="p-5 space-y-4 text-xs sm:text-sm">
+        <div class="bg-blue-950/40 border border-blue-800/60 rounded-xl p-3.5 space-y-1.5 text-blue-200">
+          <p class="font-bold flex items-center gap-1.5">
+            <span>ℹ️ 왜 다른 디바이스에 보고서가 안 떴을까요?</span>
+          </p>
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            보고서가 현재 컴퓨터 브라우저 로컬 스토리지에만 저장되어 있었기 때문입니다.
+            아래 동기화를 진행하면 보고서 HTML 파일이 GitHub에 영구 보존되고,
+            중앙 목록인 <code>reports.json</code>이 갱신되어 <strong>스마트폰, 태블릿, 다른 컴퓨터 등 어떤 기기에서 접속해도 동일하게 열람</strong>할 수 있습니다!
+          </p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">동기화 대상 로컬 보고서</label>
+          <div id="syncModalReportList" class="max-h-36 overflow-y-auto space-y-1.5 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-xs"></div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-semibold text-slate-300">GitHub Personal Access Token (PAT) *</label>
+            <a href="https://github.com/settings/tokens/new?scopes=repo&description=petro-report" target="_blank" class="text-[11px] text-cyan-400 hover:underline">
+              🔑 토큰 1초 발급 바로가기 ↗
+            </a>
+          </div>
+          <input type="password" id="syncPatInput" placeholder="ghp_xxxxxxxxxxxx" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono">
+        </div>
+
+        <div id="syncProgressStatus" class="text-xs text-cyan-400 font-mono min-h-4"></div>
+
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+          <button onclick="closeSyncModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition">
+            취소
+          </button>
+          <button id="btnExecuteSync" onclick="syncAllLocalReportsToGitHub()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-lg transition">
+            <span>🚀 GitHub로 일괄 동기화 실행</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Message -->
   <div id="toast" class="hidden fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl text-xs sm:text-sm font-semibold text-white animate-fade-in flex items-center gap-2">
     <span id="toastText"></span>
@@ -351,7 +596,7 @@
   </footer>
 
   <script>
-    const INITIAL_REPORTS = [{"id":"plattsai-daily-2026-10-26","title":"아시아 원유·석유화학 데일리 시황 | 2026-10-26","category":"daily","date":"2026-10-26","summary":"원유·원료 변동성 확대 속 주요 제품 차별화, 하류 유도품의 원가 전가는 제한적. 나프타와 LPG 등 원료가는 강세를 이어갔으나 원유는 유종별 혼조세를 보였습니다. 스프레드 및 설비 동향 분석.","tags":["원유","나프타","에틸렌","LPG","CFR NEA","FOB Korea"],"author":"PlattsAI Intelligence","filePath":"./reports/daily/2026-10-26_아시아_원유석유화학_데일리_시황_2026-10-26.html"},{"id":"petrochem-weekly-2026-42w","title":"아시아 원유·석유화학 주간 시황 및 차주 전망 (Asia Crude & Petrochemical Weekly Market Report & Outlook)","category":"weekly","date":"2026-10-23","summary":"유가 폭등 및 공급 타이트로 아시아 석유화학 원가 부담 극대화. ICE Brent $114/b 돌파 및 일본 나프타 $1,030/mt 달성으로 NCC 에틸렌 마진 마이너스 대폭 확대. 차주 수급 및 BEP 마진 체인 분석.","tags":["원유","나프타","에틸렌","부타디엔","PX","BEP분석","주간전망"],"author":"PlattsAI Petrochemical Intelligence Group","filePath":"./reports/weekly/2026-10-23_아시아_원유석유화학_주간_시황_및_차주_전망_asia_crude_petrochemical_.html"},{"id":"special-ncc-vs-ecc-2026","title":"[기획] 2026 하반기 글로벌 NCC vs 미국·중동 ECC 원가 경쟁력 및 에탄 크래커 영향 분석","category":"special","date":"2026-10-18","summary":"고유가($100+/b) 국면에서 아시아 나프타 분해설비(NCC)와 북미 에탄 분해설비(ECC) 간의 톤당 에틸렌 생산 현금원가 스프레드가 $450/mt 이상으로 확대됨에 따른 아시아 석화사 대응 전략.","tags":["스페셜기획","NCC","ECC","원가경쟁력","에탄크래커","마진분석"],"author":"전략기획팀","filePath":"./reports/special/2026-10-18_기획_2026_하반기_글로벌_ncc_vs_미국중동_ecc_원가_경쟁력_및_에탄_크래커_영향.html"},{"id":"monthly-northeast-asia-2026-10","title":"2026년 10월 아시아 올레핀·아로마틱 월간 수급 및 설비 정기보수 총람","category":"monthly","date":"2026-10-01","summary":"10~11월 동북아 NCC 정기보수 집중 일정과 주요 화학단지 가동률 변동 추이. 크래커 감산에 따른 기초유분 수급 긴축 및 다운스트림 폴리머 재고 변동 종합 진단.","tags":["월간수급","정기보수","가동률","크래커","아로마틱"],"author":"시장분석실","filePath":"./reports/monthly/2026-10-01_2026년_10월_아시아_올레핀아로마틱_월간_수급_및_설비_정기보수_총람.html"}];
+    const INITIAL_REPORTS = [{"id":"report-1793162942990","title":"중동 지정학 리스크와 석유화학산업 영향 2026-10-27","category":"special","date":"2026-10-27","summary":"미국-이란 전쟁, 예멘-후티반군 전쟁으로 인한 물류난 / 석유화학산업 원료 / 제품 가격 괴리 감소 (원료:제품가 상승 / 제품 : 수요 보합세)","tags":["중동전쟁","전쟁","미국","이란","호르무즈","후티","예맨","중동","국제정세"],"author":"석유화학시황팀","filePath":"./reports/special/2026-10-27_중동_지정학_리스크와_석유화학산업_영향_2026-10-27.html"},{"id":"plattsai-daily-2026-10-26","title":"아시아 원유·석유화학 데일리 시황 | 2026-10-26","category":"daily","date":"2026-10-26","summary":"원유·원료 변동성 확대 속 주요 제품 차별화, 하류 유도품의 원가 전가는 제한적. 나프타와 LPG 등 원료가는 강세를 이어갔으나 원유는 유종별 혼조세를 보였습니다. 스프레드 및 설비 동향 분석.","tags":["원유","나프타","에틸렌","LPG","CFR NEA","FOB Korea"],"author":"PlattsAI Intelligence","filePath":"./reports/daily/2026-10-26_아시아_원유석유화학_데일리_시황_2026-10-26.html"},{"id":"petrochem-weekly-2026-42w","title":"아시아 원유·석유화학 주간 시황 및 차주 전망 (Asia Crude & Petrochemical Weekly Market Report & Outlook)","category":"weekly","date":"2026-10-23","summary":"유가 폭등 및 공급 타이트로 아시아 석유화학 원가 부담 극대화. ICE Brent $114/b 돌파 및 일본 나프타 $1,030/mt 달성으로 NCC 에틸렌 마진 마이너스 대폭 확대. 차주 수급 및 BEP 마진 체인 분석.","tags":["원유","나프타","에틸렌","부타디엔","PX","BEP분석","주간전망"],"author":"PlattsAI Petrochemical Intelligence Group","filePath":"./reports/weekly/2026-10-23_아시아_원유석유화학_주간_시황_및_차주_전망_asia_crude_petrochemical_.html"},{"id":"special-ncc-vs-ecc-2026","title":"[기획] 2026 하반기 글로벌 NCC vs 미국·중동 ECC 원가 경쟁력 및 에탄 크래커 영향 분석","category":"special","date":"2026-10-18","summary":"고유가($100+/b) 국면에서 아시아 나프타 분해설비(NCC)와 북미 에탄 분해설비(ECC) 간의 톤당 에틸렌 생산 현금원가 스프레드가 $450/mt 이상으로 확대됨에 따른 아시아 석화사 대응 전략.","tags":["스페셜기획","NCC","ECC","원가경쟁력","에탄크래커","마진분석"],"author":"전략기획팀","filePath":"./reports/special/2026-10-18_기획_2026_하반기_글로벌_ncc_vs_미국중동_ecc_원가_경쟁력_및_에탄_크래커_영향.html"},{"id":"monthly-northeast-asia-2026-10","title":"2026년 10월 아시아 올레핀·아로마틱 월간 수급 및 설비 정기보수 총람","category":"monthly","date":"2026-10-01","summary":"10~11월 동북아 NCC 정기보수 집중 일정과 주요 화학단지 가동률 변동 추이. 크래커 감산에 따른 기초유분 수급 긴축 및 다운스트림 폴리머 재고 변동 종합 진단.","tags":["월간수급","정기보수","가동률","크래커","아로마틱"],"author":"시장분석실","filePath":"./reports/monthly/2026-10-01_2026년_10월_아시아_올레핀아로마틱_월간_수급_및_설비_정기보수_총람.html"}];
     const STORAGE_KEY = 'petro_gh_pages_custom_reports_v1';
     const PAT_STORAGE_KEY = 'petro_gh_pat_v1';
     const THEME_STORAGE_KEY = 'petro_gh_theme_v1';
@@ -361,25 +606,80 @@
     function applyTheme(theme) {
       currentTheme = theme;
       localStorage.setItem(THEME_STORAGE_KEY, theme);
+      const isLight = theme === 'light';
       const btn = document.getElementById('themeToggleBtn');
       const icon = document.getElementById('themeIcon');
       const label = document.getElementById('themeLabel');
 
-      if (theme === 'light') {
+      if (isLight) {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
         document.body.classList.add('light-mode');
+        document.body.classList.remove('bg-slate-950', 'text-slate-100');
+        document.body.classList.add('bg-slate-50', 'text-slate-900');
         if (icon) icon.innerText = '🌙';
         if (label) label.innerText = '다크모드';
         if (btn) {
           btn.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 transition flex items-center gap-1.5 shadow-sm';
         }
       } else {
-        document.body.classList.remove('light-mode');
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+        document.body.classList.remove('light-mode', 'bg-slate-50', 'text-slate-900');
+        document.body.classList.add('bg-slate-950', 'text-slate-100');
         if (icon) icon.innerText = '☀️';
         if (label) label.innerText = '일반모드';
         if (btn) {
           btn.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 transition flex items-center gap-1.5 shadow-sm';
         }
       }
+
+      // Update containers
+      const tabsBox = document.getElementById('categoryTabsContainer');
+      if (tabsBox) {
+        tabsBox.className = isLight
+          ? 'cat-tabs-bar bg-white border border-slate-200 rounded-2xl p-2 sm:p-3 shadow-sm flex flex-wrap gap-2 transition-colors'
+          : 'cat-tabs-bar bg-slate-900/90 border border-slate-800 rounded-2xl p-2 sm:p-3 shadow-lg flex flex-wrap gap-2 transition-colors';
+      }
+
+      const searchBox = document.getElementById('searchToolbarContainer');
+      if (searchBox) {
+        searchBox.className = isLight
+          ? 'search-toolbar bg-white border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm transition-colors'
+          : 'search-toolbar bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 transition-colors';
+      }
+
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.className = isLight
+          ? 'w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500'
+          : 'w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500';
+      }
+
+      // Update header buttons
+      const creatorBtn = document.getElementById('navBtnCreator');
+      if (creatorBtn) {
+        creatorBtn.className = isLight
+          ? 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-100 hover:bg-cyan-200 text-cyan-900 border border-cyan-300 transition flex items-center gap-1.5'
+          : 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-600/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-600 hover:text-white transition flex items-center gap-1.5';
+      }
+
+      const writerBtn = document.getElementById('navBtnShareWriter');
+      if (writerBtn) {
+        writerBtn.className = isLight
+          ? 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center gap-1.5 shadow-sm'
+          : 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-cyan-950/60 text-cyan-300 border border-cyan-800/80 hover:bg-cyan-900/60 transition flex items-center gap-1.5 shadow-sm';
+      }
+
+      const refreshBtn = document.getElementById('navBtnRefresh');
+      if (refreshBtn) {
+        refreshBtn.className = isLight
+          ? 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center gap-1.5 shadow-sm'
+          : 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 transition flex items-center gap-1.5 shadow-sm';
+      }
+
+      updateCounts();
+      setCategory(currentCategory);
     }
 
     function toggleTheme() {
@@ -388,7 +688,70 @@
       showToast(nextTheme === 'light' ? '일반모드(라이트)로 전환되었습니다.' : '다크모드로 전환되었습니다.');
     }
 
+    // Auto-authenticate via URL hash (#auth=... or #token=...) on mobile/team devices
+    function checkUrlAuth() {
+      try {
+        let tokenVal = '';
+        if (window.location.hash) {
+          const hashParams = new URLSearchParams(window.location.hash.substring(1));
+          tokenVal = hashParams.get('auth') || hashParams.get('token') || '';
+        }
+        if (!tokenVal && window.location.search) {
+          const searchParams = new URLSearchParams(window.location.search);
+          tokenVal = searchParams.get('auth') || searchParams.get('token') || '';
+        }
+        if (tokenVal) {
+          let finalToken = tokenVal;
+          try {
+            if (!tokenVal.startsWith('ghp_') && !tokenVal.startsWith('github_pat_')) {
+              finalToken = atob(tokenVal);
+            }
+          } catch(e) {}
+          if (finalToken.startsWith('ghp_') || finalToken.startsWith('github_pat_')) {
+            localStorage.setItem(PAT_STORAGE_KEY, finalToken);
+            const patInput = document.getElementById('ghPatInput');
+            if (patInput) patInput.value = finalToken;
+            showToast('🔑 작성자 권한이 활성화되었습니다! 이제 이 기기에서도 작성한 보고서가 중앙 GitHub 저장소 및 모든 기기에 실시간 공유됩니다.');
+            if (window.history && window.history.replaceState) {
+              window.history.replaceState(null, '', window.location.pathname);
+            }
+          }
+        }
+      } catch(e) {
+        console.error('URL auth error:', e);
+      }
+    }
+
+    // Copy team/mobile writer link with encoded auth token
+    function copyTeamWriterLink() {
+      let pat = localStorage.getItem(PAT_STORAGE_KEY);
+      if (!pat && document.getElementById('ghPatInput')) {
+        pat = document.getElementById('ghPatInput').value.trim();
+      }
+      if (!pat) {
+        pat = prompt('팀원 또는 다른 모바일 기기에서 사용할 GitHub Personal Access Token(PAT)을 입력해주세요:
+(입력하시면 해당 기기에서 링크를 열었을 때 자동으로 작성 권한이 부여됩니다.)');
+        if (!pat) return;
+        pat = pat.trim();
+        localStorage.setItem(PAT_STORAGE_KEY, pat);
+        if (document.getElementById('ghPatInput')) document.getElementById('ghPatInput').value = pat;
+      }
+      const b64 = btoa(pat.trim());
+      const shareUrl = window.location.origin + window.location.pathname + '#auth=' + b64;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast('🔗 팀원/모바일 작성 권한 링크가 복사되었습니다! 카톡이나 메시지로 전달하세요.');
+        }).catch(() => {
+          prompt('아래 링크를 복사하여 팀원의 핸드폰이나 다른 PC로 전달하세요:', shareUrl);
+        });
+      } else {
+        prompt('아래 링크를 복사하여 팀원의 핸드폰이나 다른 PC로 전달하세요:', shareUrl);
+      }
+    }
+
     let currentCategory = 'all';
+
+    let remoteReports = [];
 
     function getCustomReports() {
       try {
@@ -399,7 +762,99 @@
 
     function getAllReports() {
       const customs = getCustomReports();
-      return [...customs, ...INITIAL_REPORTS];
+      // remoteReports from GitHub manifest is authoritative for all synced reports; fallback to INITIAL_REPORTS
+      const baseReports = remoteReports.length > 0 ? remoteReports : INITIAL_REPORTS;
+      const existingTitles = new Set(baseReports.map(r => r.title + '___' + r.date));
+      const existingPaths = new Set(baseReports.map(r => r.filePath || ''));
+      // Only include customs that haven't been committed to remote yet
+      const unsyncedCustoms = customs.filter(c => {
+        const key = c.title + '___' + c.date;
+        return !existingTitles.has(key) && (!c.filePath || !existingPaths.has(c.filePath));
+      });
+      return [...unsyncedCustoms, ...baseReports];
+    }
+
+    async function fetchRemoteReports(manual = false) {
+      const icon = document.getElementById('refreshIcon');
+      if (icon && manual) icon.classList.add('animate-spin');
+      try {
+        const res = await fetch('./reports.json?v=' + Date.now());
+        if (res.ok) {
+          const list = await res.json();
+          if (Array.isArray(list) && list.length > 0) {
+            remoteReports = list;
+            updateCounts();
+            renderReports();
+            checkLocalReports();
+            if (manual) {
+              showToast('최신 보고서 ' + list.length + '건이 GitHub에서 실시간 동기화되었습니다.');
+            }
+            return;
+          }
+        }
+        if (manual) {
+          showToast('동기화 완료: 최신 상태입니다.');
+        }
+      } catch(e) {
+        if (manual) showToast('동기화 확인 중 오류: ' + e.message);
+      } finally {
+        if (icon && manual) setTimeout(() => icon.classList.remove('animate-spin'), 600);
+      }
+    }
+
+    function checkLocalReports() {
+      const customs = getCustomReports();
+      const baseReports = remoteReports.length > 0 ? remoteReports : INITIAL_REPORTS;
+      const existingTitles = new Set(baseReports.map(r => r.title + '___' + r.date));
+      const unsynced = customs.filter(c => !existingTitles.has(c.title + '___' + c.date));
+
+      const alertBox = document.getElementById('localSyncAlert');
+      const alertCount = document.getElementById('localReportAlertCount');
+      const navBtn = document.getElementById('navBtnSyncLocal');
+      const navCount = document.getElementById('navSyncLocalCount');
+
+      if (unsynced.length > 0) {
+        if (alertBox) alertBox.classList.remove('hidden');
+        if (alertCount) alertCount.innerText = unsynced.length + '건';
+        if (navBtn) navBtn.classList.remove('hidden');
+        if (navCount) navCount.innerText = unsynced.length;
+      } else {
+        if (alertBox) alertBox.classList.add('hidden');
+        if (navBtn) navBtn.classList.add('hidden');
+      }
+    }
+
+    function openSyncModal() {
+      const customs = getCustomReports();
+      const baseReports = remoteReports.length > 0 ? remoteReports : INITIAL_REPORTS;
+      const existingTitles = new Set(baseReports.map(r => r.title + '___' + r.date));
+      const unsynced = customs.filter(c => !existingTitles.has(c.title + '___' + c.date));
+
+      const listEl = document.getElementById('syncModalReportList');
+      if (unsynced.length === 0) {
+        listEl.innerHTML = '<div class="text-slate-400 p-2 text-center">동기화할 로컬 보고서가 없습니다. 모든 보고서가 이미 GitHub에 반영되어 있습니다.</div>';
+      } else {
+        listEl.innerHTML = unsynced.map(r => 
+          '<div class="flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-slate-800">' +
+            '<div class="truncate mr-2">' +
+              '<span class="font-bold text-white">' + r.title + '</span>' +
+              '<span class="text-slate-400 text-[11px] ml-2">' + r.date + '</span>' +
+            '</div>' +
+            '<span class="px-2 py-0.5 rounded text-[10px] bg-amber-950 text-amber-300 border border-amber-800 shrink-0">로컬 전용</span>' +
+          '</div>'
+        ).join('');
+      }
+
+      const savedPat = localStorage.getItem(PAT_STORAGE_KEY) || (document.getElementById('ghPatInput') ? document.getElementById('ghPatInput').value : '');
+      if (savedPat) {
+        document.getElementById('syncPatInput').value = savedPat;
+      }
+      document.getElementById('syncProgressStatus').innerText = '';
+      document.getElementById('syncModal').classList.remove('hidden');
+    }
+
+    function closeSyncModal() {
+      document.getElementById('syncModal').classList.add('hidden');
     }
 
     function showToast(msg) {
@@ -410,17 +865,22 @@
     }
 
     function switchNav(tab) {
+      const isLight = currentTheme === 'light';
       if (tab === 'archive') {
         document.getElementById('viewArchive').classList.remove('hidden');
         document.getElementById('viewCreator').classList.add('hidden');
         document.getElementById('navBtnArchive').className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md transition flex items-center gap-1.5';
-        document.getElementById('navBtnCreator').className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-600/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-600 hover:text-white transition flex items-center gap-1.5';
+        document.getElementById('navBtnCreator').className = isLight
+          ? 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-100 text-cyan-900 border border-cyan-300 hover:bg-cyan-200 transition flex items-center gap-1.5'
+          : 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-600/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-600 hover:text-white transition flex items-center gap-1.5';
         updateCounts();
         renderReports();
       } else {
         document.getElementById('viewArchive').classList.add('hidden');
         document.getElementById('viewCreator').classList.remove('hidden');
-        document.getElementById('navBtnArchive').className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-slate-300 hover:text-white transition flex items-center gap-1.5';
+        document.getElementById('navBtnArchive').className = isLight
+          ? 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5'
+          : 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-slate-300 hover:text-white transition flex items-center gap-1.5';
         document.getElementById('navBtnCreator').className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-600 text-white shadow-md transition flex items-center gap-1.5';
         if (!document.getElementById('reportDateInput').value) {
           document.getElementById('reportDateInput').value = new Date().toISOString().split('T')[0];
@@ -432,6 +892,16 @@
     }
 
     function getCategoryBadge(cat) {
+      const isLight = currentTheme === 'light';
+      if (isLight) {
+        switch(cat) {
+          case 'daily': return { name: '일간 보고서', bg: 'bg-emerald-50', color: 'text-emerald-700', border: 'border-emerald-300', borderL: 'border-l-emerald-500 hover:border-l-emerald-600', icon: '☀️' };
+          case 'weekly': return { name: '주간 보고서', bg: 'bg-cyan-50', color: 'text-cyan-700', border: 'border-cyan-300', borderL: 'border-l-cyan-500 hover:border-l-cyan-600', icon: '📊' };
+          case 'monthly': return { name: '월간 보고서', bg: 'bg-amber-50', color: 'text-amber-800', border: 'border-amber-300', borderL: 'border-l-amber-500 hover:border-l-amber-600', icon: '📅' };
+          case 'special': return { name: '스페셜 기획', bg: 'bg-purple-50', color: 'text-purple-700', border: 'border-purple-300', borderL: 'border-l-purple-500 hover:border-l-purple-600', icon: '💡' };
+          default: return { name: '보고서', bg: 'bg-slate-100', color: 'text-slate-700', border: 'border-slate-300', borderL: 'border-l-blue-500', icon: '📄' };
+        }
+      }
       switch(cat) {
         case 'daily': return { name: '일간 보고서', bg: 'bg-emerald-500/10', color: 'text-emerald-400', border: 'border-emerald-500/30', borderL: 'border-l-emerald-500 hover:border-l-emerald-400', icon: '☀️' };
         case 'weekly': return { name: '주간 보고서', bg: 'bg-cyan-500/10', color: 'text-cyan-400', border: 'border-cyan-500/30', borderL: 'border-l-cyan-500 hover:border-l-cyan-400', icon: '📊' };
@@ -443,18 +913,33 @@
 
     function updateCounts() {
       const all = getAllReports();
+      const isLight = currentTheme === 'light';
       document.getElementById('navReportCount').innerText = all.length;
       document.getElementById('count-all').innerText = all.length;
       document.getElementById('count-daily').innerText = all.filter(r => r.category === 'daily').length;
       document.getElementById('count-weekly').innerText = all.filter(r => r.category === 'weekly').length;
       document.getElementById('count-monthly').innerText = all.filter(r => r.category === 'monthly').length;
       document.getElementById('count-special').innerText = all.filter(r => r.category === 'special').length;
+
+      const daily = document.getElementById('count-daily');
+      const weekly = document.getElementById('count-weekly');
+      const monthly = document.getElementById('count-monthly');
+      const special = document.getElementById('count-special');
+      if (daily) daily.className = isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-emerald-50 text-emerald-700 border border-emerald-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-emerald-400';
+      if (weekly) weekly.className = isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-cyan-50 text-cyan-700 border border-cyan-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-cyan-400';
+      if (monthly) monthly.className = isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-amber-50 text-amber-700 border border-amber-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-amber-400';
+      if (special) special.className = isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-purple-50 text-purple-700 border border-purple-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-purple-400';
     }
 
     function setCategory(cat) {
       currentCategory = cat;
+      const isLight = currentTheme === 'light';
       document.querySelectorAll('.cat-tab').forEach(b => {
-        b.className = 'cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2';
+        if (isLight) {
+          b.className = 'cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-2';
+        } else {
+          b.className = 'cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2';
+        }
       });
       const activeBtn = document.getElementById('tab-' + cat);
       if (activeBtn) {
@@ -468,6 +953,7 @@
       const list = document.getElementById('reportsList');
       const emptyState = document.getElementById('emptyState');
       const all = getAllReports();
+      const isLight = currentTheme === 'light';
 
       const filtered = all.filter(r => {
         if (currentCategory !== 'all' && r.category !== currentCategory) return false;
@@ -492,36 +978,46 @@
       emptyState.classList.add('hidden');
       list.innerHTML = filtered.map(r => {
         const badge = getCategoryBadge(r.category);
-        const tagsHtml = (r.tags || []).map(t => '<span class="px-2 py-0.5 rounded-md text-[11px] bg-slate-950 text-slate-400 border border-slate-800">#' + t + '</span>').join('');
+        const tagsHtml = (r.tags || []).map(t => '<span class="px-2 py-0.5 rounded-md text-[11px] ' + (isLight ? 'bg-slate-100 text-slate-700 border border-slate-200' : 'bg-slate-950 text-slate-400 border border-slate-800') + '">#' + t + '</span>').join('');
         const isCustom = Boolean(r.isCustom);
         const encId = encodeURIComponent(r.id);
 
+        const cardBgClass = isLight
+          ? 'bg-white hover:bg-white border-slate-200 hover:border-slate-300 text-slate-800 shadow-sm hover:shadow-md'
+          : 'bg-slate-900/90 hover:bg-slate-900 border-slate-800 hover:border-slate-700 text-slate-100 shadow-lg';
+        const titleClass = isLight ? 'text-slate-900 group-hover:text-blue-600' : 'text-white group-hover:text-cyan-300';
+        const summaryClass = isLight ? 'text-slate-600' : 'text-slate-400';
+        const authorClass = isLight ? 'text-slate-500' : 'text-slate-400';
+        const btnClass = isLight
+          ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'
+          : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700';
+
         return `
-          <div onclick="openReportModal('${encId}')" class="group w-full bg-slate-900/90 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-4 sm:p-5 shadow-lg transition-all duration-200 cursor-pointer flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-l-4 ${badge.borderL} hover:shadow-cyan-950/20 hover:-translate-y-0.5">
+          <div onclick="openReportModal('${encId}')" class="report-card group w-full ${cardBgClass} border rounded-2xl p-4 sm:p-5 transition-all duration-200 cursor-pointer flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-l-4 ${badge.borderL} hover:-translate-y-0.5">
             <div class="flex flex-col sm:flex-row sm:items-start gap-4 flex-1 min-w-0">
               <div class="flex sm:flex-col items-center sm:items-start gap-2 sm:gap-1.5 shrink-0 sm:w-36">
                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${badge.bg} ${badge.color} ${badge.border}">
                   <span>${badge.icon}</span> ${badge.name}
                 </span>
-                <span class="text-xs text-slate-400 font-mono">🕒 ${r.date}</span>
-                ${isCustom ? '<span class="px-1.5 py-0.5 rounded text-[10px] bg-cyan-950 text-cyan-300 border border-cyan-800 font-medium">직접 추가됨</span>' : ''}
+                <span class="text-xs ${authorClass} font-mono">🕒 ${r.date}</span>
+                ${isCustom ? '<span class="px-1.5 py-0.5 rounded text-[10px] ' + (isLight ? 'bg-cyan-50 text-cyan-700 border border-cyan-200' : 'bg-cyan-950 text-cyan-300 border border-cyan-800') + ' font-medium">직접 추가됨</span>' : ''}
               </div>
               <div class="flex-1 min-w-0 space-y-1.5">
-                <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-1">${r.title}</h3>
-                <p class="text-xs sm:text-sm text-slate-400 line-clamp-2 leading-relaxed">${r.summary}</p>
+                <h3 class="text-base sm:text-lg font-bold ${titleClass} transition-colors line-clamp-1">${r.title}</h3>
+                <p class="text-xs sm:text-sm ${summaryClass} line-clamp-2 leading-relaxed">${r.summary}</p>
                 <div class="flex flex-wrap items-center gap-2 pt-1">
-                  <span class="text-[11px] text-slate-500 font-medium">${r.author}</span>
-                  <span class="text-slate-700">•</span>
+                  <span class="text-[11px] ${authorClass} font-medium">${r.author}</span>
+                  <span class="${isLight ? 'text-slate-300' : 'text-slate-700'}">•</span>
                   <div class="flex flex-wrap gap-1.5">${tagsHtml}</div>
                 </div>
               </div>
             </div>
-            <div class="flex items-center justify-between lg:justify-end gap-2 pt-3 lg:pt-0 border-t border-slate-800/80 lg:border-t-0 shrink-0" onclick="event.stopPropagation()">
-              <button onclick="downloadReportById('${encId}')" title="HTML 다운로드" class="p-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+            <div class="flex items-center justify-between lg:justify-end gap-2 pt-3 lg:pt-0 ${isLight ? 'border-t border-slate-200' : 'border-t border-slate-800/80'} lg:border-t-0 shrink-0" onclick="event.stopPropagation()">
+              <button onclick="downloadReportById('${encId}')" title="HTML 다운로드" class="p-2 rounded-xl text-xs font-semibold ${btnClass} border transition">
                 💾 다운로드
               </button>
-              ${r.filePath ? '<a href="' + r.filePath + '" target="_blank" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">새 창 열기 ↗</a>' : ''}
-              ${isCustom ? '<button onclick="deleteCustomReport(\'' + encId + '\')" title="삭제" class="p-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-red-400 hover:bg-slate-800 transition">🗑️</button>' : ''}
+              ${r.filePath ? '<a href="' + r.filePath + '" target="_blank" class="px-3 py-2 rounded-xl text-xs font-semibold ' + btnClass + ' border transition">새 창 열기 ↗</a>' : ''}
+              ${isCustom ? '<button onclick="deleteCustomReport(\'' + encId + '\')" title="삭제" class="p-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-red-500 ' + (isLight ? 'hover:bg-slate-100' : 'hover:bg-slate-800') + ' transition">🗑️</button>' : ''}
               <button onclick="openReportModal('${encId}')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-900/30 transition">
                 <span>열람하기</span> →
               </button>
@@ -594,6 +1090,7 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(customs));
       updateCounts();
       renderReports();
+      checkLocalReports();
       showToast('보고서가 삭제되었습니다.');
     }
 
@@ -769,6 +1266,143 @@
       autoAnalyzeHtml();
     }
 
+    async function syncAllLocalReportsToGitHub() {
+      const customs = getCustomReports();
+      if (!customs.length) {
+        showToast('동기화할 로컬 보고서가 없습니다.');
+        return;
+      }
+      let pat = document.getElementById('syncPatInput') ? document.getElementById('syncPatInput').value.trim() : '';
+      if (!pat) pat = localStorage.getItem(PAT_STORAGE_KEY) || '';
+      if (!pat) {
+        showToast('GitHub Personal Access Token을 입력해주세요.');
+        return;
+      }
+      localStorage.setItem(PAT_STORAGE_KEY, pat);
+
+      const statusEl = document.getElementById('syncProgressStatus');
+      const execBtn = document.getElementById('btnExecuteSync');
+      if (execBtn) execBtn.disabled = true;
+      if (statusEl) statusEl.innerText = '동기화 시작 중... (0 / ' + customs.length + ')';
+
+      try {
+        let currentManifest = [];
+        let manifestSha = null;
+
+        // 1. Fetch current reports.json
+        const mRes = await fetch('https://api.github.com/repos/jduck02/petro-report/contents/reports.json?ref=main', {
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': 'token ' + pat,
+          }
+        });
+        if (mRes.ok) {
+          const mData = await mRes.json();
+          manifestSha = mData.sha;
+          try {
+            const rawText = decodeURIComponent(escape(atob(mData.content.replace(/s/g, ''))));
+            currentManifest = JSON.parse(rawText);
+          } catch(e) { currentManifest = []; }
+        } else {
+          currentManifest = [...INITIAL_REPORTS];
+        }
+
+        // 2. Commit each custom report HTML file
+        const newManifestItems = [];
+        for (let i = 0; i < customs.length; i++) {
+          const rep = customs[i];
+          if (statusEl) statusEl.innerText = '커밋 중: ' + rep.title + ' (' + (i + 1) + '/' + customs.length + ')';
+
+          const fileName = rep.date + '_' + rep.title.replace(/[^a-zA-Z0-9가-힣_-]/g, '_') + '.html';
+          const filePath = 'reports/' + rep.category + '/' + fileName;
+          const contentBase64 = btoa(unescape(encodeURIComponent(rep.htmlContent || '')));
+
+          // Check if file already exists
+          let fileSha = null;
+          const fRes = await fetch('https://api.github.com/repos/jduck02/petro-report/contents/' + filePath + '?ref=main', {
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              'Authorization': 'token ' + pat,
+            }
+          });
+          if (fRes.ok) {
+            const fData = await fRes.json();
+            fileSha = fData.sha;
+          }
+
+          const putBody = {
+            message: '[Petrochem Report] ' + rep.title + ' (' + rep.date + ')',
+            content: contentBase64,
+            branch: 'main',
+          };
+          if (fileSha) putBody.sha = fileSha;
+
+          const uploadRes = await fetch('https://api.github.com/repos/jduck02/petro-report/contents/' + filePath, {
+            method: 'PUT',
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              'Content-Type': 'application/json',
+              'Authorization': 'token ' + pat,
+            },
+            body: JSON.stringify(putBody),
+          });
+
+          if (!uploadRes.ok) {
+            const err = await uploadRes.json().catch(() => ({}));
+            throw new Error(rep.title + ' 업로드 실패: ' + (err.message || uploadRes.statusText));
+          }
+
+          newManifestItems.push({
+            id: rep.id,
+            title: rep.title,
+            category: rep.category,
+            date: rep.date,
+            summary: rep.summary,
+            tags: rep.tags || ['석유화학', '시황'],
+            author: rep.author || '석유화학시황팀',
+            filePath: './' + filePath,
+          });
+        }
+
+        // 3. Update reports.json on GitHub
+        if (statusEl) statusEl.innerText = '중앙 목록(reports.json) 업데이트 중...';
+        const existingKeys = new Set(newManifestItems.map(m => m.title + '___' + m.date));
+        const mergedManifest = [...newManifestItems, ...currentManifest.filter(m => !existingKeys.has(m.title + '___' + m.date))];
+        const manifestBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(mergedManifest, null, 2))));
+
+        const mPutBody = {
+          message: '[Reports Manifest] Synchronized ' + mergedManifest.length + ' reports (reports.json)',
+          content: manifestBase64,
+          branch: 'main',
+        };
+        if (manifestSha) mPutBody.sha = manifestSha;
+
+        await fetch('https://api.github.com/repos/jduck02/petro-report/contents/reports.json', {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json',
+            'Authorization': 'token ' + pat,
+          },
+          body: JSON.stringify(mPutBody),
+        });
+
+        // 4. Update memory and clear customs
+        remoteReports = mergedManifest;
+        localStorage.removeItem(STORAGE_KEY);
+        closeSyncModal();
+        updateCounts();
+        renderReports();
+        checkLocalReports();
+        showToast('성공! 로컬 보고서가 GitHub에 영구 동기화되었습니다. 이제 모든 디바이스에서 최신 보고서를 확인할 수 있습니다.');
+      } catch(err) {
+        if (statusEl) statusEl.innerText = '오류: ' + err.message;
+        showToast('동기화 실패: ' + err.message);
+      } finally {
+        if (execBtn) execBtn.disabled = false;
+      }
+    }
+
     async function saveReport(pushToGithub) {
       const html = document.getElementById('htmlCodeInput').value;
       const title = document.getElementById('reportTitleInput').value.trim();
@@ -800,19 +1434,22 @@
         isCustom: true,
       };
 
-      // 1. Save to localStorage
-      const customs = getCustomReports();
-      customs.unshift(newReport);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(customs));
-
-      // 2. Push to GitHub if requested
+      // 1. Push to GitHub if requested
       if (pushToGithub) {
-        const pat = document.getElementById('ghPatInput').value.trim();
+        let pat = document.getElementById('ghPatInput').value.trim();
+        if (!pat) pat = localStorage.getItem(PAT_STORAGE_KEY) || '';
         if (!pat) {
-          showToast('GitHub에 커밋하려면 Token (PAT)을 입력해주세요.');
-          return;
+          pat = prompt('모든 기기(스마트폰, 다른 PC)에 실시간으로 공유 발행하려면 작성자 권한(GitHub 토큰)이 필요합니다.
+관리자로부터 받은 [팀원 작성용 링크]로 접속하셨거나 토큰이 있다면 입력해주세요:');
+          if (!pat) {
+            showToast('취소되었습니다. 이 기기 로컬에 임시 저장합니다.');
+            saveReport(false);
+            return;
+          }
+          pat = pat.trim();
+          localStorage.setItem(PAT_STORAGE_KEY, pat);
+          if (document.getElementById('ghPatInput')) document.getElementById('ghPatInput').value = pat;
         }
-        localStorage.setItem(PAT_STORAGE_KEY, pat);
 
         showToast('GitHub 저장소로 커밋 중...');
         try {
@@ -820,43 +1457,144 @@
           const filePath = 'reports/' + category + '/' + fileName;
           const contentBase64 = btoa(unescape(encodeURIComponent(html)));
 
-          const res = await fetch('https://api.github.com/repos/Jduck02/petro-report/contents/' + filePath, {
+          // Check if file already exists
+          let fileSha = null;
+          const fRes = await fetch('https://api.github.com/repos/jduck02/petro-report/contents/' + filePath + '?ref=main', {
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              'Authorization': 'token ' + pat,
+            }
+          });
+          if (fRes.ok) {
+            const fData = await fRes.json();
+            fileSha = fData.sha;
+          }
+
+          const putBody = {
+            message: '[Petrochem Report] ' + title + ' (' + date + ')',
+            content: contentBase64,
+            branch: 'main',
+          };
+          if (fileSha) putBody.sha = fileSha;
+
+          const res = await fetch('https://api.github.com/repos/jduck02/petro-report/contents/' + filePath, {
             method: 'PUT',
             headers: {
               'Accept': 'application/vnd.github.v3+json',
               'Content-Type': 'application/json',
               'Authorization': 'token ' + pat,
             },
-            body: JSON.stringify({
-              message: '[Petrochem Report] ' + title + ' (' + date + ')',
-              content: contentBase64,
-              branch: 'main',
-            }),
+            body: JSON.stringify(putBody),
           });
 
-          if (res.ok) {
-            showToast('GitHub 커밋 및 보관소 저장 완료! (' + filePath + ')');
-          } else {
+          if (!res.ok) {
             const err = await res.json().catch(() => ({}));
-            showToast('로컬 저장은 완료되었으나 GitHub 커밋 실패: ' + (err.message || res.statusText));
+            showToast('GitHub 파일 커밋 실패: ' + (err.message || res.statusText));
+            // Save to localStorage as fallback
+            const customs = getCustomReports();
+            customs.unshift(newReport);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(customs));
+            checkLocalReports();
+            switchNav('archive');
+            return;
           }
+
+          // Also update reports.json manifest so EVERY device sees it!
+          try {
+            let manifest = [];
+            let manifestSha = null;
+            const mRes = await fetch('https://api.github.com/repos/jduck02/petro-report/contents/reports.json?ref=main', {
+              headers: {
+                'Accept': 'application/vnd.github.v3+json',
+                'Authorization': 'token ' + pat,
+              }
+            });
+            if (mRes.ok) {
+              const mData = await mRes.json();
+              manifestSha = mData.sha;
+              try {
+                const raw = decodeURIComponent(escape(atob(mData.content.replace(/s/g, ''))));
+                manifest = JSON.parse(raw);
+              } catch(e) { manifest = []; }
+            } else {
+              manifest = [...INITIAL_REPORTS];
+            }
+
+            const item = {
+              id: newReport.id,
+              title: newReport.title,
+              category: newReport.category,
+              date: newReport.date,
+              summary: newReport.summary,
+              tags: newReport.tags,
+              author: newReport.author,
+              filePath: './' + filePath,
+            };
+
+            const updatedManifest = [item, ...manifest.filter(m => m.id !== item.id && (m.title + '___' + m.date) !== (item.title + '___' + item.date))];
+            const mBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(updatedManifest, null, 2))));
+
+            const mPutBody = {
+              message: '[Reports Index] Add ' + title + ' (' + date + ') to reports.json',
+              content: mBase64,
+              branch: 'main',
+            };
+            if (manifestSha) mPutBody.sha = manifestSha;
+
+            await fetch('https://api.github.com/repos/jduck02/petro-report/contents/reports.json', {
+              method: 'PUT',
+              headers: {
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json',
+                'Authorization': 'token ' + pat,
+              },
+              body: JSON.stringify(mPutBody)
+            });
+
+            remoteReports = updatedManifest;
+            // Since it's committed to GitHub, remove from local customs to avoid duplicate
+            const updatedCustoms = getCustomReports().filter(c => c.id !== newReport.id && (c.title + '___' + c.date) !== (newReport.title + '___' + newReport.date));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCustoms));
+          } catch(manifestErr) {
+            console.error('reports.json update error:', manifestErr);
+          }
+
+          showToast('GitHub 커밋 및 중앙 목록(reports.json) 갱신 완료! 모든 기기에서 즉시 공유됩니다.');
         } catch(e) {
           showToast('GitHub 통신 오류: ' + e.message);
+          // Save locally
+          const customs = getCustomReports();
+          customs.unshift(newReport);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(customs));
         }
       } else {
-        showToast('보고서가 보관소에 성공적으로 저장되었습니다!');
+        // Local only save
+        const customs = getCustomReports();
+        customs.unshift(newReport);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(customs));
+        showToast('로컬 브라우저에 임시 저장되었습니다. 스마트폰 등 다른 기기에서도 공유하려면 [☁️ GitHub 동기화]를 진행해주세요!');
       }
 
+      checkLocalReports();
+      updateCounts();
+      renderReports();
       switchNav('archive');
     }
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Escape') {
+        closeModal();
+        closeSyncModal();
+      }
     });
 
-    window.onload = () => {
+    window.onload = async () => {
+      checkUrlAuth();
+      applyTheme(currentTheme);
       updateCounts();
       renderReports();
+      checkLocalReports();
+      await fetchRemoteReports();
     };
   </script>
 </body>
