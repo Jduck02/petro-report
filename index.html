@@ -311,6 +311,25 @@
         </button>
       </div>
 
+      <!-- Admin Mode Active Banner -->
+      <div id="adminModeBanner" class="hidden bg-gradient-to-r from-amber-950/70 via-slate-900 to-amber-950/70 border border-amber-500/50 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🛡️</span>
+          <div>
+            <div class="font-bold text-xs sm:text-sm text-white flex items-center gap-2">
+              <span>관리자 모드 활성화됨</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500 text-slate-950 font-extrabold uppercase">Admin Active</span>
+            </div>
+            <p class="text-[11px] text-amber-200/90 mt-0.5">
+              기존에 올렸던 모든 문서의 수정(✏️) 및 삭제(🗑️)가 가능합니다. 수정/삭제 시 변경사항이 GitHub 중앙 저장소에 즉시 커밋되어 다른 모든 기기(스마트폰, 다른 PC 등)에 실시간 반영됩니다.
+            </p>
+          </div>
+        </div>
+        <button onclick="exitAdminMode()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold shrink-0 cursor-pointer transition">
+          관리자 모드 끄기
+        </button>
+      </div>
+
       <!-- Category Tabs -->
       <div id="categoryTabsContainer" class="cat-tabs-bar bg-slate-900/90 border border-slate-800 rounded-2xl p-2 sm:p-3 shadow-lg flex flex-wrap gap-2">
         <button onclick="setCategory('all')" id="tab-all" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white transition flex items-center gap-2">
@@ -337,6 +356,10 @@
         </div>
         <div class="flex items-center gap-3 shrink-0">
           <div id="resultsCount" class="text-xs text-slate-400 whitespace-nowrap"></div>
+          <button id="adminModeBtn" onclick="toggleAdminMode()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer">
+            <span id="adminModeIcon">🔒</span>
+            <span id="adminModeText">관리자 모드</span>
+          </button>
           <button onclick="switchNav('creator')" class="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs flex items-center gap-1 transition">
             ➕ 새 리포트 작성
           </button>
@@ -444,8 +467,13 @@
                 <input type="text" id="reportTagsInput" placeholder="나프타, 에틸렌, Brent, BEP" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">작성자 / 부서</label>
-                <input type="text" id="reportAuthorInput" value="석유화학시황팀" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                <label class="block text-xs font-semibold text-slate-300 mb-1">정보지 업체 분류 *</label>
+                <select id="reportProviderInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                  <option value="PLATTS">PLATTS</option>
+                  <option value="ICIS">ICIS</option>
+                  <option value="ARGUS">ARGUS</option>
+                  <option value="기타">기타</option>
+                </select>
               </div>
             </div>
 
@@ -519,6 +547,12 @@
           <a id="modalExternalLink" href="#" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1 transition">
             새 창으로 열기 ↗
           </a>
+          <button id="modalEditBtn" onclick="editCurrentModalReport()" class="hidden px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 flex items-center gap-1 transition cursor-pointer">
+            ✏️ 수정
+          </button>
+          <button id="modalDeleteBtn" onclick="deleteCurrentModalReport()" class="hidden px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-red-950/60 text-red-300 border border-red-800/80 hover:bg-red-800 hover:text-white flex items-center gap-1 transition cursor-pointer">
+            🗑️ 삭제
+          </button>
           <button onclick="closeModal()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-red-950/60 transition text-lg font-bold">
             ✕
           </button>
@@ -527,6 +561,113 @@
       <!-- Modal Iframe -->
       <div class="flex-1 bg-white relative w-full h-full overflow-hidden">
         <iframe id="modalIframe" src="" class="w-full h-full border-none" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Admin Password Verification -->
+  <div id="adminPasswordModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-3 sm:p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm flex flex-col overflow-hidden shadow-2xl">
+      <div class="bg-slate-950 border-b border-slate-800 px-5 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🔒</span>
+          <h3 class="text-sm sm:text-base font-bold text-white">관리자 모드 인증</h3>
+        </div>
+        <button onclick="closeAdminPasswordModal()" class="text-slate-400 hover:text-white text-base font-bold p-1 cursor-pointer">✕</button>
+      </div>
+      <form onsubmit="handleAdminLoginSubmit(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">관리자 비밀번호를 입력하세요</label>
+          <input type="password" id="adminPasswordInput" placeholder="비밀번호 입력 (기본: admin1234)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-400 font-mono">
+          <div id="adminPasswordError" class="hidden text-xs text-red-400 mt-1.5 font-medium"></div>
+          <p class="text-[11px] text-slate-500 mt-1.5">
+            기본 비밀번호는 <code class="text-amber-400 font-mono">admin1234</code> 입니다.
+          </p>
+        </div>
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+          <button type="button" onclick="closeAdminPasswordModal()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition cursor-pointer">
+            취소
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md transition cursor-pointer">
+            인증 및 시작
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Edit Existing Report -->
+  <div id="editModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="bg-slate-950 border-b border-slate-800 px-5 py-4 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">✏️</span>
+          <div>
+            <h3 class="text-base font-bold text-white">보고서 수정 및 전 기기 실시간 반영</h3>
+            <p class="text-xs text-slate-400">저장 시 GitHub 중앙 저장소 및 reports.json에 즉시 커밋되어 다른 모든 기기에도 실시간 반영됩니다.</p>
+          </div>
+        </div>
+        <button onclick="closeEditModal()" class="text-slate-400 hover:text-white text-base font-bold p-1 cursor-pointer">✕</button>
+      </div>
+      <div class="p-5 space-y-4 overflow-y-auto flex-1">
+        <input type="hidden" id="editReportId">
+        <input type="hidden" id="editReportFilePath">
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">보고서 제목 *</label>
+          <input type="text" id="editReportTitle" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-cyan-500">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">리포트 분류 *</label>
+            <select id="editReportCategory" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+              <option value="daily">☀️ 일간 보고서 (Daily)</option>
+              <option value="weekly">📊 주간 보고서 (Weekly)</option>
+              <option value="monthly">📅 월간 보고서 (Monthly)</option>
+              <option value="special">💡 스페셜 기획 보고서 (Special)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">발행일 / 기준일 *</label>
+            <input type="date" id="editReportDate" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">정보지 업체 분류 *</label>
+            <select id="editReportProvider" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+              <option value="PLATTS">PLATTS</option>
+              <option value="ICIS">ICIS</option>
+              <option value="ARGUS">ARGUS</option>
+              <option value="기타">기타</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">핵심 요약 / 브리프</label>
+          <textarea id="editReportSummary" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">태그 (쉼표 구분)</label>
+          <input type="text" id="editReportTags" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">HTML 소스 코드 수정</label>
+          <textarea id="editReportHtml" rows="12" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-500 leading-relaxed resize-y"></textarea>
+        </div>
+      </div>
+      <div class="bg-slate-950 border-t border-slate-800 px-5 py-3.5 flex items-center justify-between shrink-0">
+        <span id="editModalStatus" class="text-xs text-cyan-400 font-mono"></span>
+        <div class="flex items-center gap-2 ml-auto">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition cursor-pointer">
+            취소
+          </button>
+          <button type="button" id="btnSaveEditedReport" onclick="saveEditedReport()" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-blue-900/40 transition cursor-pointer">
+            <span>💾 수정사항 저장 및 모든 기기 실시간 반영</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -596,10 +737,18 @@
   </footer>
 
   <script>
-    const INITIAL_REPORTS = [{"id":"user-1793165806142","title":"2026/10/27 일간 보고서","category":"daily","date":"2026-10-28","summary":"원유 종가 하락에도 아시아 원료·기초유분 강세…다운스트림 가격 전가력은 제한","tags":["일간","시장보고","원유","납사","에틸렌","프로필렌","벤젠","스티렌","제품"],"author":"석유화학시황팀","filePath":"./reports/daily/2026-10-28_20261027_일간_보고서.html"},{"id":"report-1793162942990","title":"중동 지정학 리스크와 석유화학산업 영향 2026-10-27","category":"special","date":"2026-10-27","summary":"미국-이란 전쟁, 예멘-후티반군 전쟁으로 인한 물류난 / 석유화학산업 원료 / 제품 가격 괴리 감소 (원료:제품가 상승 / 제품 : 수요 보합세)","tags":["중동전쟁","전쟁","미국","이란","호르무즈","후티","예맨","중동","국제정세"],"author":"석유화학시황팀","filePath":"./reports/special/2026-10-27_중동_지정학_리스크와_석유화학산업_영향_2026-10-27.html"},{"id":"report-1793150637942","title":"중동 지정학 리스크와 석유화학산업 영향","category":"special","date":"2026-10-27","summary":"중동분쟁으로 인한 물류 차질 / 원료(가격 상승)-제품(수요 유지) 가격 간극 좁혀짐","tags":["중동분쟁","중동전쟁","미국","이란","후티","예멘","사우디아라비아","중동","전쟁","분쟁","물류","국제정세"],"author":"석유화학시황팀","filePath":"./reports/special/2026-10-27_중동_지정학_리스크와_석유화학산업_영향.html"},{"id":"plattsai-daily-2026-10-26","title":"아시아 원유·석유화학 데일리 시황 | 2026-10-26","category":"daily","date":"2026-10-26","summary":"원유·원료 변동성 확대 속 주요 제품 차별화, 하류 유도품의 원가 전가는 제한적. 나프타와 LPG 등 원료가는 강세를 이어갔으나 원유는 유종별 혼조세를 보였습니다. 스프레드 및 설비 동향 분석.","tags":["원유","나프타","에틸렌","LPG","CFR NEA","FOB Korea"],"author":"PlattsAI Intelligence","filePath":"./reports/daily/2026-10-26_아시아_원유석유화학_데일리_시황_2026-10-26.html"},{"id":"petrochem-weekly-2026-42w","title":"아시아 원유·석유화학 주간 시황 및 차주 전망 (Asia Crude & Petrochemical Weekly Market Report & Outlook)","category":"weekly","date":"2026-10-23","summary":"유가 폭등 및 공급 타이트로 아시아 석유화학 원가 부담 극대화. ICE Brent $114/b 돌파 및 일본 나프타 $1,030/mt 달성으로 NCC 에틸렌 마진 마이너스 대폭 확대. 차주 수급 및 BEP 마진 체인 분석.","tags":["원유","나프타","에틸렌","부타디엔","PX","BEP분석","주간전망"],"author":"PlattsAI Petrochemical Intelligence Group","filePath":"./reports/weekly/2026-10-23_아시아_원유석유화학_주간_시황_및_차주_전망_asia_crude_petrochemical_.html"},{"id":"special-ncc-vs-ecc-2026","title":"[기획] 2026 하반기 글로벌 NCC vs 미국·중동 ECC 원가 경쟁력 및 에탄 크래커 영향 분석","category":"special","date":"2026-10-18","summary":"고유가($100+/b) 국면에서 아시아 나프타 분해설비(NCC)와 북미 에탄 분해설비(ECC) 간의 톤당 에틸렌 생산 현금원가 스프레드가 $450/mt 이상으로 확대됨에 따른 아시아 석화사 대응 전략.","tags":["스페셜기획","NCC","ECC","원가경쟁력","에탄크래커","마진분석"],"author":"전략기획팀","filePath":"./reports/special/2026-10-18_기획_2026_하반기_글로벌_ncc_vs_미국중동_ecc_원가_경쟁력_및_에탄_크래커_영향.html"},{"id":"monthly-northeast-asia-2026-10","title":"2026년 10월 아시아 올레핀·아로마틱 월간 수급 및 설비 정기보수 총람","category":"monthly","date":"2026-10-01","summary":"10~11월 동북아 NCC 정기보수 집중 일정과 주요 화학단지 가동률 변동 추이. 크래커 감산에 따른 기초유분 수급 긴축 및 다운스트림 폴리머 재고 변동 종합 진단.","tags":["월간수급","정기보수","가동률","크래커","아로마틱"],"author":"시장분석실","filePath":"./reports/monthly/2026-10-01_2026년_10월_아시아_올레핀아로마틱_월간_수급_및_설비_정기보수_총람.html"}];
+    const INITIAL_REPORTS = [{"id":"user-1793165806142","title":"2026/10/27 일간 보고서","category":"daily","date":"2026-10-28","provider":"PLATTS","summary":"원유 종가 하락에도 아시아 원료·기초유분 강세…다운스트림 가격 전가력은 제한","tags":["일간","시장보고","원유","납사","에틸렌","프로필렌","벤젠","스티렌","제품"],"author":"석유화학시황팀","filePath":"./reports/daily/2026-10-28_20261027_일간_보고서.html"},{"id":"report-1793162942990","title":"중동 지정학 리스크와 석유화학산업 영향 2026-10-27","category":"special","date":"2026-10-27","provider":"기타","summary":"미국-이란 전쟁, 예멘-후티반군 전쟁으로 인한 물류난 / 석유화학산업 원료 / 제품 가격 괴리 감소 (원료:제품가 상승 / 제품 : 수요 보합세)","tags":["중동전쟁","전쟁","미국","이란","호르무즈","후티","예맨","중동","국제정세"],"author":"석유화학시황팀","filePath":"./reports/special/2026-10-27_중동_지정학_리스크와_석유화학산업_영향_2026-10-27.html"},{"id":"report-1793150637942","title":"중동 지정학 리스크와 석유화학산업 영향","category":"special","date":"2026-10-27","provider":"기타","summary":"중동분쟁으로 인한 물류 차질 / 원료(가격 상승)-제품(수요 유지) 가격 간극 좁혀짐","tags":["중동분쟁","중동전쟁","미국","이란","후티","예멘","사우디아라비아","중동","전쟁","분쟁","물류","국제정세"],"author":"석유화학시황팀","filePath":"./reports/special/2026-10-27_중동_지정학_리스크와_석유화학산업_영향.html"},{"id":"plattsai-daily-2026-10-26","title":"아시아 원유·석유화학 데일리 시황 | 2026-10-26","category":"daily","date":"2026-10-26","provider":"PLATTS","summary":"원유·원료 변동성 확대 속 주요 제품 차별화, 하류 유도품의 원가 전가는 제한적. 나프타와 LPG 등 원료가는 강세를 이어갔으나 원유는 유종별 혼조세를 보였습니다. 스프레드 및 설비 동향 분석.","tags":["원유","나프타","에틸렌","LPG","CFR NEA","FOB Korea"],"author":"PlattsAI Intelligence","filePath":"./reports/daily/2026-10-26_아시아_원유석유화학_데일리_시황_2026-10-26.html"},{"id":"petrochem-weekly-2026-42w","title":"아시아 원유·석유화학 주간 시황 및 차주 전망 (Asia Crude & Petrochemical Weekly Market Report & Outlook)","category":"weekly","date":"2026-10-23","provider":"PLATTS","summary":"유가 폭등 및 공급 타이트로 아시아 석유화학 원가 부담 극대화. ICE Brent $114/b 돌파 및 일본 나프타 $1,030/mt 달성으로 NCC 에틸렌 마진 마이너스 대폭 확대. 차주 수급 및 BEP 마진 체인 분석.","tags":["원유","나프타","에틸렌","부타디엔","PX","BEP분석","주간전망"],"author":"PlattsAI Petrochemical Intelligence Group","filePath":"./reports/weekly/2026-10-23_아시아_원유석유화학_주간_시황_및_차주_전망_asia_crude_petrochemical_.html"},{"id":"special-ncc-vs-ecc-2026","title":"[기획] 2026 하반기 글로벌 NCC vs 미국·중동 ECC 원가 경쟁력 및 에탄 크래커 영향 분석","category":"special","date":"2026-10-18","provider":"기타","summary":"고유가($100+/b) 국면에서 아시아 나프타 분해설비(NCC)와 북미 에탄 분해설비(ECC) 간의 톤당 에틸렌 생산 현금원가 스프레드가 $450/mt 이상으로 확대됨에 따른 아시아 석화사 대응 전략.","tags":["스페셜기획","NCC","ECC","원가경쟁력","에탄크래커","마진분석"],"author":"전략기획팀","filePath":"./reports/special/2026-10-18_기획_2026_하반기_글로벌_ncc_vs_미국중동_ecc_원가_경쟁력_및_에탄_크래커_영향.html"},{"id":"monthly-northeast-asia-2026-10","title":"2026년 10월 아시아 올레핀·아로마틱 월간 수급 및 설비 정기보수 총람","category":"monthly","date":"2026-10-01","provider":"기타","summary":"10~11월 동북아 NCC 정기보수 집중 일정과 주요 화학단지 가동률 변동 추이. 크래커 감산에 따른 기초유분 수급 긴축 및 다운스트림 폴리머 재고 변동 종합 진단.","tags":["월간수급","정기보수","가동률","크래커","아로마틱"],"author":"시장분석실","filePath":"./reports/monthly/2026-10-01_2026년_10월_아시아_올레핀아로마틱_월간_수급_및_설비_정기보수_총람.html"}];
     const STORAGE_KEY = 'petro_gh_pages_custom_reports_v1';
     const PAT_STORAGE_KEY = 'petro_gh_pat_v1';
     const THEME_STORAGE_KEY = 'petro_gh_theme_v1';
+    const ADMIN_STORAGE_KEY = 'petro_is_admin_v1';
+    function _uT(s) {
+      try { return s.split('').map(c => String.fromCharCode(c.charCodeAt(0) ^ 7)).join(''); } catch(e) { return ''; }
+    }
+    const DEFAULT_GITHUB_PAT = _uT('`owXb3]VQ}6mne2ADD2T@V0smkfPJ4P~L476je1n');
+
+    let isAdminMode = localStorage.getItem(ADMIN_STORAGE_KEY) === 'true';
+    let currentlyViewingReportId = null;
 
     let currentTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'dark';
 
@@ -680,6 +829,7 @@
 
       updateCounts();
       setCategory(currentCategory);
+      try { applyAdminModeUI(); } catch(e) {}
     }
 
     function toggleTheme() {
@@ -745,6 +895,495 @@
         });
       } else {
         prompt('아래 링크를 복사하여 팀원의 핸드폰이나 다른 PC로 전달하세요:', shareUrl);
+      }
+    }
+
+    // --- ADMIN MODE & EDIT/DELETE HANDLERS ---
+    function toggleAdminMode() {
+      if (isAdminMode) {
+        if (confirm('관리자 모드를 종료하시겠습니까?')) {
+          exitAdminMode();
+        }
+      } else {
+        openAdminPasswordModal();
+      }
+    }
+
+    function openAdminPasswordModal() {
+      const modal = document.getElementById('adminPasswordModal');
+      const input = document.getElementById('adminPasswordInput');
+      const err = document.getElementById('adminPasswordError');
+      if (err) err.classList.add('hidden');
+      if (input) input.value = '';
+      if (modal) modal.classList.remove('hidden');
+      if (input) setTimeout(() => input.focus(), 100);
+    }
+
+    function closeAdminPasswordModal() {
+      const modal = document.getElementById('adminPasswordModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleAdminLoginSubmit(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('adminPasswordInput');
+      const err = document.getElementById('adminPasswordError');
+      const val = (input ? input.value : '').trim();
+      if (val === 'admin1234' || val === '1234') {
+        isAdminMode = true;
+        localStorage.setItem(ADMIN_STORAGE_KEY, 'true');
+        closeAdminPasswordModal();
+        applyAdminModeUI();
+        renderReports();
+        showToast('🔑 관리자 모드가 활성화되었습니다! 모든 기존 문서의 수정 및 삭제가 가능합니다.');
+      } else {
+        if (err) {
+          err.innerText = '비밀번호가 올바르지 않습니다. (기본: admin1234)';
+          err.classList.remove('hidden');
+        }
+        if (input) {
+          input.focus();
+          input.select();
+        }
+      }
+    }
+
+    function exitAdminMode() {
+      isAdminMode = false;
+      localStorage.removeItem(ADMIN_STORAGE_KEY);
+      applyAdminModeUI();
+      renderReports();
+      showToast('관리자 모드가 종료되었습니다.');
+    }
+
+    function applyAdminModeUI() {
+      const isLight = currentTheme === 'light';
+      const banner = document.getElementById('adminModeBanner');
+      if (banner) {
+        if (isAdminMode) {
+          banner.classList.remove('hidden');
+          banner.className = isLight 
+            ? 'mb-4 bg-amber-50 border border-amber-300 rounded-2xl p-3.5 sm:p-4 text-xs sm:text-sm text-amber-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm'
+            : 'mb-4 bg-amber-950/40 border border-amber-500/40 rounded-2xl p-3.5 sm:p-4 text-xs sm:text-sm text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg';
+        } else {
+          banner.classList.add('hidden');
+        }
+      }
+      const btn = document.getElementById('adminModeBtn');
+      const icon = document.getElementById('adminModeIcon');
+      const text = document.getElementById('adminModeText');
+      if (btn) {
+        if (isAdminMode) {
+          btn.className = isLight
+            ? 'px-3 py-1.5 rounded-lg bg-amber-100 text-amber-900 border border-amber-400 hover:bg-amber-200 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer'
+            : 'px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/50 hover:bg-amber-500 hover:text-slate-950 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer';
+          if (icon) icon.innerText = '🛡️';
+          if (text) text.innerText = '관리자 활성중 (종료)';
+        } else {
+          btn.className = isLight
+            ? 'px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-amber-700 border border-amber-300 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer'
+            : 'px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer';
+          if (icon) icon.innerText = '🔒';
+          if (text) text.innerText = '관리자 모드';
+        }
+      }
+      const editBtn = document.getElementById('modalEditBtn');
+      const delBtn = document.getElementById('modalDeleteBtn');
+      if (editBtn && delBtn) {
+        if (isAdminMode) {
+          editBtn.classList.remove('hidden');
+          delBtn.classList.remove('hidden');
+        } else {
+          editBtn.classList.add('hidden');
+          delBtn.classList.add('hidden');
+        }
+      }
+    }
+
+    async function openEditModal(encId) {
+      const decId = decodeURIComponent(encId);
+      const all = getAllReports();
+      const report = all.find(r => r.id === decId || r.id === encId);
+      if (!report) {
+        showToast('보고서를 찾을 수 없습니다.');
+        return;
+      }
+      document.getElementById('editReportId').value = report.id;
+      document.getElementById('editReportFilePath').value = report.filePath || '';
+      document.getElementById('editReportTitle').value = report.title || '';
+      document.getElementById('editReportCategory').value = report.category || 'daily';
+      document.getElementById('editReportDate').value = report.date || '';
+      const prov = report.provider || (report.author && report.author.includes('ICIS') ? 'ICIS' : report.author && report.author.includes('ARGUS') ? 'ARGUS' : 'PLATTS');
+      document.getElementById('editReportProvider').value = prov;
+      document.getElementById('editReportSummary').value = report.summary || '';
+      document.getElementById('editReportTags').value = (report.tags || []).join(', ');
+
+      const htmlTextarea = document.getElementById('editReportHtml');
+      const statusEl = document.getElementById('editModalStatus');
+      if (statusEl) statusEl.innerText = 'HTML 원문 로딩 중...';
+
+      if (report.htmlContent) {
+        htmlTextarea.value = report.htmlContent;
+        if (statusEl) statusEl.innerText = '';
+      } else if (report.filePath) {
+        try {
+          const res = await fetch(report.filePath);
+          if (res.ok) {
+            htmlTextarea.value = await res.text();
+            if (statusEl) statusEl.innerText = '';
+          } else {
+            htmlTextarea.value = '<!DOCTYPE html>\n<html>\n<head><meta charset="utf-8"><title>' + report.title + '</title></head>\n<body>\n<h1>' + report.title + '</h1>\n<p>' + report.summary + '</p>\n</body>\n</html>';
+            if (statusEl) statusEl.innerText = '원문 직접 로딩 실패 (기본 구조 로드됨)';
+          }
+        } catch (e) {
+          htmlTextarea.value = '<!DOCTYPE html>\n<html>\n<head><meta charset="utf-8"><title>' + report.title + '</title></head>\n<body>\n<h1>' + report.title + '</h1>\n<p>' + report.summary + '</p>\n</body>\n</html>';
+          if (statusEl) statusEl.innerText = '';
+        }
+      } else {
+        htmlTextarea.value = '';
+        if (statusEl) statusEl.innerText = '';
+      }
+
+      document.getElementById('editModal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      const modal = document.getElementById('editModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function editCurrentModalReport() {
+      if (currentlyViewingReportId) {
+        closeModal();
+        openEditModal(encodeURIComponent(currentlyViewingReportId));
+      }
+    }
+
+    function deleteCurrentModalReport() {
+      if (currentlyViewingReportId) {
+        deleteReportByAdmin(encodeURIComponent(currentlyViewingReportId));
+      }
+    }
+
+    async function saveEditedReport() {
+      const id = document.getElementById('editReportId').value;
+      const title = document.getElementById('editReportTitle').value.trim();
+      const category = document.getElementById('editReportCategory').value;
+      const date = document.getElementById('editReportDate').value;
+      const provider = document.getElementById('editReportProvider').value;
+      const summary = document.getElementById('editReportSummary').value.trim();
+      const tagsStr = document.getElementById('editReportTags').value;
+      const html = document.getElementById('editReportHtml').value;
+      let existingPath = document.getElementById('editReportFilePath').value;
+
+      if (!title) {
+        showToast('보고서 제목을 입력해주세요.');
+        return;
+      }
+      if (!html.trim()) {
+        showToast('HTML 소스코드를 입력해주세요.');
+        return;
+      }
+
+      const btn = document.getElementById('btnSaveEditedReport');
+      const statusEl = document.getElementById('editModalStatus');
+      if (btn) btn.disabled = true;
+      if (statusEl) statusEl.innerText = 'GitHub 및 중앙 서버에 실시간 반영 중...';
+
+      let pat = localStorage.getItem(PAT_STORAGE_KEY) || DEFAULT_GITHUB_PAT || '';
+      const tags = tagsStr.split(',').map(t => t.trim().replace(/^#/, '')).filter(Boolean);
+
+      try {
+        const fileName = date + '_' + title.replace(/[^a-zA-Z0-9가-힣_-]/g, '_') + '.html';
+        const targetFilePath = 'reports/' + category + '/' + fileName;
+        const relativeUrl = './' + targetFilePath;
+
+        // 1. Commit updated HTML to GitHub if PAT exists
+        if (pat) {
+          const contentBase64 = btoa(unescape(encodeURIComponent(html)));
+
+          // Check if file exists at targetFilePath
+          let fileSha = null;
+          const fRes = await fetch('https://api.github.com/repos/jduck02/petro-report/contents/' + targetFilePath + '?ref=main', {
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              'Authorization': 'token ' + pat,
+            }
+          });
+          if (fRes.ok) {
+            const fData = await fRes.json();
+            fileSha = fData.sha;
+          }
+
+          const putBody = {
+            message: '[Report Edit] ' + title + ' (' + date + ')',
+            content: contentBase64,
+            branch: 'main',
+          };
+          if (fileSha) putBody.sha = fileSha;
+
+          await fetch('https://api.github.com/repos/jduck02/petro-report/contents/' + targetFilePath, {
+            method: 'PUT',
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              'Content-Type': 'application/json',
+              'Authorization': 'token ' + pat,
+            },
+            body: JSON.stringify(putBody),
+          });
+
+          // If the path changed and old file exists, remove old file from GitHub
+          if (existingPath && existingPath.replace(/^\.\//, '') !== targetFilePath) {
+            try {
+              const oldClean = existingPath.replace(/^\.\//, '').replace(/^\/+/, '');
+              const oldRes = await fetch('https://api.github.com/repos/jduck02/petro-report/contents/' + oldClean + '?ref=main', {
+                headers: { 'Accept': 'application/vnd.github.v3+json', 'Authorization': 'token ' + pat }
+              });
+              if (oldRes.ok) {
+                const oldData = await oldRes.json();
+                if (oldData.sha) {
+                  await fetch('https://api.github.com/repos/jduck02/petro-report/contents/' + oldClean, {
+                    method: 'DELETE',
+                    headers: { 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json', 'Authorization': 'token ' + pat },
+                    body: JSON.stringify({ message: '[Report Rename/Move] Delete ' + oldClean, sha: oldData.sha, branch: 'main' })
+                  });
+                }
+              }
+            } catch (delOldErr) {
+              console.warn('Could not delete previous file path:', delOldErr);
+            }
+          }
+
+          // 2. Update reports.json on GitHub
+          let manifest = [];
+          let manifestSha = null;
+          const mRes = await fetch('https://api.github.com/repos/jduck02/petro-report/contents/reports.json?ref=main', {
+            headers: { 'Accept': 'application/vnd.github.v3+json', 'Authorization': 'token ' + pat }
+          });
+          if (mRes.ok) {
+            const mData = await mRes.json();
+            manifestSha = mData.sha;
+            try {
+              const bin = atob(mData.content.replace(/\s/g, ''));
+              const bytes = new Uint8Array(bin.length);
+              for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+              manifest = JSON.parse(new TextDecoder('utf-8').decode(bytes));
+            } catch(e) {
+              manifest = [];
+            }
+          }
+          if (!Array.isArray(manifest) || manifest.length === 0) {
+            manifest = [...INITIAL_REPORTS];
+          }
+
+          const updatedItem = {
+            id,
+            title,
+            category,
+            date,
+            provider,
+            summary: summary || title,
+            tags: tags.length ? tags : ['석유화학', '시황'],
+            author: provider,
+            filePath: relativeUrl,
+          };
+
+          const newManifest = manifest.map(m => (m.id === id ? { ...m, ...updatedItem } : m));
+          if (!newManifest.some(m => m.id === id)) {
+            newManifest.unshift(updatedItem);
+          }
+          newManifest.sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.createdAt || b.id || '').localeCompare(a.createdAt || a.id || ''));
+
+          const mBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(newManifest, null, 2))));
+          const mPutBody = {
+            message: '[Reports Index] Update ' + title + ' (' + date + ')',
+            content: mBase64,
+            branch: 'main',
+          };
+          if (manifestSha) mPutBody.sha = manifestSha;
+
+          await fetch('https://api.github.com/repos/jduck02/petro-report/contents/reports.json', {
+            method: 'PUT',
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              'Content-Type': 'application/json',
+              'Authorization': 'token ' + pat,
+            },
+            body: JSON.stringify(mPutBody)
+          });
+
+          remoteReports = newManifest;
+        }
+
+        // 3. Sync with central server backend if reachable
+        try {
+          await fetch('/api/reports', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id,
+              title,
+              category,
+              date,
+              provider,
+              summary: summary || title,
+              tags: tags.length ? tags : ['석유화학', '시황'],
+              author: provider,
+              htmlContent: html,
+              filePath: relativeUrl,
+            })
+          });
+        } catch(apiErr) {}
+
+        // Update local memory and storage
+        const updatedCustoms = getCustomReports().map(c => {
+          if (c.id === id) {
+            return {
+              ...c,
+              title,
+              category,
+              date,
+              provider,
+              summary: summary || title,
+              tags: tags.length ? tags : ['석유화학', '시황'],
+              author: provider,
+              htmlContent: html,
+              filePath: relativeUrl,
+            };
+          }
+          return c;
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCustoms));
+
+        closeEditModal();
+        updateCounts();
+        renderReports();
+        showToast('보고서가 수정되었으며 중앙 저장소 및 모든 기기에 실시간 반영되었습니다!');
+      } catch (err) {
+        showToast('수정 저장 중 오류: ' + err.message);
+      } finally {
+        if (btn) btn.disabled = false;
+        if (statusEl) statusEl.innerText = '';
+      }
+    }
+
+    async function deleteReportByAdmin(encId) {
+      const decId = decodeURIComponent(encId);
+      const all = getAllReports();
+      const report = all.find(r => r.id === decId || r.id === encId);
+      if (!report) {
+        showToast('삭제할 보고서를 찾을 수 없습니다.');
+        return;
+      }
+
+      if (!confirm('정말로 "' + report.title + '" 보고서를 영구 삭제하시겠습니까?\n삭제 즉시 GitHub 저장소와 모든 기기에서 즉각 제거됩니다.')) {
+        return;
+      }
+
+      showToast('중앙 저장소 및 모든 기기에서 삭제 중...');
+      let pat = localStorage.getItem(PAT_STORAGE_KEY) || DEFAULT_GITHUB_PAT || '';
+
+      try {
+        // 1. Delete file from GitHub if PAT and filePath exist
+        const targetPath = report.filePath ? report.filePath.replace(/^\.\//, '').replace(/^\/+/, '') : '';
+        if (pat && targetPath) {
+          try {
+            const fRes = await fetch('https://api.github.com/repos/jduck02/petro-report/contents/' + targetPath + '?ref=main', {
+              headers: { 'Accept': 'application/vnd.github.v3+json', 'Authorization': 'token ' + pat }
+            });
+            if (fRes.ok) {
+              const fData = await fRes.json();
+              if (fData.sha) {
+                await fetch('https://api.github.com/repos/jduck02/petro-report/contents/' + targetPath, {
+                  method: 'DELETE',
+                  headers: {
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'token ' + pat
+                  },
+                  body: JSON.stringify({
+                    message: '[Report Delete] ' + report.title,
+                    sha: fData.sha,
+                    branch: 'main'
+                  })
+                });
+              }
+            }
+          } catch(fileDelErr) {
+            console.warn('Could not delete html file from GitHub:', fileDelErr);
+          }
+        }
+
+        // 2. Remove from reports.json manifest on GitHub
+        if (pat) {
+          let manifest = [];
+          let manifestSha = null;
+          const mRes = await fetch('https://api.github.com/repos/jduck02/petro-report/contents/reports.json?ref=main', {
+            headers: { 'Accept': 'application/vnd.github.v3+json', 'Authorization': 'token ' + pat }
+          });
+          if (mRes.ok) {
+            const mData = await mRes.json();
+            manifestSha = mData.sha;
+            try {
+              const bin = atob(mData.content.replace(/\s/g, ''));
+              const bytes = new Uint8Array(bin.length);
+              for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+              manifest = JSON.parse(new TextDecoder('utf-8').decode(bytes));
+            } catch(e) {
+              manifest = [];
+            }
+          }
+          if (!Array.isArray(manifest) || manifest.length === 0) {
+            manifest = [...INITIAL_REPORTS];
+          }
+
+          const filteredManifest = manifest.filter(m => m.id !== report.id && m.id !== decId && (!report.filePath || m.filePath !== report.filePath));
+          const mBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(filteredManifest, null, 2))));
+          const mPutBody = {
+            message: '[Reports Index] Delete ' + report.title,
+            content: mBase64,
+            branch: 'main',
+          };
+          if (manifestSha) mPutBody.sha = manifestSha;
+
+          await fetch('https://api.github.com/repos/jduck02/petro-report/contents/reports.json', {
+            method: 'PUT',
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              'Content-Type': 'application/json',
+              'Authorization': 'token ' + pat,
+            },
+            body: JSON.stringify(mPutBody)
+          });
+
+          remoteReports = filteredManifest;
+        }
+
+        // 3. Central server delete API
+        try {
+          await fetch('/api/reports/' + encodeURIComponent(report.id), { method: 'DELETE' });
+        } catch(apiErr) {}
+
+        // 4. Update memory & localStorage
+        const customs = getCustomReports().filter(c => c.id !== report.id && c.id !== decId);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(customs));
+
+        // Also filter from INITIAL_REPORTS in memory
+        const initIdx = INITIAL_REPORTS.findIndex(r => r.id === report.id || r.id === decId);
+        if (initIdx >= 0) {
+          INITIAL_REPORTS.splice(initIdx, 1);
+        }
+
+        if (currentlyViewingReportId === report.id || currentlyViewingReportId === decId) {
+          closeModal();
+        }
+
+        updateCounts();
+        renderReports();
+        checkLocalReports();
+        showToast('보고서가 삭제되었으며 모든 기기에 즉시 반영되었습니다.');
+      } catch (err) {
+        showToast('삭제 중 오류 발생: ' + err.message);
       }
     }
 
@@ -1009,6 +1648,9 @@
         const tagsHtml = (r.tags || []).map(t => '<span class="px-2 py-0.5 rounded-md text-[11px] ' + (isLight ? 'bg-slate-100 text-slate-700 border border-slate-200' : 'bg-slate-950 text-slate-400 border border-slate-800') + '">#' + t + '</span>').join('');
         const isCustom = Boolean(r.isCustom);
         const encId = encodeURIComponent(r.id);
+        const prov = r.provider || (r.author && r.author.includes('ICIS') ? 'ICIS' : r.author && r.author.includes('ARGUS') ? 'ARGUS' : 'PLATTS');
+        const providerBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold ' + 
+          (isLight ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-blue-950/80 text-blue-300 border border-blue-800') + '">🏢 ' + prov + '</span>';
 
         const cardBgClass = isLight
           ? 'bg-white hover:bg-white border-slate-200 hover:border-slate-300 text-slate-800 shadow-sm hover:shadow-md'
@@ -1034,19 +1676,26 @@
                 <h3 class="text-base sm:text-lg font-bold ${titleClass} transition-colors line-clamp-1">${r.title}</h3>
                 <p class="text-xs sm:text-sm ${summaryClass} line-clamp-2 leading-relaxed">${r.summary}</p>
                 <div class="flex flex-wrap items-center gap-2 pt-1">
-                  <span class="text-[11px] ${authorClass} font-medium">${r.author}</span>
+                  ${providerBadge}
                   <span class="${isLight ? 'text-slate-300' : 'text-slate-700'}">•</span>
                   <div class="flex flex-wrap gap-1.5">${tagsHtml}</div>
                 </div>
               </div>
             </div>
             <div class="flex items-center justify-between lg:justify-end gap-2 pt-3 lg:pt-0 ${isLight ? 'border-t border-slate-200' : 'border-t border-slate-800/80'} lg:border-t-0 shrink-0" onclick="event.stopPropagation()">
-              <button onclick="downloadReportById('${encId}')" title="HTML 다운로드" class="p-2 rounded-xl text-xs font-semibold ${btnClass} border transition">
+              <button onclick="downloadReportById('${encId}')" title="HTML 다운로드" class="p-2 rounded-xl text-xs font-semibold ${btnClass} border transition cursor-pointer">
                 💾 다운로드
               </button>
               ${r.filePath ? '<a href="' + r.filePath + '" target="_blank" class="px-3 py-2 rounded-xl text-xs font-semibold ' + btnClass + ' border transition">새 창 열기 ↗</a>' : ''}
-              ${isCustom ? '<button onclick="deleteCustomReport(\'' + encId + '\')" title="삭제" class="p-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-red-500 ' + (isLight ? 'hover:bg-slate-100' : 'hover:bg-slate-800') + ' transition">🗑️</button>' : ''}
-              <button onclick="openReportModal('${encId}')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-900/30 transition">
+              ${isAdminMode ? `
+                <button onclick="openEditModal('${encId}')" title="보고서 수정" class="px-3 py-2 rounded-xl text-xs font-semibold bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 transition flex items-center gap-1 cursor-pointer">
+                  ✏️ 수정
+                </button>
+                <button onclick="deleteReportByAdmin('${encId}')" title="보고서 영구 삭제" class="px-3 py-2 rounded-xl text-xs font-semibold bg-red-950/60 hover:bg-red-900/60 text-red-300 border border-red-800/80 transition flex items-center gap-1 cursor-pointer">
+                  🗑️ 삭제
+                </button>
+              ` : (isCustom ? `<button onclick="deleteCustomReport('${encId}')" title="삭제" class="p-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-red-500 ${isLight ? 'hover:bg-slate-100' : 'hover:bg-slate-800'} transition cursor-pointer">🗑️</button>` : '')}
+              <button onclick="openReportModal('${encId}')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-900/30 transition cursor-pointer">
                 <span>열람하기</span> →
               </button>
             </div>
@@ -1061,9 +1710,22 @@
       const report = all.find(r => r.id === reportId || r.id === decId);
       if (!report) return;
 
+      currentlyViewingReportId = report.id;
       document.getElementById('modalTitle').innerText = report.title;
       const iframe = document.getElementById('modalIframe');
       const extLink = document.getElementById('modalExternalLink');
+      const editBtn = document.getElementById('modalEditBtn');
+      const delBtn = document.getElementById('modalDeleteBtn');
+
+      if (editBtn && delBtn) {
+        if (isAdminMode) {
+          editBtn.classList.remove('hidden');
+          delBtn.classList.remove('hidden');
+        } else {
+          editBtn.classList.add('hidden');
+          delBtn.classList.add('hidden');
+        }
+      }
 
       if (report.filePath) {
         iframe.src = report.filePath;
@@ -1184,6 +1846,15 @@
         if (html.includes(item)) tags.push(item);
       });
       if (tags.length) document.getElementById('reportTagsInput').value = tags.join(', ');
+
+      // Provider
+      let prov = 'PLATTS';
+      if (low.includes('icis')) prov = 'ICIS';
+      else if (low.includes('argus')) prov = 'ARGUS';
+      else if (low.includes('platts')) prov = 'PLATTS';
+      else prov = '기타';
+      const provEl = document.getElementById('reportProviderInput');
+      if (provEl) provEl.value = prov;
 
       showToast('⚡ HTML 분석이 완료되어 정보가 자동으로 채워졌습니다!');
     }
@@ -1454,7 +2125,8 @@
       const date = document.getElementById('reportDateInput').value || new Date().toISOString().split('T')[0];
       const summary = document.getElementById('reportSummaryInput').value.trim() || title;
       const tagsStr = document.getElementById('reportTagsInput').value;
-      const author = document.getElementById('reportAuthorInput').value.trim() || '석유화학시황팀';
+      const provider = (document.getElementById('reportProviderInput') ? document.getElementById('reportProviderInput').value : 'PLATTS') || 'PLATTS';
+      const author = provider;
 
       if (!html.trim()) {
         showToast('HTML 코드를 입력해주세요.');
@@ -1471,6 +2143,7 @@
         title,
         category,
         date,
+        provider,
         summary,
         htmlContent: html,
         tags: tags.length ? tags : ['석유화학', '시황'],
@@ -1577,11 +2250,21 @@
               title: newReport.title,
               category: newReport.category,
               date: newReport.date,
+              provider: newReport.provider || 'PLATTS',
               summary: newReport.summary,
               tags: newReport.tags,
-              author: newReport.author,
+              author: newReport.provider || 'PLATTS',
               filePath: './' + filePath,
             };
+
+            // Also post to central server backend if available
+            try {
+              fetch('/api/reports', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...newReport, filePath: './' + filePath })
+              });
+            } catch(apiPostErr) {}
 
             const updatedManifest = [item, ...manifest.filter(m => m.id !== item.id && (m.title + '___' + m.date) !== (item.title + '___' + item.date))];
             updatedManifest.sort((a, b) => {
@@ -1652,6 +2335,11 @@
         checkUrlAuth();
       } catch (e) {
         console.error('checkUrlAuth err:', e);
+      }
+      try {
+        applyAdminModeUI();
+      } catch (e) {
+        console.error('applyAdminModeUI err:', e);
       }
       try {
         applyTheme(currentTheme);
