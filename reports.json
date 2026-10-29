@@ -1,5 +1,25 @@
 [
   {
+    "id": "user-1793232806139",
+    "title": "2026/10/28 PLATTS AI 일간 보고서",
+    "category": "daily",
+    "date": "2026-10-29",
+    "summary": "미국 원유·브렌트 상승과 두바이·나프타 하락 속, 아시아 기초유분·수지 가격 차별화",
+    "tags": [
+      "일간",
+      "시장보고",
+      "원유",
+      "납사",
+      "에틸렌",
+      "프로필렌",
+      "벤젠",
+      "스티렌",
+      "제품"
+    ],
+    "author": "석유화학시황팀",
+    "filePath": "./reports/daily/2026-10-29_2026_10_28_PLATTS_AI_일간_보고서.html"
+  },
+  {
     "id": "user-1793165806142",
     "title": "2026/10/27 일간 보고서",
     "category": "daily",
@@ -17,7 +37,7 @@
       "제품"
     ],
     "author": "석유화학시황팀",
-    "filePath": "./reports/daily/2026-10-28_2026_10_27_일간_보고서.html"
+    "filePath": "./reports/daily/2026-10-28_20261027_일간_보고서.html"
   },
   {
     "id": "report-1793162942990",
@@ -77,7 +97,7 @@
       "FOB Korea"
     ],
     "author": "PlattsAI Intelligence",
-    "filePath": "./reports/daily/2026-10-26_아시아_원유_석유화학_데일리_시황___2026-10-26.html"
+    "filePath": "./reports/daily/2026-10-26_아시아_원유석유화학_데일리_시황_2026-10-26.html"
   },
   {
     "id": "petrochem-weekly-2026-42w",
@@ -95,7 +115,7 @@
       "주간전망"
     ],
     "author": "PlattsAI Petrochemical Intelligence Group",
-    "filePath": "./reports/weekly/2026-10-23_아시아_원유_석유화학_주간_시황_및_차주_전망__Asia_Crude___Petrochemical_Weekly_Market_Report___Outlook_.html"
+    "filePath": "./reports/weekly/2026-10-23_아시아_원유석유화학_주간_시황_및_차주_전망_asia_crude_petrochemical_.html"
   },
   {
     "id": "special-ncc-vs-ecc-2026",
@@ -112,7 +132,7 @@
       "마진분석"
     ],
     "author": "전략기획팀",
-    "filePath": "./reports/special/2026-10-18__기획__2026_하반기_글로벌_NCC_vs_미국_중동_ECC_원가_경쟁력_및_에탄_크래커_영향_분석.html"
+    "filePath": "./reports/special/2026-10-18_기획_2026_하반기_글로벌_ncc_vs_미국중동_ecc_원가_경쟁력_및_에탄_크래커_영향.html"
   },
   {
     "id": "monthly-northeast-asia-2026-10",
@@ -128,6 +148,6 @@
       "아로마틱"
     ],
     "author": "시장분석실",
-    "filePath": "./reports/monthly/2026-10-01_2026년_10월_아시아_올레핀_아로마틱_월간_수급_및_설비_정기보수_총람.html"
+    "filePath": "./reports/monthly/2026-10-01_2026년_10월_아시아_올레핀아로마틱_월간_수급_및_설비_정기보수_총람.html"
   }
 ]
