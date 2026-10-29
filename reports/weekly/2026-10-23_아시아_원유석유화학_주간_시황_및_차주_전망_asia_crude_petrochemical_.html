@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아시아 원유·석유화학 주간 시황 및 차주 전망 (Asia Crude & Petrochemical Weekly Market Report & Outlook)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for Market Trend Visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Pretendard Alternative (Inter + Noto Sans KR) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            800: '#00264d',
+                            900: '#001a33',
+                            950: '#001020',
+                        },
+                        bullish: '#D32F2F',
+                        bearish: '#1976D2',
+                        neutral: '#388E3C',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+<script src="/_aistudio-iframe.js?v=1f94f900"></script></head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased pb-16">
+
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-header border-b border-slate-200 shadow-sm transition-all duration-300">
+        <!-- Top Bar -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row justify-between items-center border-b border-slate-100 gap-2">
+            <div class="flex items-center gap-3">
+                <div class="bg-navy-900 text-white p-2 rounded-lg font-black tracking-wider text-xs uppercase shadow-md flex items-center gap-1.5">
+                    <i class="fa-solid fa-chart-line text-amber-400"></i> PlattsAI Market Report
+                </div>
+                <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
+                    아시아 원유·석유화학 주간 시황 및 차주 전망
+                </h1>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-semibold text-slate-500">
+                <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full border border-emerald-200">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 실시간 데이터 연동
+                </span>
+                <span><i class="fa-regular fa-clock mr-1"></i> 2026년 10월 42주차 | 업데이트: 2026-10-23</span>
+            </div>
+        </div>
+
+        <!-- Sticky Navigation Bar -->
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 overflow-x-auto whitespace-nowrap scrollbar-none">
+            <div class="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-600">
+                <a href="#kpi-dashboard" class="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-navy-900 hover:text-white transition-all duration-200 flex items-center gap-1.5">
+                    <i class="fa-solid fa-gauge-high"></i> 주간 주요 가격 지표
+                </a>
+                <a href="#section1" class="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-navy-900 hover:text-white transition-all duration-200 flex items-center gap-1.5">
+                    <i class="fa-solid fa-newspaper"></i> 1. 전주 시황 요약
+                </a>
+                <a href="#section2" class="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-navy-900 hover:text-white transition-all duration-200 flex items-center gap-1.5">
+                    <i class="fa-solid fa-scale-balanced"></i> 2. 핵심 변동 요인
+                </a>
+                <a href="#section3" class="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-navy-900 hover:text-white transition-all duration-200 flex items-center gap-1.5">
+                    <i class="fa-solid fa-compass"></i> 3. 차주 시황/수급 전망
+                </a>
+                <a href="#section4" class="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-navy-900 hover:text-white transition-all duration-200 flex items-center gap-1.5">
+                    <i class="fa-solid fa-calculator"></i> 4. 주간 마진 분석
+                </a>
+                <a href="#" class="ml-auto px-3 py-1.5 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-700 transition">
+                    <i class="fa-solid fa-arrow-up"></i> Top
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 sm:pt-32 space-y-8">
+
+        <!-- Banner Announcement / Summary Highlight -->
+        <div class="bg-gradient-to-r from-navy-950 via-navy-900 to-slate-900 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl text-white pointer-events-none">
+                <i class="fa-solid fa-oil-well"></i>
+            </div>
+            <div class="relative z-10 space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="bg-bullish text-white text-xs font-bold px-2.5 py-0.5 rounded-md uppercase tracking-wider">Market Alert</span>
+                    <span class="text-slate-300 text-xs font-medium">유가·나프타 강세 지속 & 지정학적 리스크 심화</span>
+                </div>
+                <h2 class="text-xl sm:text-2xl font-bold tracking-tight">유가 폭등 및 공급 타이트로 아시아 석유화학 원가 부담 극대화</h2>
+                <p class="text-sm text-slate-300 max-w-4xl leading-relaxed">
+                    ICE Brent $114/b 돌파 및 일본 나프타 $1,030/mt 달성으로 NCC 에틸렌 마진 마이너스 대폭 확대. 부타디엔 급등 및 PX/PTA 물류 차질 속 다운스트림 실거래 저항이 교차하는 복합적 약세-강세 혼재 장세.
+                </p>
+            </div>
+        </div>
+
+        <!-- Section: KPI Dashboard -->
+        <section id="kpi-dashboard" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6 scroll-mt-36">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-simple text-blue-600"></i> 주간 주요 가격 지표 (Weekly Price Indicators)
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">주요 원료, 기초유분, 아로마틱 및 폴리머 제품군의 전주 대비 가격 변동 추이</p>
+                </div>
+                <!-- Filter Search Bar -->
+                <div class="w-full sm:w-auto flex items-center gap-2">
+                    <div class="relative w-full sm:w-64">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="kpiSearch" onkeyup="filterKPIs()" placeholder="품목명 검색 (예: Ethylene, Naphtha)" class="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-800">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 1: Crude & Feedstocks -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <i class="fa-solid fa-barrel-oil text-amber-600"></i> ① 원유 & 원료 (Crude & Feedstocks)
+                </h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3" id="kpi-group-1">
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">WTI ($/b)</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">100.73</div>
+                        <div class="text-xs font-bold text-bullish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-up"></i> ▲ $1.26 (+1.27%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">Brent ($/b)</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">114.27</div>
+                        <div class="text-xs font-bold text-bullish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-up"></i> ▲ $2.06 (+1.84%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">Dubai ($/b)</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">111.85</div>
+                        <div class="text-xs font-bold text-bullish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-up"></i> ▲ $1.95 (+1.77%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200 border-l-4 border-l-red-500">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">Naphtha CFR Japan</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,030.50</div>
+                        <div class="text-xs font-bold text-bullish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-up"></i> ▲ $22.13 (+2.19%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">US MtB Ethane (¢/gal)</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">31.30</div>
+                        <div class="text-xs font-bold text-bearish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-down"></i> ▼ 0.20 (-0.63%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">C3 LPG Propane ($/mt)</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">786.00</div>
+                        <div class="text-xs font-bold text-bearish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-down"></i> ▼ $19.80 (-2.46%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">C4 LPG Butane ($/mt)</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">812.00</div>
+                        <div class="text-xs font-bold text-bearish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-down"></i> ▼ $15.00 (-1.81%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 2: Olefins & Aromatics -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <i class="fa-solid fa-vial text-blue-600"></i> ② 석유화학 기초유분 & 아로마틱 (Olefins & Aromatics)
+                </h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-3">
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">Ethylene CFR NEA</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,190.00</div>
+                        <div class="text-xs font-bold text-bullish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-up"></i> ▲ $20.00 (+1.71%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">Propylene FOB Korea</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,300.00</div>
+                        <div class="text-xs font-bold text-neutral flex items-center gap-1">
+                            <i class="fa-solid fa-minus"></i> ━ $0.00 (0.00%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200 bg-red-50/50 border-red-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">Butadiene FOB Korea</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,690.00</div>
+                        <div class="text-xs font-bold text-bullish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-up"></i> ▲ $90.00 (+5.63%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">MTBE FOB Singapore</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,178.30</div>
+                        <div class="text-xs font-bold text-bullish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-up"></i> ▲ $26.54 (+2.30%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">Styrene Monomer FOB Korea</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,472.50</div>
+                        <div class="text-xs font-bold text-bullish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-up"></i> ▲ $18.50 (+1.27%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">Benzene FOB Korea</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,240.67</div>
+                        <div class="text-xs font-bold text-bullish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-up"></i> ▲ $12.00 (+0.98%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">Toluene FOB Korea</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,241.50</div>
+                        <div class="text-xs font-bold text-bullish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-up"></i> ▲ $18.00 (+1.47%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">Paraxylene CFR TW/China</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,307.67</div>
+                        <div class="text-xs font-bold text-bullish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-up"></i> ▲ $22.00 (+1.71%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 3: Polymer & Chemical Derivatives -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <i class="fa-solid fa-boxes-packing text-purple-600"></i> ③ 주요 유도품 (Polymer & Chemical Derivatives)
+                </h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-3">
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">HDPE Film CFR FE Asia</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,095.00</div>
+                        <div class="text-xs font-bold text-bearish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-down"></i> ▼ $5.00 (-0.45%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">PP Raffia CFR FE Asia</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,290.00</div>
+                        <div class="text-xs font-bold text-neutral flex items-center gap-1">
+                            <i class="fa-solid fa-minus"></i> ━ $0.00 (0.00%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">LLDPE Butene CFR FE Asia</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,140.00</div>
+                        <div class="text-xs font-bold text-bearish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-down"></i> ▼ $5.00 (-0.44%)
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-slate-50 p-3.5 rounded-xl border border-slate-200 hover:shadow-md transition duration-200">
+                        <div class="text-xs font-bold text-slate-500 truncate kpi-name">LDPE GP CFR FE Asia</div>
+                        <div class="text-lg font-extrabold text-slate-900 my-1">$1,360.00</div>
+                        <div class="text-xs font-bold text-bearish flex items-center gap-1">
+                            <i class="fa-solid fa-caret-down"></i> ▼ $20.00 (-1.45%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Weekly Market Summary -->
+        <section id="section1" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6 scroll-mt-36">
+            <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-file-lines text-navy-800"></i> 1. 전주 주간 시황 요약 (Weekly Summary)
+                </h2>
+                <span class="text-xs text-slate-400 font-medium">품목별 상세 현황</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        원유 & 나프타 (Crude & Naphtha)
+                        <span class="text-xs text-bullish font-semibold">강세</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        중동 지정학적 리스크 심화 및 러시아의 우크라이나 에너지 시설 재공격으로 국제유가가 강세를 보였습니다. ICE Brent는 배럴당 $114.27로 상승했으며, 아시아 나프타(CFR Japan)도 $1,030.50/mt로 상승해 강한 원가 압박을 가했습니다.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        에틸렌 (Ethylene)
+                        <span class="text-xs text-bullish font-semibold">원가 상승</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        CFR 동북아 가격은 원료 나프타 급등에 힘입어 전주 대비 $20/mt 상승한 $1,190/mt를 기록했습니다. 공급 측 원가 부담이 지지했으나, 다운스트림 구매자들의 강한 가격 저항으로 원가 상승분을 완전히 반영하지는 못했습니다.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        프로필렌 (Propylene)
+                        <span class="text-xs text-neutral font-semibold">보합</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        FOB 한국 및 CFR 중국 가격은 $1,300/mt, $1,350/mt 수준에서 보합세를 유지했습니다. 산둥 내수가격 상승에도 불확실성으로 거래가 조용했던 가운데 동남아는 고정가보다 연동가(Formula) 거래 선호 경향이 강했습니다.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-red-500 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        부타디엔 (Butadiene)
+                        <span class="text-xs text-bullish font-semibold">급등</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        유럽 Shell 설비 차질 및 역외 물량 유입 지연, 동남아 공급 차질 우려로 주간 $70~$140/mt 급등했습니다. CFR 동북아 거래가 $1,800/mt 이상에서 체결되는 등 타이트한 수급 불균형이 주도했습니다.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        벤젠 (Benzene)
+                        <span class="text-xs text-bullish font-semibold">상승</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        FOB 한국 가격은 $1,240.67/mt로 상승세를 이어갔습니다. 유가 상승 및 아로마틱 단지 전반의 강세가 지지했으나, 중국 하류 설비 가동률(66.41%) 하락 등 다운스트림 마진 압박으로 상승폭이 다소 제한되었습니다.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        톨루엔 (Toluene)
+                        <span class="text-xs text-bullish font-semibold">상승</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        FOB 한국 가격은 $1,241.50/mt로 전일 대비 $18/mt 상승했습니다. 해상 운임 급등과 원유 상승이 호재였으나, 옥탄가 블렌딩 마진 약화로 가솔린 블렌딩 수요가 위축되며 아비트리지는 차단된 상태입니다.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        혼합자일렌 (MX)
+                        <span class="text-xs text-bullish font-semibold">강보합</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Isomer-MX FOB 한국 가격은 PX 연동으로 $1,200/mt로 상승했습니다. 가솔린 블렌딩 수요 위축으로 정제업체들의 수율 감축이 공급을 타이트하게 만들었습니다. Solvent-MX도 $1,165/mt로 강보합을 나타냈습니다.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        파라자일렌 (PX)
+                        <span class="text-xs text-bullish font-semibold">상승</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        CFR 대만/중국 가격은 $1,307.67/mt로 상승했습니다. 태풍 샴피로 인한 동중국 물류 차질 및 12월 체결 수요 유입이 긍정적 영향으로 작용했습니다. 중국 내수 가동률은 82% 수준을 기록했습니다.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        스티렌 모노머 (SM)
+                        <span class="text-xs text-bullish font-semibold">상승</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        FOB 한국 $1,472.50/mt, CFR 중국 $1,412.50/mt로 상승했습니다. 동중국 항구 재고가 31,500mt으로 주간 감소하고, 숏커버링 물량이 유입되며 선물 상승과 함께 가격을 견인했습니다.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-blue-500 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        MTBE
+                        <span class="text-xs text-bearish font-semibold">혼조세</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        FOB 싱가포르는 원유 반등으로 $1,178.30/mt 반등했으나, FOB 중국은 블렌딩 수요 약화로 $1,100/mt까지 하락해 10월 최저치를 기록했습니다. 유럽향 아비트리지 닫힘으로 가동률 축소가 진행 중입니다.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-blue-500 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        폴리올레핀 (PE/PP)
+                        <span class="text-xs text-bearish font-semibold">약보합</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        HDPE Film($1,095/mt), LDPE($1,360/mt)는 정기보수 종료 후 공급 증가 및 가공업체 가격 저항으로 약세를 보였습니다. PP Raffia($1,290/mt)는 높은 운임 부담 속에 동남아/중국 간 온도차를 보이며 보합했습니다.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-l-navy-900 border-y border-r border-slate-200 hover:bg-white hover:shadow-md transition">
+                    <h4 class="font-bold text-navy-900 text-sm mb-2 flex justify-between items-center">
+                        ABS & PVC & PTA
+                        <span class="text-xs text-bullish font-semibold">강보합</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        ABS(CFR $1,700/mt)는 높은 원료가(SM/BD/ACN)로 가격 인상 시도가 지속되었습니다. PVC(인도 CFR $900/mt)는 중국 메이저 가동률 하락과 인도 디왈리 수요로 상승했습니다. PTA는 PX 상승 연동 $980/mt 기록.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Key Market Drivers -->
+        <section id="section2" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6 scroll-mt-36">
+            <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-code-compare text-amber-600"></i> 2. 주간 핵심 변동 요인 (Drivers Analysis)
+                </h2>
+                <span class="text-xs text-slate-400 font-medium">수급 요인 다각 분석</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Bullish Drivers -->
+                <div class="bg-red-50/60 border border-red-200 rounded-xl p-5 space-y-4">
+                    <h3 class="text-base font-extrabold text-bullish flex items-center gap-2 border-b border-red-200 pb-2">
+                        <i class="fa-solid fa-circle-arrow-up"></i> 상승 요인 (Bullish Drivers)
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5 flex items-center gap-1">
+                                <i class="fa-solid fa-industry text-red-500"></i> [공급 측면 / Supply Side]
+                            </h4>
+                            <ul class="text-xs text-slate-700 space-y-2 list-disc pl-4 leading-relaxed">
+                                <li><strong>중동 지정학적 리스크 및 유가 급등:</strong> 걸프 지역 긴장 고조와 러시아의 우크라이나 에너지 기반 시설 재공격으로 ICE Brent 원유가 $114/b 돌파, Naphtha 원가 급등.</li>
+                                <li><strong>기상 악화 및 물류 차질:</strong> 태풍 샴피(Champi) 영향으로 동중국 주요 항구의 PX/PTA 하역 지연 및 연안 물류 병목 현상 발생.</li>
+                                <li><strong>역외 및 역내 주요 설비 차질:</strong> 유럽 Shell의 11.5만mt/yr 부타디엔 설비 트러블, 말레이시아 PrefChem 전력 정전으로 인한 PE/PP 설비 셧다운 등 역내외 공급 타이트.</li>
+                                <li><strong>중국 제조사 가동률 하강:</strong> PVC 가동률이 10년래 최저치(카바이드 67%, 에틸렌계 48%)로 하락하였으며, MTBE 및 MX 생산자들도 마진 악화에 따라 가동률 감축.</li>
+                            </ul>
+                        </div>
+
+                        <div class="pt-2 border-t border-red-100">
+                            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5 flex items-center gap-1">
+                                <i class="fa-solid fa-cart-shopping text-red-500"></i> [수요 측면 / Demand Side]
+                            </h4>
+                            <ul class="text-xs text-slate-700 space-y-2 list-disc pl-4 leading-relaxed">
+                                <li><strong>스티렌(SM) 숏커버링 및 항구 재고 감소:</strong> 동중국 SM 항구 재고가 31,500mt으로 주간 감소세를 보이며 장중 숏커버링 물량 유입.</li>
+                                <li><strong>인도 계절적 PVC 수요 집중:</strong> 디왈리(Diwali) 축제 앞두고 인프라 및 농업용 PVC 계절적 수요 성수기 진입으로 CFR India 가격 상승 견인.</li>
+                                <li><strong>ABS 제조사의 원가 전가 시도:</strong> 높은 원료가(SM/BD/ACN) 부담에 따른 재고 소진 후 최소한의 필수 현물 매수세 유입.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bearish Drivers -->
+                <div class="bg-blue-50/60 border border-blue-200 rounded-xl p-5 space-y-4">
+                    <h3 class="text-base font-extrabold text-bearish flex items-center gap-2 border-b border-blue-200 pb-2">
+                        <i class="fa-solid fa-circle-arrow-down"></i> 하락 요인 (Bearish Drivers)
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5 flex items-center gap-1">
+                                <i class="fa-solid fa-warehouse text-blue-500"></i> [공급 측면 / Supply Side]
+                            </h4>
+                            <ul class="text-xs text-slate-700 space-y-2 list-disc pl-4 leading-relaxed">
+                                <li><strong>중국 정기보수 완료 설비 재가동:</strong> PE 및 PP 단지에 집중되었던 10월 정기보수 설비들이 순차 복귀하며 시장 공급 물량 증가.</li>
+                                <li><strong>중국 내수 산둥(Shandong) 프로필렌 수급 완화:</strong> 정제업체 공급 증가로 프로필렌 내수가격 상승세 상쇄.</li>
+                                <li><strong>미국산 물량의 역외 우회 유입:</strong> 관세 이슈로 미국산 PVC/PE 물량이 동남아 및 남미로 다량 우회 수출되며 지역 내 가격 인상 제한.</li>
+                            </ul>
+                        </div>
+
+                        <div class="pt-2 border-t border-blue-100">
+                            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5 flex items-center gap-1">
+                                <i class="fa-solid fa-gas-pump text-blue-500"></i> [수요 측면 / Demand Side]
+                            </h4>
+                            <ul class="text-xs text-slate-700 space-y-2 list-disc pl-4 leading-relaxed">
+                                <li><strong>가솔린 블렌딩 마진 붕괴:</strong> 95 RON 가솔린과 Naphtha 스프레드가 $21.68/mt로 급감하면서 톨루엔 및 MX의 블렌딩 수요 전멸.</li>
+                                <li><strong>다운스트림 완제품 수주 부진 및 가격 저항:</strong> 고물가·고금리 여파로 PE/PP 가공업체들의 완제품 수주가 침체되었으며, 원료가 상승분 제품가 전가 불가능.</li>
+                                <li><strong>해상 컨테이너 운임 급등 부담:</strong> 동남아 및 중국발 해상 운임 급등으로 폴리머 수출 아비트리지 창구가 사실상 봉쇄되어 수입자 구매심리 위축.</li>
+                                <li><strong>나일론 및 폴리에스터 체인 고전:</strong> 캡롤락탐 및 텍스타일 하류 구매자들의 고가격 저항으로 폴리에스터/나일론 원사 거래 둔화.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Next Week's Outlook (RESTRUCTURED BY CATEGORY & STRENGTH) -->
+        <section id="section3" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6 scroll-mt-36">
+            <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-crystal-ball text-purple-600"></i> 3. 차주 가격 및 수급 전망 (Weekly Outlook)
+                </h2>
+                <span class="text-xs text-slate-400 font-medium">카테고리별 / 강세순 분류</span>
+            </div>
+
+            <div class="space-y-6">
+
+                <!-- 3-1. 원유 & 원료 (Crude & Feedstocks) -->
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide flex items-center gap-2 bg-slate-100 p-2.5 rounded-lg border-l-4 border-amber-600">
+                        <i class="fa-solid fa-barrel-oil text-amber-600"></i> ① 원유 & 원료 (Crude & Feedstocks)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <!-- 강세 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-red-800 shadow-sm shrink-0">강세</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>원유 & 나프타</u> :</strong> 중동 지정학적 불안 지속과 역외 유입 지연으로 나프타 가격의 추가 상승세가 불가피할 전망임.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3-2. 석유화학 기초유분 & 아로마틱 (Olefins & Aromatics) -->
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide flex items-center gap-2 bg-slate-100 p-2.5 rounded-lg border-l-4 border-blue-600">
+                        <i class="fa-solid fa-vial text-blue-600"></i> ② 석유화학 기초유분 & 아로마틱 (Olefins & Aromatics)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <!-- 강세 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-red-800 shadow-sm shrink-0">강세</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>부타디엔 FOB KOREA</u> :</strong> 역내외 설비 셧다운에 따른 타이트한 현물 공급과 타이어용 고무 선물 상승이 추가 상승을 견인할 것으로 전망됨.
+                            </div>
+                        </div>
+                        <!-- 강보합 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0">강보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>에틸렌 CFR JAPAN / NEA</u> :</strong> 나프타 원가 상승 압력이 지속되는 가운데 크래커 감산 가능성이 하방을 지지할 것으로 전망됨.
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0">강보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>벤젠 FOB KOREA</u> :</strong> 강한 유가 수준과 아로마틱 타이트 수급이 지지하나, 하류 가동률 하락이 상방을 제한할 것으로 전망됨.
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0">강보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>Isomer-MX FOB KOREA</u> :</strong> PX 설비 가동을 위한 필수 원료 수요와 타이트한 공급으로 강보합 흐름이 이어질 것으로 전망됨.
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0">강보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>파라자일렌 (PX) CFR TW/CHINA</u> :</strong> 동중국 항구 물류 차질 및 12월 리스타이밍 체결 수요로 우상향 트렌드가 유지될 것으로 전망됨.
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0">강보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>스티렌 모노머 (SM) FOB KOREA</u> :</strong> 낮은 항구 재고 수준과 원료(벤젠)가 강세로 인해 강보합 흐름을 나타낼 것으로 전망됨.
+                            </div>
+                        </div>
+                        <!-- 보합 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-emerald-600 shadow-sm shrink-0">보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>프로필렌 FOB KOREA</u> :</strong> 원가 상승 압력에도 불구하고 다운스트림 PP 및 ACN의 가동률 정체로 수급 균형이 유지될 것으로 전망됨.
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-emerald-600 shadow-sm shrink-0">보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>톨루엔 FOB KOREA</u> :</strong> 원유 강세에도 불구하고 가솔린 블렌딩 마진 붕괴에 따른 수요 부진으로 상방이 제한될 것으로 전망됨.
+                            </div>
+                        </div>
+                        <!-- 약보합 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-blue-600 shadow-sm shrink-0">약보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>MTBE FOB SINGAPORE</u> :</strong> 아비트리지 차단 및 가솔린 블렌딩 수요 위축으로 중국산 공급과잉 압박이 지속될 것으로 전망됨.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3-3. 주요 유도품 (Polymer & Chemical Derivatives) -->
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide flex items-center gap-2 bg-slate-100 p-2.5 rounded-lg border-l-4 border-purple-600">
+                        <i class="fa-solid fa-boxes-packing text-purple-600"></i> ③ 주요 유도품 (Polymer & Chemical Derivatives)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <!-- 강보합 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0">강보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>PVC ETHYLENE FOB CHINA</u> :</strong> 중국 메이저 제조사의 10년래 최저 가동률에 따른 공급 축소로 가격 지지력이 강화될 것으로 전망됨.
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0">강보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>ABS INJ CFR CHINA</u> :</strong> 부타디엔 및 ACN 등 원료가 폭등에 따른 손실 방어용 가격 인상 시도가 계속될 것으로 전망됨.
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-red-600 shadow-sm shrink-0">강보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>PTA CFR CHINA</u> :</strong> 상류 PX 강세 및 태풍으로 인한 동중국 설비 감산 영향으로 강보합세를 유지할 것으로 전망됨.
+                            </div>
+                        </div>
+                        <!-- 보합 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-emerald-600 shadow-sm shrink-0">보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>LLDPE BUTENE CFR FE ASIA</u> :</strong> 원가 부담이 하방을 지지하나 수요 개선 부진으로 보합권 박스권 형성이 전망됨.
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-emerald-600 shadow-sm shrink-0">보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>PP RAFFIA CFR FE ASIA</u> :</strong> 해상 운임 부담과 역내 공급 여유로 인해 소폭의 가격 변동 내 보합 흐름이 유지될 것으로 전망됨.
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-emerald-600 shadow-sm shrink-0">보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>PS GPPS CFR CHINA</u> :</strong> SM 원가 압력에도 불구하고 연말 수요 둔화 우려로 추가 가격 상승은 제한될 것으로 전망됨.
+                            </div>
+                        </div>
+                        <!-- 약보합 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-blue-600 shadow-sm shrink-0">약보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>HDPE FILM CFR FE ASIA</u> :</strong> 정기보수 종료 후 물량 증가 및 실수요 가공업체의 강한 가격 저항으로 약보합세가 예상됨.
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 hover:border-slate-300 transition">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded text-white bg-blue-600 shadow-sm shrink-0">약보합</span>
+                            <div class="text-xs">
+                                <strong class="text-navy-900"><u>LDPE G-P CFR FE ASIA</u> :</strong> 고가격에 대한 하류 구매자 거부감과 계절적 성수기 종료로 약세 압력이 우세할 것으로 전망됨.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Section 4: Margins Analysis (SIMPLIFIED & CLEANED) -->
+        <section id="section4" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6 scroll-mt-36">
+            <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-calculator text-emerald-600"></i> 4. 주간 마진 분석 (Margin Chain & BEP Analysis)
+                </h2>
+                <span class="text-xs text-slate-400 font-medium">손익분기점(BEP) 현황</span>
+            </div>
+
+            <!-- Margin Chart Visualization & Summary Row Only -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Margin Summary Card -->
+                <div class="lg:col-span-1 bg-slate-900 text-white rounded-xl p-5 space-y-4 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">
+                            <i class="fa-solid fa-triangle-exclamation"></i> 손익분기점(BEP) 점검
+                        </div>
+                        <h3 class="text-lg font-bold">주간 마진 체인 주요 변화</h3>
+                        
+                        <ul class="text-xs text-slate-300 space-y-3 mt-4 leading-relaxed">
+                            <li class="border-b border-slate-800 pb-2">
+                                <strong class="text-white block">• NCC (에틸렌/프로필렌 - 나프타)</strong>
+                                나프타 $1,030.50 급등으로 에틸렌-나프타 스프레드는 <span class="text-red-400 font-bold">$159.50/mt</span>로 축소되어 BEP($300~$350/mt) 하회, 적자 확대.
+                            </li>
+                            <li class="border-b border-slate-800 pb-2">
+                                <strong class="text-white block">• PX - 나프타 체인</strong>
+                                PX-Naphtha 스프레드는 <span class="text-amber-400 font-bold">$277.17/mt</span>로 BEP($280~$300) 수준 근접 경계선 위치.
+                            </li>
+                            <li>
+                                <strong class="text-white block">• PE/PP - 에틸렌/프로필렌 체인</strong>
+                                HDPE-Ethylene 스프레드 <span class="text-red-400 font-bold">-$95/mt</span> 반전, PP-Propylene <span class="text-red-400 font-bold">-$10/mt</span>로 유도품 가공 마진 붕괴.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="text-[11px] text-slate-400 bg-slate-800/80 p-2.5 rounded-lg border border-slate-700">
+                        <i class="fa-solid fa-circle-info mr-1 text-slate-300"></i> 나프타 상승분이 유도품 가격에 반영되지 못하여 통합 마진 급감.
+                    </div>
+                </div>
+
+                <!-- Interactive Margin Chart -->
+                <div class="lg:col-span-2 bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-xs font-bold text-slate-700 uppercase">석유화학 스프레드 vs BEP 비교 ($/mt)</h4>
+                        <span class="text-[11px] text-slate-500">붉은 점선: 최소 손익분기점 기준</span>
+                    </div>
+                    <div class="w-full h-64">
+                        <canvas id="marginChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 text-center text-xs text-slate-400 space-y-2">
+        <p>© 2026 PlattsAI Petrochemical Intelligence Group. All rights reserved.</p>
+        <p>본 보고서는 시장 정보 제공을 목적으로 작성되었으며, 투자 및 거래에 따른 최종 책임은 본인에게 있습니다.</p>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // KPI Filter Functionality
+        function filterKPIs() {
+            const input = document.getElementById('kpiSearch');
+            const filter = input.value.toUpperCase();
+            const cards = document.getElementsByClassName('kpi-card');
+
+            for (let i = 0; i < cards.length; i++) {
+                const nameDiv = cards[i].getElementsByClassName('kpi-name')[0];
+                if (nameDiv) {
+                    const txtValue = nameDiv.textContent || nameDiv.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        cards[i].style.display = "";
+                    } else {
+                        cards[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        // Render Margin Chart using Chart.js
+        window.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('marginChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['에틸렌-나프타', 'PX-나프타', 'HDPE-에틸렌', 'PP-프로필렌'],
+                    datasets: [
+                        {
+                            label: '현재 주간 스프레드 ($/mt)',
+                            data: [159.5, 277.17, -95, -10],
+                            backgroundColor: [
+                                'rgba(211, 47, 47, 0.85)',
+                                'rgba(255, 160, 0, 0.85)',
+                                'rgba(25, 118, 210, 0.85)',
+                                'rgba(25, 118, 210, 0.85)'
+                            ],
+                            borderRadius: 6,
+                        },
+                        {
+                            label: '최소 BEP (손익분기점) 기준 ($/mt)',
+                            data: [320, 290, 150, 150],
+                            type: 'line',
+                            borderColor: '#ef4444',
+                            borderDash: [5, 5],
+                            borderWidth: 2,
+                            fill: false,
+                            pointStyle: 'circle',
+                            pointRadius: 4,
+                            pointBackgroundColor: '#ef4444'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 11,
+                                    family: "'Noto Sans KR', sans-serif"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': $' + context.raw;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                color: '#e2e8f0'
+                            },
+                            ticks: {
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    size: 11,
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
