@@ -1,5 +1,23 @@
 [
   {
+    "id": "plattsai-daily-2026-10-26",
+    "title": "아시아 원유·석유화학 주간 보고 | 2026/10/19 ~ 2026/10/25",
+    "category": "weekly",
+    "date": "2026-10-26",
+    "provider": "PLATTS",
+    "summary": "원료 가격 상승보다 빠른 수익성 악화…부타디엔 강세와 PE·PP 가격 전가력 저하가 핵심",
+    "tags": [
+      "원유",
+      "나프타",
+      "에틸렌",
+      "LPG",
+      "CFR NEA",
+      "FOB Korea"
+    ],
+    "author": "PLATTS",
+    "filePath": "./reports/weekly/2026-10-26_아시아_원유석유화학_주간_보고_20261019_20261025.html"
+  },
+  {
     "id": "user-1793165806142",
     "title": "2026/10/27 일간 보고서",
     "category": "daily",
@@ -19,24 +37,6 @@
     ],
     "author": "석유화학시황팀",
     "filePath": "./reports/daily/2026-10-28_20261027_일간_보고서.html"
-  },
-  {
-    "id": "plattsai-daily-2026-10-26",
-    "title": "아시아 원유·석유화학 데일리 시황 | 2026/10/19 ~ 2026/10/25",
-    "category": "weekly",
-    "date": "2026-10-26",
-    "provider": "PLATTS",
-    "summary": "원료 가격 상승보다 빠른 수익성 악화…부타디엔 강세와 PE·PP 가격 전가력 저하가 핵심",
-    "tags": [
-      "원유",
-      "나프타",
-      "에틸렌",
-      "LPG",
-      "CFR NEA",
-      "FOB Korea"
-    ],
-    "author": "PLATTS",
-    "filePath": "./reports/weekly/2026-10-26_아시아_원유석유화학_데일리_시황_20261019_20261025.html"
   },
   {
     "id": "report-1793253210730",
