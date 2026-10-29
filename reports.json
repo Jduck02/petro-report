@@ -1,5 +1,23 @@
 [
   {
+    "id": "special-ncc-vs-ecc-2026",
+    "title": "[기획] 2026 하반기 글로벌 NCC vs 미국·중동 ECC 원가 경쟁력 및 에탄 크래커 영향 분석",
+    "category": "special",
+    "date": "2026-10-18",
+    "provider": "기타",
+    "summary": "고유가($100+/b) 국면에서 아시아 나프타 분해설비(NCC)와 북미 에탄 분해설비(ECC) 간의 톤당 에틸렌 생산 현금원가 스프레드가 $450/mt 이상으로 확대됨에 따른 아시아 석화사 대응 전략.",
+    "tags": [
+      "스페셜기획",
+      "NCC",
+      "ECC",
+      "원가경쟁력",
+      "에탄크래커",
+      "마진분석"
+    ],
+    "author": "전략기획팀",
+    "filePath": "./reports/special/2026-10-18_기획_2026_하반기_글로벌_ncc_vs_미국중동_ecc_원가_경쟁력_및_에탄_크래커_영향.html"
+  },
+  {
     "id": "petrochem-weekly-2026-42w",
     "title": "아시아 원유·석유화학 주간 시황 및 차주 전망 (Asia Crude & Petrochemical Weekly Market Report & Outlook)",
     "category": "weekly",
@@ -121,23 +139,6 @@
     ],
     "author": "석유화학시황팀",
     "filePath": "./reports/daily/2026-10-29_2026_10_28_PLATTS_AI_일간_보고서.html"
-  },
-  {
-    "id": "special-ncc-vs-ecc-2026",
-    "title": "[기획] 2026 하반기 글로벌 NCC vs 미국·중동 ECC 원가 경쟁력 및 에탄 크래커 영향 분석",
-    "category": "special",
-    "date": "2026-10-18",
-    "summary": "고유가($100+/b) 국면에서 아시아 나프타 분해설비(NCC)와 북미 에탄 분해설비(ECC) 간의 톤당 에틸렌 생산 현금원가 스프레드가 $450/mt 이상으로 확대됨에 따른 아시아 석화사 대응 전략.",
-    "tags": [
-      "스페셜기획",
-      "NCC",
-      "ECC",
-      "원가경쟁력",
-      "에탄크래커",
-      "마진분석"
-    ],
-    "author": "전략기획팀",
-    "filePath": "./reports/special/2026-10-18_기획_2026_하반기_글로벌_ncc_vs_미국중동_ecc_원가_경쟁력_및_에탄_크래커_영향.html"
   },
   {
     "id": "monthly-northeast-asia-2026-10",
