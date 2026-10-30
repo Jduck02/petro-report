@@ -1,5 +1,23 @@
 [
   {
+    "id": "plattsai-daily-2026-10-26",
+    "title": "아시아 원유·석유화학 데일리 시황 | 2026-10-26",
+    "category": "daily",
+    "date": "2026-10-26",
+    "provider": "PLATTS",
+    "summary": "원유·원료 변동성 확대 속 주요 제품 차별화, 하류 유도품의 원가 전가는 제한적. 나프타와 LPG 등 원료가는 강세를 이어갔으나 원유는 유종별 혼조세를 보였습니다. 스프레드 및 설비 동향 분석.",
+    "tags": [
+      "원유",
+      "나프타",
+      "에틸렌",
+      "LPG",
+      "CFR NEA",
+      "FOB Korea"
+    ],
+    "author": "PlattsAI Intelligence",
+    "filePath": "./reports/daily/2026-10-26_아시아_원유석유화학_데일리_시황_2026-10-26.html"
+  },
+  {
     "id": "user-1793165806142",
     "title": "아시아 원유·석유화학 일간 보고 | 2026-10-27",
     "category": "daily",
@@ -19,24 +37,6 @@
     ],
     "author": "PLATTS",
     "filePath": "./reports/daily/2026-10-28_아시아_원유석유화학_일간_보고_2026-10-27.html"
-  },
-  {
-    "id": "plattsai-daily-2026-10-26",
-    "title": "아시아 원유·석유화학 데일리 시황 | 2026-10-26",
-    "category": "daily",
-    "date": "2026-10-26",
-    "provider": "PLATTS",
-    "summary": "원유·원료 변동성 확대 속 주요 제품 차별화, 하류 유도품의 원가 전가는 제한적. 나프타와 LPG 등 원료가는 강세를 이어갔으나 원유는 유종별 혼조세를 보였습니다. 스프레드 및 설비 동향 분석.",
-    "tags": [
-      "원유",
-      "나프타",
-      "에틸렌",
-      "LPG",
-      "CFR NEA",
-      "FOB Korea"
-    ],
-    "author": "PlattsAI Intelligence",
-    "filePath": "./reports/daily/2026-10-26_아시아_원유석유화학_데일리_시황_2026-10-26.html"
   },
   {
     "id": "petrochem-weekly-2026-42w",
