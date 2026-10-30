@@ -1295,8 +1295,7 @@
         return;
       }
 
-      if (!confirm('정말로 "' + report.title + '" 보고서를 영구 삭제하시겠습니까?
-삭제 즉시 GitHub 저장소와 모든 기기에서 즉각 제거됩니다.')) {
+      if (!confirm('정말로 "' + report.title + '" 보고서를 영구 삭제하시겠습니까?\n삭제 즉시 GitHub 저장소와 모든 기기에서 즉각 제거됩니다.')) {
         return;
       }
 
@@ -1309,7 +1308,7 @@
 
       try {
         // 1. Delete file from GitHub if PAT and filePath exist
-        const targetPath = report.filePath ? report.filePath.replace(/^.//, '').replace(/^/+/, '') : '';
+        const targetPath = report.filePath ? report.filePath.replace(/^\.\//, '').replace(/^\/+/, '') : '';
         const encodedTargetPath = targetPath.split('/').map(encodeURIComponent).join('/');
         if (pat && targetPath) {
           try {
@@ -1350,7 +1349,7 @@
             const mData = await mRes.json();
             manifestSha = mData.sha;
             try {
-              const bin = atob(mData.content.replace(/s/g, ''));
+              const bin = atob(mData.content.replace(/\s/g, ''));
               const bytes = new Uint8Array(bin.length);
               for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
               manifest = JSON.parse(new TextDecoder('utf-8').decode(bytes));
@@ -2026,13 +2025,13 @@
           const mData = await mRes.json();
           manifestSha = mData.sha;
           try {
-            const bin = atob(mData.content.replace(/s/g, ''));
+            const bin = atob(mData.content.replace(/\s/g, ''));
             const bytes = new Uint8Array(bin.length);
             for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
             currentManifest = JSON.parse(new TextDecoder('utf-8').decode(bytes));
           } catch(e) {
             try {
-              currentManifest = JSON.parse(decodeURIComponent(escape(atob(mData.content.replace(/s/g, '')))));
+              currentManifest = JSON.parse(decodeURIComponent(escape(atob(mData.content.replace(/\s/g, '')))));
             } catch(e2) {
               currentManifest = [];
             }
@@ -2256,13 +2255,13 @@
               const mData = await mRes.json();
               manifestSha = mData.sha;
               try {
-                const bin = atob(mData.content.replace(/s/g, ''));
+                const bin = atob(mData.content.replace(/\s/g, ''));
                 const bytes = new Uint8Array(bin.length);
                 for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
                 manifest = JSON.parse(new TextDecoder('utf-8').decode(bytes));
               } catch(e) {
                 try {
-                  manifest = JSON.parse(decodeURIComponent(escape(atob(mData.content.replace(/s/g, '')))));
+                  manifest = JSON.parse(decodeURIComponent(escape(atob(mData.content.replace(/\s/g, '')))));
                 } catch(e2) {
                   manifest = [];
                 }
