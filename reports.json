@@ -1,5 +1,26 @@
 [
   {
+    "id": "user-1793607952523",
+    "title": "PLATTS 일간 보고 | 2026-10-30",
+    "category": "daily",
+    "date": "2026-11-02",
+    "provider": "PLATTS",
+    "summary": "원유·납사 동반 상승 속 부타디엔 강세 확대, 에틸렌 채산성은 재차 악화",
+    "tags": [
+      "일간",
+      "시장보고",
+      "원유",
+      "납사",
+      "에틸렌",
+      "프로필렌",
+      "벤젠",
+      "스티렌",
+      "제품"
+    ],
+    "author": "PLATTS",
+    "filePath": "./reports/daily/2026-11-02_PLATTS_일간_보고___2026-10-30.html"
+  },
+  {
     "id": "user-1793343842332",
     "title": "ICIS 일간 보고 | 2026-10-29",
     "category": "daily",
