@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>아시아 원유·석유화학 데일리 시황 | 2026-10-30</title>
+  <style>
+    :root {
+      --navy:#10283f; --navy2:#173f5c; --blue:#1682ae;
+      --teal:#087f83; --red:#bd5057; --gold:#cb9d41;
+      --violet:#8168bb; --green:#438b68; --ink:#23384a;
+      --muted:#697d90; --line:#dce7ef; --paper:#f2f5f9;
+      --white:#fff;
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0; color:var(--ink); background:var(--paper);
+      font:14px/1.65 Arial,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    }
+    button { font:inherit; }
+    .wrap { max-width:1250px; margin:auto; padding:22px; }
+    .hero {
+      position:relative; overflow:hidden; padding:34px;
+      border-radius:22px; color:#fff;
+      background:linear-gradient(115deg,#0d263d 5%,#153c5b 62%,#17667e);
+      box-shadow:0 20px 50px #10283f22;
+    }
+    .hero:after {
+      content:""; position:absolute; width:440px; height:440px;
+      right:-110px; bottom:-330px; border-radius:50%;
+      border:75px solid #ffffff0b;
+    }
+    .hero-top {
+      position:relative; z-index:1; display:flex;
+      justify-content:space-between; gap:18px;
+    }
+    .brand { font-size:17px; font-weight:800; letter-spacing:.01em; }
+    .eyebrow { color:#d7e9f1; font-size:12px; }
+    .updated { margin-left:auto; text-align:right; white-space:nowrap; font-size:12px; }
+    .hero h1 {
+      position:relative; z-index:1; margin:24px 0 7px;
+      font-size:clamp(26px,3.2vw,39px); letter-spacing:-.045em;
+    }
+    .hero p { position:relative; z-index:1; max-width:940px; margin:8px 0 0; }
+    .hero .headline { color:#e7f6fb; font-size:18px; font-weight:700; }
+    .hero-pills { position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:8px; margin-top:21px; }
+    .hero-pill {
+      padding:7px 11px; border:1px solid #ffffff35;
+      border-radius:999px; background:#ffffff16; font-size:12px;
+    }
+    .nav {
+      position:sticky; top:0; z-index:10; display:flex;
+      flex-wrap:wrap; align-items:center; gap:7px;
+      margin:14px 0; padding:9px; border:1px solid var(--line);
+      border-radius:12px; background:#ffffffed;
+      backdrop-filter:blur(12px); box-shadow:0 8px 20px #112d4212;
+    }
+    .nav a,.nav button,.controls button {
+      padding:8px 11px; border:1px solid var(--line);
+      border-radius:8px; background:#fff; color:var(--navy);
+      font-size:12px; font-weight:700; text-decoration:none; cursor:pointer;
+    }
+    .nav a:hover,.nav button:hover,.controls button:hover { border-color:#83afc7; }
+    .nav button { margin-left:auto; }
+    section {
+      margin:16px 0; padding:24px; border:1px solid var(--line);
+      border-radius:18px; background:var(--white);
+      box-shadow:0 10px 28px #18324808; scroll-margin-top:85px;
+    }
+    h2 { margin:0 0 15px; color:var(--navy); font-size:22px; letter-spacing:-.03em; }
+    h3 { margin:0 0 9px; color:var(--navy); font-size:16px; }
+    p { margin:7px 0; }
+    .muted { color:var(--muted); font-size:12px; }
+    .note {
+      padding:12px 14px; border:1px solid #d9eaf2;
+      border-radius:10px; background:#eff7fa; color:#3b5d71; font-size:12px;
+    }
+    .group-title {
+      display:flex; align-items:center; gap:10px;
+      margin:23px 0 12px; padding-bottom:7px;
+      border-bottom:2px solid #d9e9f0; color:var(--navy2);
+    }
+    .group-title .count {
+      margin-left:auto; color:var(--muted); font-size:12px; font-weight:400;
+    }
+    .kpis {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(162px,1fr));
+      gap:10px;
+    }
+    .kpi {
+      position:relative; min-height:143px; padding:15px;
+      border:1px solid var(--line); border-radius:12px;
+      background:linear-gradient(160deg,#fff,#f7fafc);
+      transition:transform .2s,box-shadow .2s;
+    }
+    .kpi:hover { transform:translateY(-2px); box-shadow:0 9px 24px #1a405013; }
+    .kpi:before {
+      content:""; position:absolute; top:0; left:15px; right:15px;
+      height:3px; border-radius:0 0 4px 4px; background:#91b7c8;
+    }
+    .kpi.positive:before { background:var(--red); }
+    .kpi.negative:before { background:var(--teal); }
+    .kpi .label { min-height:36px; color:#365c76; font-size:12px; font-weight:800; }
+    .kpi .value { display:block; font-size:21px; font-weight:800; letter-spacing:-.04em; }
+    .kpi .unit { font-size:11px; font-weight:600; letter-spacing:0; }
+    .kpi .change { display:block; margin-top:2px; font-size:12px; font-weight:700; }
+    .kpi .id { display:block; margin-top:8px; color:var(--muted); font-size:10px; line-height:1.35; }
+    .up { color:var(--red); } .down { color:var(--teal); } .flat { color:var(--muted); }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; }
+    .chart-card,.info-card {
+      min-width:0; padding:18px; border:1px solid var(--line);
+      border-radius:13px; background:#fbfdff;
+    }
+    .chart-card { position:relative; }
+    .chart-intro {
+      display:flex; flex-wrap:wrap; align-items:end;
+      justify-content:space-between; gap:9px; margin-bottom:12px;
+    }
+    .chart-intro h3 { margin:0; }
+    .statline { color:var(--navy2); font-size:12px; font-weight:700; }
+    canvas { display:block; width:100%; height:350px; }
+    .controls { display:flex; align-items:center; flex-wrap:wrap; gap:7px; }
+    .controls button.active { border-color:var(--blue); background:var(--blue); color:#fff; }
+    .legend { display:flex; flex-wrap:wrap; gap:11px 16px; margin:13px 0; color:var(--muted); font-size:12px; }
+    .legend label { display:inline-flex; align-items:center; gap:5px; cursor:pointer; }
+    .legend input { accent-color:var(--navy2); }
+    .swatch { display:inline-block; width:10px; height:10px; border-radius:50%; }
+    .chart-tip {
+      position:absolute; z-index:2; display:none; min-width:190px;
+      padding:10px 12px; border-radius:9px; background:#10283ff0;
+      color:#fff; font-size:12px; pointer-events:none;
+      box-shadow:0 10px 25px #0002;
+    }
+    .spread-strip {
+      display:grid; grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:9px; margin-top:13px;
+    }
+    .spread-chip {
+      padding:11px; border:1px solid var(--line);
+      border-radius:10px; background:#f8fbfd;
+    }
+    .spread-chip small { display:block; color:var(--muted); font-size:11px; }
+    .spread-chip strong { display:block; color:var(--navy); font-size:18px; }
+    .market-item { padding:12px 0; border-bottom:1px solid #e9eff4; }
+    .market-item:last-child { border:0; }
+    .market-item strong { color:#164966; }
+    .market-item p { margin:4px 0 0; }
+    ul { margin:7px 0 13px; padding-left:21px; }
+    li { margin:5px 0; }
+    .drivers h3 { padding-bottom:7px; border-bottom:1px solid var(--line); }
+    .outlook { columns:2; column-gap:28px; }
+    .outlook p {
+      break-inside:avoid; margin:0; padding:9px 0;
+      border-bottom:1px solid #e9eff4;
+    }
+    .info-card p + p { margin-top:12px; }
+    footer { padding:16px 2px 25px; color:var(--muted); font-size:11px; text-align:center; }
+
+    @media(max-width:820px) {
+      .wrap { padding:11px; }
+      .hero { padding:23px; }
+      .hero-top { flex-wrap:wrap; }
+      .updated { width:100%; }
+      .grid { grid-template-columns:1fr; }
+      .outlook { columns:1; }
+      .spread-strip { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .nav button { margin-left:0; }
+      section { padding:17px; }
+      canvas { height:290px; }
+    }
+    @media print {
+      body { background:#fff; }
+      .wrap { max-width:none; padding:0; }
+      .nav,.controls,.chart-tip { display:none!important; }
+      section,.chart-card,.info-card { break-inside:avoid; box-shadow:none; }
+      .hero,.spread-chip,.kpi { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap" id="top">
+  <header class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="brand">PlattsAI Energy &amp; Petrochemicals Intelligence</div>
+        <div class="eyebrow">Asia-Pacific / Petrochemicals &amp; Crude Daily Review</div>
+        <div class="eyebrow">발행일자: 2026-10-30 (금) · 보고서 번호: PA-20261030-ASIA</div>
+      </div>
+      <div class="updated">최종 업데이트: 2026-11-02 17:20 (KST)</div>
+    </div>
+    <h1>아시아 원유·석유화학 데일리 시황</h1>
+    <p class="headline">원유·납사 동반 상승 속 부타디엔 강세 확대, 에틸렌 채산성은 재차 악화</p>
+    <p>
+      10월 30일 중동 공급 위험이 재부각되며 WTI·Dated Brent·Dubai와 일본 도착 납사가
+      동반 상승하였습니다. 부타디엔은 제한적인 공급을 반영해 크게 올랐으나,
+      에틸렌은 보합을 유지하면서 납사 대비 차액이 $147.75/mt로 축소되었습니다.
+      MTBE는 지역 블렌딩 수요 부진으로 하락하였고, 스티렌은 중국 재고 감소에 반등하였습니다.
+    </p>
+    <div class="hero-pills">
+      <span class="hero-pill">납사 C+F Japan +$33.00/mt</span>
+      <span class="hero-pill">부타디엔 FOB Korea +$100.00/mt</span>
+      <span class="hero-pill">에틸렌−납사 $147.75/mt</span>
+      <span class="hero-pill">평가일 2026-10-30</span>
+    </div>
+  </header>
+
+  <nav class="nav" aria-label="빠른 이동">
+    <a href="#summary">1. 일간 시황 요약</a>
+    <a href="#drivers">2. 핵심 변동 요인</a>
+    <a href="#outlook">3. 단기 가격 전망</a>
+    <a href="#additional">4. 추가 주요 정보</a>
+    <a href="#top">↑ 한번에 보기</a>
+    <button type="button" onclick="window.print()">인쇄 / PDF</button>
+  </nav>
+
+  <section aria-labelledby="prices-title">
+    <h2 id="prices-title">일간 주요 가격 및 지표 현황</h2>
+    <div class="note">
+      2026-10-30 평가와 10-29 평가를 비교합니다. 스티렌 FOB 한국은
+      10-30 주간 평가이며 증감은 10-23 대비입니다. WTI Cushing·Dubai Mo01은
+      선행월 평가, Dated Brent는 현물 평가입니다. C3·C4 LPG는 CFR 북아시아
+      냉동 화물 평가입니다.
+    </div>
+
+    <h3 class="group-title">① 원유 &amp; 원료 <span class="count">Crude &amp; Feedstocks · 7개 품목</span></h3>
+    <div class="kpis" id="kpi-raw"></div>
+
+    <h3 class="group-title">② 제품 <span class="count">Monomers &amp; Aromatics · 8개 품목</span></h3>
+    <div class="kpis" id="kpi-products"></div>
+
+    <h3 class="group-title">③ 유도품 <span class="count">Derivatives &amp; Polymers · 4개 품목</span></h3>
+    <div class="kpis" id="kpi-polymers"></div>
+  </section>
+
+  <section aria-labelledby="spread-title">
+    <h2 id="spread-title">제품별 납사 대비 차액 비교</h2>
+    <div class="chart-intro">
+      <div>
+        <h3>에틸렌 · 프로필렌 · 부타디엔 · 벤젠 · 스티렌 − 납사</h3>
+        <p class="muted">각 제품의 평가가격에서 같은 평가일의 Naphtha C+F Japan 가격을 차감 · USD/mt</p>
+      </div>
+      <div class="controls" role="group" aria-label="조회 기간 선택">
+        <button type="button" data-days="7" class="active" aria-pressed="true">7일</button>
+        <button type="button" data-days="30" aria-pressed="false">30일</button>
+        <button type="button" data-days="90" aria-pressed="false">90일</button>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="statline" id="chart-status"></div>
+      <canvas id="spread-chart" role="img" aria-label="제품 다섯 가지의 납사 대비 가격 차액 추이"></canvas>
+      <div class="chart-tip" id="chart-tip"></div>
+      <div class="legend" id="series-controls" aria-label="품목별 표시 전환"></div>
+      <p class="muted">
+        스티렌은 주간 평가일에만 표시됩니다. 주말·휴장일과 주간 평가 사이의 공백에는
+        가격을 연결하거나 채우지 않습니다. 에틸렌의 $250/mt 점선은 통합형 크래커의
+        채산성 참고선이며 다른 제품 차액의 손익 기준에는 적용되지 않습니다.
+        제품별 인도 조건과 가공 공정이 서로 달라 차액은 동일 납사 기준의 가격 비교 지표입니다.
+      </p>
+    </div>
+    <div class="spread-strip" id="latest-spreads"></div>
+  </section>
+
+  <section id="summary">
+    <h2>1. 일간 시황 요약 <span class="muted">Daily Market Commentary · 19개 품목</span></h2>
+    <div class="grid">
+      <div>
+        <h3 class="group-title">원유 · 원료</h3>
+
+        <div class="market-item">
+          <strong>WTI Cushing Mo01 — $104.12/bbl, +$2.12</strong>
+          <p>중동 공급 위험 재부각과 미국의 양호한 성장 지표가 가격을 지지하며 상승하였습니다.
+          지정학적 긴장 완화 여부에 따른 변동성 모니터링이 요구됩니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>Dated Brent — $118.76/bbl, +$3.94</strong>
+          <p>사우디 에너지 시설에 대한 공격 주장과 중동 물류 위험이 상승 압력으로 작용하였습니다.
+          북해 현물 화물의 판매 부담은 가격 상단을 일부 제약하였습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>Dubai Mo01 — $118.70/bbl, +$4.50</strong>
+          <p>중동 인프라를 둘러싼 위험이 절대가격을 끌어올렸습니다.
+          Dubai 현물–선행월 프리미엄도 $7.13/bbl로 전일 대비 확대되었습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>Naphtha C+F Japan — $1,082.25/mt, +$33.00</strong>
+          <p>원유 상승과 중동발 공급 위험, 높은 운임이 맞물려 6개월 만의 고점에 도달하였습니다.
+          12월 도착 화물의 활발한 조달도 가격을 지지하였습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>Ethane US, Mt Belvieu — 33.75¢/gal, +1.25¢</strong>
+          <p>미국산 원료의 수출 수요와 역내 원료 가격 강세가 반영되었습니다.
+          아시아 석화 원료비에 대한 영향은 운송·투입원료 구성을 함께 고려해야 합니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>C3 LPG CFR North Asia — $1,113.00/mt, +$71.00</strong>
+          <p>북아시아 LPG 시장이 강한 선물·스왑 시장을 따라 급등하였습니다.
+          납사 대비 프로판의 상대가격 상승은 혼합원료 크래커의 선택을 제약할 수 있습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>C4 LPG CFR North Asia — $1,203.00/mt, +$71.00</strong>
+          <p>프로판과 동반 급등하였습니다. 부탄 공급의 제약과 동절기 블렌딩 수요가
+          가격을 뒷받침하였으며 고가에 따른 구매 저항을 점검해야 합니다.</p>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="group-title">제품 · 유도품</h3>
+
+        <div class="market-item">
+          <strong>Ethylene CFR NE Asia — $1,230.00/mt, 변동 없음</strong>
+          <p>납사 급등에도 현물 구매자의 가격 수용 범위가 제한되어 보합을 유지하였습니다.
+          에틸렌−납사 차액은 $147.75/mt로 축소되며 크래커 채산성 압박이 커졌습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>Propylene FOB Korea — $1,370.00/mt, +$20.00</strong>
+          <p>중국 PDH 설비의 정지와 재가동 지연, 원료 비용 상승에 힘입어 상승하였습니다.
+          PP 수요자의 원가 전가 여력은 여전히 제한적입니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>Butadiene FOB Korea — $1,840.00/mt, +$100.00</strong>
+          <p>역내 현물 공급 부족과 중국 내 가격 강세가 큰 폭의 상승을 이끌었습니다.
+          합성고무 업체 일부는 높은 원료비에 생산량 조정까지 검토하는 것으로 전해졌습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>MTBE FOB Singapore — $1,148.15/mt, −$17.54</strong>
+          <p>휘발유 블렌딩 수요 부진과 중국산 화물에 대한 낮은 구매 의향이 가격을 압박하였습니다.
+          원유 상승분이 제품 가격으로 이어지지 못하였습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>Styrene FOB Korea · 주간 평가 — $1,485.50/mt, 전주 대비 +$13.00</strong>
+          <p>10월 30일 현물 시장에서도 동중국 항만 재고 감소에 힘입어 반등하였습니다.
+          다만 유도품 실수요가 약해 추가 상승 지속성은 점검이 필요합니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>Benzene FOB Korea — $1,198.33/mt, +$6.00</strong>
+          <p>재고 확보를 위한 문의와 제한적인 공급이 전일 하락 이후 가격을 지지하였습니다.
+          높은 원료비에 대한 유도품 업체의 부담은 여전합니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>Toluene FOB Korea — $1,243.50/mt, +$7.00</strong>
+          <p>역내 공급 타이트와 방향족 제품 강세에 힘입어 상승하였습니다.
+          동남아 수입업체는 높은 운송비를 반영한 도착가격을 주시하고 있습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>PX FOB Korea — $1,350.00/mt, +$19.00</strong>
+          <p>원유·납사 상승과 제한적인 역내 가용 화물이 가격을 지지하였습니다.
+          PTA 수요의 계절적 둔화가 추가 상승 폭을 제한할 수 있습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>HDPE Film CFR FE Asia — $1,180.00/mt, 변동 없음</strong>
+          <p>주간 기준 가격 상승에도 당일 평가는 보합이었습니다.
+          납사와 에틸렌 비용 부담, 가공업체의 신중한 구매가 동시에 작용하였습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>PP Raffia CFR FE Asia — $1,350.00/mt, +$20.00</strong>
+          <p>프로필렌 가격 상승과 공급 제약을 반영하며 상승하였습니다.
+          최종 구매자의 가격 저항은 원가 전가 폭을 제한하고 있습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>LLDPE Butene CFR FE Asia — $1,205.00/mt, +$5.00</strong>
+          <p>높은 원료비와 제한된 수입 화물이 소폭 상승을 지지하였습니다.
+          가공업체의 필수 물량 위주 구매로 거래 확대는 제한되었습니다.</p>
+        </div>
+        <div class="market-item">
+          <strong>LDPE G-P CFR FE Asia — $1,400.00/mt, 변동 없음</strong>
+          <p>중동산 배송의 불확실성이 가격을 지지하였으나
+          포장재 구매자의 관망세로 상승 폭은 확대되지 않았습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="drivers">
+    <h2>2. 핵심 변동 요인 <span class="muted">Key Price Drivers</span></h2>
+    <div class="grid drivers">
+      <div class="info-card">
+        <h3 class="up">상승 요인 · Bullish Drivers</h3>
+        <strong>공급 측면 / Supply Side</strong>
+        <ul>
+          <li>중동 에너지 시설 공격 주장과 호르무즈 항로의 긴장이 원유·납사 공급 위험을 높였습니다.</li>
+          <li>서방발 아시아 납사 차익거래 물량 감소와 높은 운임이 근월물 공급을 제한하였습니다.</li>
+          <li>한국 크래커 정지와 중국 PDH 설비 재가동 지연이 올레핀·부타디엔 현물 공급을 지지하였습니다.</li>
+        </ul>
+        <strong>수요 측면 / Demand Side</strong>
+        <ul>
+          <li>동북아 화학업체들의 12월 인도 납사 조달이 지속되었습니다.</li>
+          <li>동중국 스티렌 항만 재고가 감소하며 재고 확보성 구매를 자극하였습니다.</li>
+          <li>북아시아 LPG 시장에는 동절기 소비 기대가 반영되었습니다.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3 class="down">하락 요인 · Bearish Drivers</h3>
+        <strong>공급 측면 / Supply Side</strong>
+        <ul>
+          <li>북해 근월물 원유의 미판매 화물은 강한 국제유가에도 현물 차액의 부담으로 남았습니다.</li>
+          <li>미국산 LPG 수출과 동남아 설비의 점진적 재가동은 역내 공급 긴장을 일부 완화할 수 있습니다.</li>
+        </ul>
+        <strong>수요 측면 / Demand Side</strong>
+        <ul>
+          <li>에틸렌 가격이 납사 상승분을 따라가지 못하며 크래커 채산성이 악화되었습니다.</li>
+          <li>MTBE 블렌딩 수요는 부진했고 PE·PP 가공업체의 구매는 즉시 소요분에 집중되었습니다.</li>
+          <li>부타디엔 가격 급등으로 일부 합성고무 업체의 생산 조정 가능성이 제기되었습니다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="outlook">
+    <h2>3. 단기 가격 전망 <span class="muted">향후 1\~2주 · 19개 품목</span></h2>
+    <div class="outlook">
+      <p>WTI - 강보합 : 중동 공급 위험이 가격을 지지하나 외교 진전 가능성에 따른 변동성이 예상됩니다.</p>
+      <p>Dated Brent - 강보합 : 운송 위험이 지지하는 반면 북해 현물 화물의 판매 부담이 상단을 제약할 전망입니다.</p>
+      <p>Dubai - 강보합 : 중동 인프라·통항 위험이 가격을 지지하나 역내 정유사의 매수 속도는 모니터링이 요구됩니다.</p>
+      <p>Naphtha C+F Japan - 강보합 : 역외 유입 제약과 12월 조달 수요가 지지하나 크래커 채산성 악화가 상단을 제한합니다.</p>
+      <p>Ethane US - 강보합 : 수출 물량 확대가 지지하나 미국 내 공급 여력이 상승 폭을 제한할 전망입니다.</p>
+      <p>C3 LPG CFR North Asia - 보합 : 동절기 수요가 가격을 지지하나 납사 대비 상대가격 상승이 석화용 구매를 억제합니다.</p>
+      <p>C4 LPG CFR North Asia - 강보합 : 블렌딩 가치와 제한적인 중동 물량이 지지하나 고가 구매 저항이 예상됩니다.</p>
+      <p>Ethylene CFR NE Asia - 보합 : 공급 제약에도 납사 급등과 약한 PE 수요가 가격 전가를 제한할 전망입니다.</p>
+      <p>Propylene FOB Korea - 강보합 : 중국 PDH 공급 제약이 지지하나 PP 가공업체의 수요는 신중합니다.</p>
+      <p>Butadiene FOB Korea - 강보합 : 제한적인 현물 공급이 강세를 지지하나 고가에 따른 수요 조정 가능성이 있습니다.</p>
+      <p>MTBE FOB Singapore - 약보합 : 원유 강세보다 역내 블렌딩 수요 둔화의 영향이 클 것으로 판단됩니다.</p>
+      <p>Styrene FOB Korea - 보합 : 낮은 항만 재고가 지지하나 유도품 구매 저항과 재고 재축적 가능성이 상단을 제약합니다.</p>
+      <p>Benzene FOB Korea - 보합 : 공급 타이트와 재고 확보 수요가 지지하지만 하류 업체의 원가 부담이 남아 있습니다.</p>
+      <p>Toluene FOB Korea - 강보합 : 동북아 공급 제약과 방향족 수요가 가격을 뒷받침할 전망입니다.</p>
+      <p>PX FOB Korea - 강보합 : 현물 가용 물량 부족이 지지하나 PTA 채산성 부담이 추가 상승을 제한합니다.</p>
+      <p>HDPE Film CFR FE Asia - 보합 : 높은 원가에도 가공업체의 구매 저항이 지속될 전망입니다.</p>
+      <p>PP Raffia CFR FE Asia - 보합 : 프로필렌 비용이 지지하나 제품 가격의 추가 전가는 제한적일 전망입니다.</p>
+      <p>LLDPE Butene CFR FE Asia - 보합 : 원가 지지와 제한적인 최종 수요가 균형을 이룰 전망입니다.</p>
+      <p>LDPE G-P CFR FE Asia - 보합 : 배송 불확실성은 지지 요인이나 포장재 구매 확대는 제한적일 전망입니다.</p>
+    </div>
+  </section>
+
+  <section id="additional">
+    <h2>4. 추가 주요 정보 <span class="muted">Additional Market Information</span></h2>
+    <div class="grid">
+      <div class="info-card">
+        <h3>주요 크랙·스프레드</h3>
+        <p><strong>에틸렌−납사:</strong> 10월 30일 $147.75/mt로 전일보다
+        $33.00/mt 축소되었습니다. 통합형 크래커의 $250/mt 채산성 참고선과의
+        격차는 $102.25/mt입니다.</p>
+        <p><strong>부타디엔−납사:</strong> $757.75/mt로 전일보다 $67.00/mt 확대되었습니다.
+        <strong>벤젠−납사:</strong> $116.08/mt로 축소되어 방향족 원료비 부담을 보여줍니다.</p>
+        <p><strong>Dubai 현물−선행월:</strong> 프리미엄은 $7.13/bbl로 전일보다
+        $2.06/bbl 확대되었습니다.</p>
+      </div>
+      <div class="info-card">
+        <h3>설비 가동률 및 정기보수</h3>
+        <p>LG Chem 여수 1호기는 10월 23일부터 정지 상태입니다.
+        10월 29일 보고된 여수 2호기 가동률은 89%, 대산은 72%입니다.</p>
+        <p>GS Caltex 여수 크래커는 10월 75%에서 11월 80%로 증산할 계획입니다.
+        YNCC 여수 1·2호기는 10월 약 74%에서 11월 70%로 감산할 계획입니다.
+        중국 일부 PDH 설비의 재가동 지연도 프로필렌 수급 변수입니다.</p>
+      </div>
+      <div class="info-card">
+        <h3>물류·재고 동향</h3>
+        <p>호르무즈 해협의 전체 선박 통항은 10월 29일 26척으로 집계되어
+        전일 18척보다 증가하였습니다. 다만 항로 위험과 높은 운임은 계속
+        중동발 화물 운송비에 반영되고 있습니다.</p>
+        <p>11월 극동향 서방발 납사 도착 전망치는 약 136만 톤으로,
+        10월 약 191만 톤보다 낮습니다. 동중국 스티렌 항만 재고는
+        10월 30일 2만4,400톤으로 전주보다 7,100톤 감소하였습니다.</p>
+      </div>
+      <div class="info-card">
+        <h3>핵심 모니터링 변수</h3>
+        <p>중동 시설 피해 여부와 해협 통항 변화, 12월 인도 납사 화물의
+        프리미엄, 한국 크래커의 실제 가동 변화가 원료·제품 가격의 핵심 변수입니다.</p>
+        <p>부타디엔의 높은 현물가격이 합성고무 생산량 조정으로 이어지는지,
+        에틸렌과 PE·PP 가격이 추가 원료비를 흡수할 수 있는지 점검이 요구됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    PlattsAI Energy &amp; Petrochemicals Intelligence · © 2026<br />
+    본 자료는 정보 제공을 목적으로 작성되었으며 거래 또는 투자 권유를 구성하지 않습니다.
+  </footer>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const items = [
+    ["WTI Cushing Mo01","PCACG00","WTI Cushing Mo01",104.12,2.12,2.08,"$/bbl","raw"],
+    ["Dated Brent","PCAAS00","Dated Brent",118.76,3.94,3.43,"$/bbl","raw"],
+    ["Dubai Mo01","PCAAT00","Dubai Mo01 (NextGen MOC)",118.70,4.50,3.94,"$/bbl","raw"],
+    ["Naphtha C+F Japan","PAAAD00","Naphtha C+F Japan Cargo",1082.25,33,3.15,"$/mt","raw"],
+    ["Ethane US","PMUDB05","Purity Ethane Enterprise Mt Belvieu Mo01",33.75,1.25,3.85,"¢/gal","raw"],
+    ["C3 LPG CFR North Asia","PMAAV00","Propane Refrigerated CFR North Asia 30–60 days cargo",1113,71,6.81,"$/mt","raw"],
+    ["C4 LPG CFR North Asia","PMAAF00","Butane Refrigerated CFR North Asia 30–60 days cargo",1203,71,6.27,"$/mt","raw"],
+
+    ["Ethylene CFR NE Asia","AAOTM00","Ethylene CFR NE Asia",1230,0,0,"$/mt","products"],
+    ["Propylene FOB Korea","AAUXJ00","Propylene Poly Grade FOB Korea",1370,20,1.48,"$/mt","products"],
+    ["Butadiene FOB Korea","AAWWM00","Butadiene FOB Korea",1840,100,5.75,"$/mt","products"],
+    ["MTBE FOB Singapore","PHALF11","MTBE FOB Singapore",1148.15,-17.54,-1.50,"$/mt","products"],
+    ["Styrene FOB Korea · 주간","PHASU05","Styrene FOB Korea Weekly",1485.50,13,0.88,"$/mt","products"],
+    ["Benzene FOB Korea","PHASM05","Benzene FOB Korea Marker",1198.33,6,0.50,"$/mt","products"],
+    ["Toluene FOB Korea","PHASO05","Toluene FOB Korea Marker",1243.50,7,0.57,"$/mt","products"],
+    ["PX FOB Korea","PHASS05","Paraxylene FOB Korea Marker",1350,19,1.43,"$/mt","products"],
+
+    ["HDPE Film CFR FE Asia","AATYE00","HDPE Film CFR FE Asia",1180,0,0,"$/mt","polymers"],
+    ["PP Raffia CFR FE Asia","PHBIK00","PP Raffia CFR FE Asia",1350,20,1.50,"$/mt","polymers"],
+    ["LLDPE Butene CFR FE Asia","PHAGZ00","LLDPE Butene CFR FE Asia",1205,5,0.42,"$/mt","polymers"],
+    ["LDPE G-P CFR FE Asia","PHAHT00","LDPE G-P CFR FE Asia",1400,0,0,"$/mt","polymers"]
+  ];
+
+  const fmt = (value, decimals=2) => Number(value).toLocaleString("en-US", {
+    minimumFractionDigits:decimals, maximumFractionDigits:decimals
+  });
+  const signed = value => `${value > 0 ? "+" : ""}${fmt(value,Math.abs(value)%1?2:0)}`;
+
+  for (const [name,symbol,description,value,change,pct,unit,group] of items) {
+    const el=document.createElement("article");
+    const trend=change>0?"positive":change<0?"negative":"";
+    el.className=`kpi ${trend}`;
+    const cls=change>0?"up":change<0?"down":"flat";
+    el.innerHTML=`
+      <div class="label">${name}</div>
+      <span class="value">${unit==="¢/gal"?"":"$"}${fmt(value)}
+        <span class="unit">${unit==="¢/gal"?"¢/gal":unit.slice(1)}</span>
+      </span>
+      <span class="change ${cls}">${signed(change)} · ${pct>0?"+":""}${fmt(pct)}%</span>
+      <span class="id">${symbol} · ${description}${symbol==="PHASU05"?" · 전주 대비":""}</span>`;
+    document.getElementById(`kpi-${group}`).appendChild(el);
+  }
+
+  const raw=`
+08-03,1000,1000,1240,781.125,920,;
+08-04,1000,1000,1240,765.125,932.33,;
+08-05,1000,1000,1240,713,889.33,;
+08-06,990,1020,1240,716.25,893.67,;
+08-07,990,1020,1270,761.25,916,1097;
+08-11,990,1040,1340,809.5,949,;
+08-12,1000,1050,1380,779.25,945,;
+08-13,965,1050,1380,767.125,943.33,;
+08-14,965,1040,1380,780.875,960.33,1158;
+08-17,980,1040,1390,788.25,975.67,;
+08-18,980,1040,1420,798,990.33,;
+08-19,1020,1050,1440,811,1009.67,;
+08-20,1060,1050,1440,823.75,1016.67,;
+08-21,1070,1060,1440,826.75,1021.67,1206;
+08-24,1070,1060,1450,825.5,1011.33,;
+08-25,1070,1060,1450,814,1027,;
+08-26,1050,1060,1450,796.75,991,;
+08-27,1050,1060,1450,810.5,1006,;
+08-28,1050,1060,1450,827.25,1016,1207.5;
+08-31,1100,1080,1470,859,1066,;
+09-01,1135,1110,1490,848.5,1056,;
+09-02,1135,1120,1500,858,1085,;
+09-03,1135,1120,1520,855,1091,;
+09-04,1150,1120,1520,863,1099,1312;
+09-07,1180,1120,1520,869.5,1114,;
+09-08,1180,1130,1520,894.5,1147.33,;
+09-09,1180,1160,1520,903.75,1173.33,;
+09-10,1180,1160,1520,908.5,1212.33,;
+09-11,1190,1160,1520,968.5,1201.67,1379;
+09-14,1190,1160,1520,982.375,1193.67,;
+09-15,1200,1185,1520,956.375,1192.67,;
+09-16,1200,1210,1520,941.25,1197.33,;
+09-17,1200,1210,1520,920.75,1159.33,;
+09-18,1200,1210,1580,902.25,1142.33,1330;
+09-21,1200,1210,1580,901,1145.33,;
+09-22,1200,1210,1580,905,1157,;
+09-23,1190,1185,1570,894.25,1138,;
+09-24,1190,1185,1570,931,1175,;
+09-25,1190,1185,1570,908.5,1176.67,1371;
+09-28,1190,1185,1570,898.25,1176.67,;
+09-29,1190,1185,1570,878.75,1184.67,;
+09-30,1160,1185,1570,885.5,1182.67,;
+10-01,1160,1185,1570,914.125,1171.33,;
+10-02,1150,1185,1570,909.625,1178.33,1409;
+10-05,1150,1185,1570,913.875,1189.33,;
+10-06,1150,1185,1570,917.875,1184.33,;
+10-07,1150,1185,1570,936.375,1185.33,;
+10-08,1150,1240,1570,972.125,1253.33,;
+10-09,1150,1260,1590,971.5,1247,1488;
+10-12,1150,1300,1590,1006,1233,;
+10-13,1170,1300,1590,996.5,1261.33,;
+10-14,1160,1310,1590,1000.75,1272.67,;
+10-15,1160,1310,1590,988,1244,;
+10-16,1160,1300,1600,976,1219.67,1420.5;
+10-19,1160,1300,1600,995.5,1207.67,;
+10-20,1170,1300,1600,1009.375,1221.67,;
+10-21,1170,1300,1600,994.125,1210.67,;
+10-22,1170,1300,1600,1008.375,1228.67,;
+10-23,1190,1300,1690,1030.5,1240.67,1472.5;
+10-26,1190,1310,1690,1046.25,1245,;
+10-27,1200,1330,1690,1059.25,1250.33,;
+10-28,1210,1340,1700,1046,1230.33,;
+10-29,1230,1350,1740,1049.25,1192.33,;
+10-30,1230,1370,1840,1082.25,1198.33,1485.5
+  `;
+
+  const observations=raw.trim().split(";").map(text=>text.trim()).filter(Boolean).map(text=>{
+    const [day,e,p,b,n,z,s]=text.split(",");
+    const naphtha=Number(n);
+    return {
+      date:`2026-${day}`, naphtha,
+      ethylene:Number(e)-naphtha,
+      propylene:Number(p)-naphtha,
+      butadiene:Number(b)-naphtha,
+      benzene:Number(z)-naphtha,
+      styrene:s===""?null:Number(s)-naphtha
+    };
+  });
+
+  const series=[
+    {key:"ethylene",name:"에틸렌",color:"#1682ae",symbol:"AAOTM00"},
+    {key:"propylene",name:"프로필렌",color:"#cb9d41",symbol:"AAUXJ00"},
+    {key:"butadiene",name:"부타디엔",color:"#8168bb",symbol:"AAWWM00"},
+    {key:"benzene",name:"벤젠",color:"#438b68",symbol:"PHASM05"},
+    {key:"styrene",name:"스티렌 · 주간",color:"#bd5057",symbol:"PHASU05"}
+  ];
+
+  const active=new Set(series.map(s=>s.key));
+  const legend=document.getElementById("series-controls");
+
+  for (const s of series) {
+    const label=document.createElement("label");
+    label.innerHTML=`<input type="checkbox" checked aria-label="${s.name} 표시">
+      <i class="swatch" style="background:${s.color}"></i>${s.name}`;
+    label.querySelector("input").addEventListener("change",event=>{
+      if (event.target.checked) active.add(s.key);
+      else active.delete(s.key);
+      draw();
+    });
+    legend.appendChild(label);
+  }
+
+  const last=observations[observations.length-1];
+  const chips=document.getElementById("latest-spreads");
+  for (const s of series) {
+    const chip=document.createElement("div");
+    chip.className="spread-chip";
+    chip.innerHTML=`<small>${s.name} − 납사 · 10/30</small>
+      <strong>$${fmt(last[s.key])}/mt</strong>`;
+    chips.appendChild(chip);
+  }
+
+  const canvas=document.getElementById("spread-chart");
+  const tooltip=document.getElementById("chart-tip");
+  const chartCard=canvas.parentElement;
+  let days=7, points=[],bounds=null,visible=[];
+
+  function draw() {
+    const cutoff=days===7?"2026-10-24":days===30?"2026-10-01":"2026-08-02";
+    visible=observations.filter(d=>d.date>=cutoff);
+    document.getElementById("chart-status").textContent=
+      `최근 ${days}일 · 일간 공통 평가 ${visible.length}회 · 스티렌 주간 평가 ${
+        visible.filter(d=>d.styrene!==null).length
+      }회 · 최종 2026-10-30`;
+
+    const rect=canvas.getBoundingClientRect();
+    const w=Math.max(320,rect.width);
+    const h=Math.max(250,rect.height);
+    const scale=window.devicePixelRatio||1;
+    canvas.width=Math.round(w*scale);
+    canvas.height=Math.round(h*scale);
+    const c=canvas.getContext("2d");
+    c.scale(scale,scale);
+
+    const m={left:50,right:17,top:24,bottom:41};
+    const pw=w-m.left-m.right,ph=h-m.top-m.bottom;
+    const lo=0,hi=800;
+
+    const dayNumber=date=>Date.parse(`${date}T00:00:00Z`)/86400000;
+    const first=dayNumber(cutoff),lastDate=dayNumber("2026-10-30");
+    const x=date=>m.left+(dayNumber(date)-first)/(lastDate-first)*pw;
+    const y=value=>m.top+(hi-value)/(hi-lo)*ph;
+
+    c.clearRect(0,0,w,h);
+    c.fillStyle="#fff"; c.fillRect(0,0,w,h);
+
+    const threshold=y(250);
+    c.fillStyle="rgba(189,80,87,.045)";
+    c.fillRect(m.left,threshold,pw,m.top+ph-threshold);
+
+    c.font="11px Arial";
+    c.textBaseline="middle";
+    for(let v=0;v<=800;v+=100) {
+      const yy=y(v);
+      c.strokeStyle="#e9eff3"; c.lineWidth=1;
+      c.beginPath(); c.moveTo(m.left,yy); c.lineTo(w-m.right,yy); c.stroke();
+      c.fillStyle="#718395"; c.textAlign="right";
+      c.fillText(String(v),m.left-8,yy);
+    }
+
+    if(active.has("ethylene")) {
+      c.strokeStyle="#bd5057"; c.lineWidth=1.4; c.setLineDash([5,5]);
+      c.beginPath(); c.moveTo(m.left,threshold); c.lineTo(w-m.right,threshold); c.stroke();
+      c.setLineDash([]);
+      c.fillStyle="#bd5057"; c.textAlign="left";
+      c.fillText("에틸렌 참고선 250",m.left+7,threshold-10);
+    }
+
+    const ticks=days===7?visible:visible.filter((_,i)=>i%Math.max(1,Math.ceil(visible.length/7))===0);
+    if(!ticks.some(t=>t.date==="2026-10-30")) ticks.push(visible[visible.length-1]);
+    ticks.forEach(point=>{
+      c.fillStyle="#758799"; c.textAlign="center";
+      c.fillText(point.date.slice(5),x(point.date),h-13);
+    });
+
+    for(const s of series) {
+      if(!active.has(s.key)) continue;
+      c.strokeStyle=s.color; c.lineWidth=s.key==="ethylene"?3:2.4;
+      c.beginPath();
+      let started=false,previous=null;
+      for(const point of visible) {
+        const value=point[s.key];
+        if(value===null) { started=false; previous=null; continue; }
+        const px=x(point.date),py=y(value);
+        if(s.key==="styrene") {
+          c.moveTo(px,py);
+          c.beginPath(); c.arc(px,py,4,0,Math.PI*2);
+          c.fillStyle=s.color; c.fill();
+          continue;
+        }
+        if(!started) c.moveTo(px,py);
+        else if(dayNumber(point.date)-dayNumber(previous.date)<=4) c.lineTo(px,py);
+        else c.moveTo(px,py);
+        started=true;previous=point;
+      }
+      if(s.key!=="styrene") c.stroke();
+      if(days===7 && s.key!=="styrene") {
+        for(const point of visible) {
+          c.beginPath(); c.arc(x(point.date),y(point[s.key]),3,0,Math.PI*2);
+          c.fillStyle=s.color; c.fill();
+        }
+      }
+    }
+
+    points=visible.map(point=>({x:x(point.date),point}));
+    bounds={left:m.left,right:w-m.right,top:m.top,bottom:h-m.bottom};
+  }
+
+  canvas.addEventListener("mousemove",event=>{
+    if(!points.length||!bounds) return;
+    const rect=canvas.getBoundingClientRect();
+    const px=event.clientX-rect.left;
+    const py=event.clientY-rect.top;
+    if(px<bounds.left||px>bounds.right||py<bounds.top||py>bounds.bottom) {
+      tooltip.style.display="none"; return;
+    }
+    let nearest=points[0];
+    for(const p of points) if(Math.abs(p.x-px)<Math.abs(nearest.x-px)) nearest=p;
+    const d=nearest.point;
+    const lines=series.filter(s=>active.has(s.key)&&d[s.key]!==null)
+      .map(s=>`${s.name} $${fmt(d[s.key])}/mt`);
+    tooltip.innerHTML=`<strong>${d.date}</strong><br />${lines.join("<br />")}`;
+    tooltip.style.display="block";
+    tooltip.style.left=`${Math.min(chartCard.clientWidth-205,Math.max(8,nearest.x+12))}px`;
+    tooltip.style.top=`${Math.max(37,Math.min(chartCard.clientHeight-150,py-65))}px`;
+  });
+  canvas.addEventListener("mouseleave",()=>tooltip.style.display="none");
+
+  document.querySelectorAll(".controls button[data-days]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      days=Number(button.dataset.days);
+      document.querySelectorAll(".controls button[data-days]").forEach(other=>{
+        const selected=other===button;
+        other.classList.toggle("active",selected);
+        other.setAttribute("aria-pressed",String(selected));
+      });
+      tooltip.style.display="none";
+      draw();
+    });
+  });
+
+  window.addEventListener("resize",draw);
+  draw();
+})();
+</script>
+</body>
+</html>
