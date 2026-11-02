@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>아시아 원유·석유화학 위클리 시황 | 2026-10-26 ~ 2026-11-01</title>
+  <style>
+    :root {
+      --navy:#10253f;
+      --blue:#245777;
+      --teal:#087e83;
+      --paper:#f2f5f9;
+      --ink:#1b2b3e;
+      --muted:#617287;
+      --line:#dce4ec;
+      --up:#087653;
+      --down:#b43d53;
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0;
+      background:var(--paper);
+      color:var(--ink);
+      font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif;
+      line-height:1.42;
+    }
+    .wrap { max-width:1080px; margin:auto; padding:0 20px; }
+    a { color:inherit; text-decoration:none; }
+    button { font:inherit; cursor:pointer; }
+
+    .topbar {
+      position:sticky;
+      top:0;
+      z-index:30;
+      background:var(--navy);
+      color:#fff;
+      box-shadow:0 3px 12px #10253f22;
+    }
+    .top-inner {
+      min-height:58px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .logo {
+      padding:5px 9px;
+      border-radius:7px;
+      background:var(--teal);
+      font-size:17px;
+      font-weight:850;
+      white-space:nowrap;
+    }
+    .logo em { color:#ffcd73; font-style:normal; }
+    .brand-sub {
+      padding-left:12px;
+      border-left:1px solid #637990;
+      color:#d6e3ee;
+      font-size:11px;
+      line-height:1.3;
+    }
+    .brand-sub strong { display:block; color:#fff; font-size:12px; }
+    .top-meta { display:flex; align-items:center; gap:14px; }
+    .top-meta small { color:#dce5ef; text-align:right; line-height:1.4; }
+    .print {
+      padding:7px 10px;
+      border:1px solid #58738e;
+      border-radius:6px;
+      background:#244765;
+      color:#fff;
+      font-size:11px;
+    }
+    .subbar { background:#fff; border-bottom:1px solid var(--line); }
+    .subbar .wrap {
+      min-height:36px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-size:10px;
+    }
+    .region { color:var(--blue); font-weight:750; }
+    .updated {
+      margin-left:auto;
+      color:var(--muted);
+      font-weight:700;
+      text-align:right;
+      white-space:nowrap;
+    }
+
+    main { padding-top:17px !important; padding-bottom:22px !important; }
+    .hero {
+      padding:19px 23px;
+      border-radius:11px;
+      background:linear-gradient(110deg,var(--navy),var(--blue));
+      color:#fff;
+    }
+    .eyebrow {
+      color:#f9cd83;
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:.1em;
+    }
+    h1 { margin:6px 0 7px; font-size:22px; line-height:1.3; }
+    .hero p { margin:0; max-width:970px; color:#e2ebf4; font-size:11px; }
+    .week-nav {
+      position:sticky;
+      top:58px;
+      z-index:20;
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin:11px 0 14px;
+      padding:8px;
+      border:1px solid var(--line);
+      border-radius:9px;
+      background:#fffffff2;
+      backdrop-filter:blur(7px);
+    }
+    .week-nav a {
+      padding:6px 9px;
+      border-radius:6px;
+      background:#ebf1f6;
+      color:#2e4963;
+      font-size:10px;
+      font-weight:750;
+    }
+    .week-nav a:hover { background:var(--navy); color:#fff; }
+    .week-nav .back { margin-left:auto; background:var(--teal); color:#fff; }
+
+    .report-page { margin-bottom:14px; }
+    .panel {
+      margin-bottom:11px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+      scroll-margin-top:110px;
+    }
+    .panel-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:9px 14px;
+      border-bottom:1px solid var(--line);
+      background:#f8fafc;
+    }
+    .panel-head h2 { margin:0; color:var(--navy); font-size:13px; }
+    .panel-head small { color:var(--muted); font-size:9px; text-align:right; }
+    .panel-body { padding:12px 14px; }
+
+    .thesis {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+    }
+    .thesis article {
+      padding:9px 10px;
+      border:1px solid #e1e8ef;
+      border-radius:8px;
+      background:#f8fafc;
+    }
+    .thesis b { display:block; margin-bottom:4px; color:var(--navy); font-size:10.5px; }
+    .thesis p { margin:0; font-size:10px; }
+    .tag {
+      display:inline-block;
+      margin-bottom:4px;
+      padding:2px 6px;
+      border-radius:4px;
+      background:#e5f3f0;
+      color:#096958;
+      font-size:9px;
+      font-weight:800;
+    }
+    .tag.warn { background:#fff2de; color:#986010; }
+    .tag.weak { background:#fcebef; color:#a63b53; }
+
+    .price-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+    }
+    .price-box {
+      padding:8px 9px;
+      border:1px solid #e2e8f0;
+      border-radius:8px;
+      background:#fcfdff;
+    }
+    .price-box h3 {
+      margin:0 0 5px;
+      padding-bottom:4px;
+      border-bottom:1px solid #e6ebf1;
+      color:var(--navy);
+      font-size:10.5px;
+    }
+    .price-row {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto auto;
+      align-items:baseline;
+      column-gap:5px;
+      padding:2px 0;
+      font-size:9.5px;
+    }
+    .price-row .name { min-width:0; }
+    .price-row .value {
+      white-space:nowrap;
+      font-weight:750;
+      font-variant-numeric:tabular-nums;
+    }
+    .price-row .change {
+      min-width:51px;
+      color:var(--muted);
+      text-align:right;
+      white-space:nowrap;
+      font-size:9px;
+      font-weight:750;
+      font-variant-numeric:tabular-nums;
+    }
+    .price-row .change.up { color:var(--up); }
+    .price-row .change.down { color:var(--down); }
+    .basis-note { margin:6px 1px 0; color:var(--muted); font-size:9px; }
+
+    .columns { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+    .insight {
+      padding:9px 10px;
+      border:1px solid #e2e9f0;
+      border-radius:8px;
+      background:#fbfcfe;
+    }
+    .insight h3 { margin:0 0 5px; color:var(--navy); font-size:10.5px; }
+    .insight p { margin:0; font-size:10px; }
+    .strip {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:7px;
+    }
+    .strip div {
+      padding:8px;
+      border:1px solid #dce7ef;
+      border-radius:7px;
+      background:#f5f9fc;
+    }
+    .strip b { display:block; color:var(--navy); font-size:9.5px; }
+    .strip strong { display:block; margin:2px 0; font-size:13px; }
+    .strip span { color:var(--muted); font-size:8.5px; }
+
+    .events { display:grid; grid-template-columns:repeat(2,1fr); gap:7px; }
+    .event {
+      padding:8px 10px;
+      border-left:3px solid var(--teal);
+      border-radius:5px;
+      background:#f5f8fb;
+    }
+    .event.alert { border-color:#c98b35; }
+    .event b { display:block; margin-bottom:3px; color:var(--navy); font-size:10px; }
+    .event p { margin:0; font-size:9.5px; }
+    .watch-list { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; }
+    .watch-list article {
+      padding:8px 9px;
+      border:1px solid #e2e8ef;
+      border-radius:7px;
+      background:#fbfcfe;
+    }
+    .watch-list b { display:block; margin-bottom:3px; color:var(--navy); font-size:9.5px; }
+    .watch-list p { margin:0; font-size:9.5px; }
+    .report-footer {
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:7px 1px 0;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:9px;
+    }
+    .bottom { padding:13px 0; background:var(--navy); color:#c9d5e1; font-size:10px; }
+    .bottom .wrap { display:flex; justify-content:space-between; gap:10px; }
+
+    @media(max-width:760px) {
+      .brand-sub,.top-meta small { display:none; }
+      .thesis,.price-grid,.strip,.watch-list { grid-template-columns:1fr; }
+      .columns,.events { grid-template-columns:1fr; }
+      .week-nav a { flex:1 1 42%; text-align:center; }
+      .week-nav .back { margin-left:0; }
+      .subbar .wrap { flex-wrap:wrap; padding-top:7px; padding-bottom:7px; }
+      .updated { width:100%; }
+    }
+    @page { size:A4 portrait; margin:9mm 10mm; }
+    @media print {
+      html { scroll-behavior:auto; }
+      body { background:#fff; }
+      .wrap { max-width:none; padding:0; }
+      .topbar { position:static; box-shadow:none; }
+      .top-inner { min-height:42px; padding:0 9px; }
+      .subbar .wrap { padding:0 9px; }
+      .print,.week-nav,.bottom { display:none !important; }
+      main { padding:8px 0 0 !important; }
+      .hero { padding:11px 14px; border-radius:5px; }
+      h1 { margin:4px 0; font-size:17px; }
+      .hero p { font-size:9.3px; line-height:1.32; }
+      .report-page {
+        height:calc(297mm - 18mm - 4mm);
+        margin:0;
+        display:flex;
+        flex-direction:column;
+        break-after:page;
+        page-break-after:always;
+      }
+      .report-page:last-of-type { break-after:auto; page-break-after:auto; }
+      .panel { margin:7px 0 0; border-radius:5px; break-inside:avoid; }
+      .panel-head { padding:6px 9px; }
+      .panel-head h2 { font-size:10.5px; }
+      .panel-body { padding:7px 9px; }
+      .thesis,.price-grid,.columns,.strip,.events,.watch-list { gap:5px; }
+      .thesis article,.insight,.price-box,.event,.watch-list article { padding:6px 7px; }
+      .thesis b,.price-box h3,.insight h3 { margin-bottom:3px; font-size:8.8px; }
+      .thesis p,.insight p,.event p,.watch-list p { font-size:8px; line-height:1.32; }
+      .price-row { padding:1px 0; column-gap:3px; font-size:7.8px; }
+      .price-row .change { min-width:43px; font-size:7.2px; }
+      .basis-note,.report-footer { font-size:7px; }
+      .strip b,.event b,.watch-list b { font-size:7.8px; }
+      .strip strong { margin:0; font-size:11px; }
+      .strip span { font-size:7px; }
+      .report-footer { margin-top:auto; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="topbar">
+    <div class="wrap top-inner">
+      <div class="brand">
+        <div class="logo">Platts<em>AI</em></div>
+        <div class="brand-sub">
+          ENERGY &amp; PETROCHEMICALS INTELLIGENCE
+          <strong>아시아 원유·석유화학 위클리 시황</strong>
+        </div>
+      </div>
+      <div class="top-meta">
+        <small>대상 기간: 2026-10-26 ~ 2026-11-01<br>보고서 번호: PA-20261101-ASIA-W</small>
+        <button class="print" type="button" onclick="window.print()">인쇄 / PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="subbar">
+    <div class="wrap">
+      <span class="region">Asia-Pacific / Weekly Energy &amp; Petrochemicals Review</span>
+      <span class="updated">최종 업데이트: 2026-11-02 17:27 (KST)</span>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <nav class="week-nav" aria-label="보고서 빠른 이동">
+      <a href="#overview">핵심 결론</a>
+      <a href="#prices">주간 가격</a>
+      <a href="#chains">가치사슬 분석</a>
+      <a href="#events">설비·물류</a>
+      <a href="#watch">차주 관전 포인트</a>
+      <a class="back" href="#top">↑ 한번에 보기</a>
+    </nav>
+
+    <div class="report-page">
+      <section class="hero">
+        <div class="eyebrow">EXECUTIVE WEEKLY BRIEF · 26 OCTOBER – 01 NOVEMBER 2026</div>
+        <h1>나프타·LPG 조달비 상승과 부타디엔 공급 부족…PE·PP 가격 상승에도 수익성 개선은 제한</h1>
+        <p>중동 물류 위험과 12월 도착 나프타 확보 경쟁이 원료 가격을 끌어올렸습니다. 프로필렌·부타디엔과 일부 수지는 강세를 보였지만, 벤젠·MTBE는 하락하고 하류 가공업체의 가격 저항이 지속되었습니다. 이번 주의 핵심은 제품 가격 상승 자체보다 원료 대비 판매가격 전가 폭과 차기 설비 재가동 속도입니다.</p>
+      </section>
+
+      <section id="overview" class="panel">
+        <div class="panel-head">
+          <h2>Executive View · 이번 주의 세 가지 판단</h2>
+          <small>10월 26~30일 평가와 기간 내 발표 내용을 종합</small>
+        </div>
+        <div class="panel-body thesis">
+          <article>
+            <span class="tag warn">원가 압박</span>
+            <b>나프타 강세가 NCC 개선을 앞질렀습니다</b>
+            <p>일본 도착 나프타는 주초 대비 $36/mt 상승했고 동북아 에틸렌은 $40/mt 상승했습니다. 단순 에틸렌–나프타 가격 차이는 $143.75/mt에서 $147.75/mt로 소폭 확대됐으나, 통합 크래커의 통상 손익분기 수준 약 $250/mt에 여전히 미달합니다.</p>
+          </article>
+          <article>
+            <span class="tag">공급 주도</span>
+            <b>프로필렌·부타디엔의 강세 원인은 다릅니다</b>
+            <p>프로필렌은 중국 PDH 설비의 재가동 지연과 돌발 중단, 부타디엔은 제한된 현물 공급이 주도했습니다. 한국 FOB 기준 각각 $60/mt와 $150/mt 상승했으나 PP와 합성고무 업체의 높은 원료비 수용력은 별도로 점검해야 합니다.</p>
+          </article>
+          <article>
+            <span class="tag weak">수요 검증</span>
+            <b>수지 상승은 등급별로 차별화됐습니다</b>
+            <p>HDPE 필름은 주초 대비 $75/mt, PP 라피아는 $50/mt 상승했으나 LLDPE는 $5/mt 상승에 그치고 LDPE는 보합입니다. 강한 원가·운송비 압박에도 최종 수요의 광범위한 회복으로 판단하기는 어렵습니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="prices" class="panel">
+        <div class="panel-head">
+          <h2>Weekly Market Monitor · 주요 19개 품목</h2>
+          <small>10월 30일 평가 · 10월 26일 대비</small>
+        </div>
+        <div class="panel-body">
+          <div class="price-grid">
+            <div class="price-box">
+              <h3>① 원유 &amp; 원료</h3>
+              <div class="price-row"><span class="name">WTI 쿠싱 Mo01 · PCACG00</span><span class="value">$104.12/bbl</span><span class="change up">+$2.36</span></div>
+              <div class="price-row"><span class="name">Dated Brent · PCAAS00</span><span class="value">$118.76/bbl</span><span class="change down">−$9.21</span></div>
+              <div class="price-row"><span class="name">Dubai Mo01 · PCAAT00</span><span class="value">$118.70/bbl</span><span class="change up">+$2.96</span></div>
+              <div class="price-row"><span class="name">나프타 C+F 일본 · PAAAD00</span><span class="value">$1,082.25/mt</span><span class="change up">+$36.00</span></div>
+              <div class="price-row"><span class="name">에탄 몽벨뷰 · PMUDB05</span><span class="value">33.75¢/gal</span><span class="change up">+2.50¢</span></div>
+              <div class="price-row"><span class="name">C3 LPG 북아시아 · PMAAV00</span><span class="value">$1,113.00/mt</span><span class="change up">+$97.75</span></div>
+              <div class="price-row"><span class="name">C4 LPG 북아시아 · PMAAF00</span><span class="value">$1,203.00/mt</span><span class="change up">+$97.75</span></div>
+            </div>
+
+            <div class="price-box">
+              <h3>② 기초유분 &amp; 방향족</h3>
+              <div class="price-row"><span class="name">에틸렌 CFR 동북아 · AAOTM00</span><span class="value">$1,230.00/mt</span><span class="change up">+$40.00</span></div>
+              <div class="price-row"><span class="name">프로필렌 FOB 한국 · AAUXJ00</span><span class="value">$1,370.00/mt</span><span class="change up">+$60.00</span></div>
+              <div class="price-row"><span class="name">부타디엔 FOB 한국 · AAWWM00</span><span class="value">$1,840.00/mt</span><span class="change up">+$150.00</span></div>
+              <div class="price-row"><span class="name">MTBE FOB 싱가포르 · PHALF11</span><span class="value">$1,148.15/mt</span><span class="change down">−$53.11</span></div>
+              <div class="price-row"><span class="name">스티렌 FOB 한국 · AAMFL00</span><span class="value">$1,485.50/mt</span><span class="change down">−$16.50</span></div>
+              <div class="price-row"><span class="name">벤젠 FOB 한국 · PHASM05</span><span class="value">$1,198.33/mt</span><span class="change down">−$46.67</span></div>
+              <div class="price-row"><span class="name">톨루엔 FOB 한국 · PHASO05</span><span class="value">$1,243.50/mt</span><span class="change down">−$11.00</span></div>
+              <div class="price-row"><span class="name">PX FOB 한국 · PHASS05</span><span class="value">$1,350.00/mt</span><span class="change up">+$38.67</span></div>
+            </div>
+
+            <div class="price-box">
+              <h3>③ 유도품 · 수지</h3>
+              <div class="price-row"><span class="name">HDPE 필름 · AATYE00</span><span class="value">$1,180.00/mt</span><span class="change up">+$75.00</span></div>
+              <div class="price-row"><span class="name">PP 라피아 · PHBIK00</span><span class="value">$1,350.00/mt</span><span class="change up">+$50.00</span></div>
+              <div class="price-row"><span class="name">LLDPE 부텐 · PHAGZ00</span><span class="value">$1,205.00/mt</span><span class="change up">+$5.00</span></div>
+              <div class="price-row"><span class="name">LDPE 범용 · PHAHT00</span><span class="value">$1,400.00/mt</span><span class="change">보합</span></div>
+              <p class="basis-note">수지 4종은 CFR 극동아시아 평가입니다. 스티렌은 FOB 한국 90일 신용장 마커이며, C3·C4 LPG는 CFR 북아시아 30~60일 도착 화물입니다.</p>
+            </div>
+          </div>
+          <p class="basis-note">주간 증감은 동일 평가의 10월 30일 가격에서 10월 26일 가격을 차감했습니다. WTI는 쿠싱 Mo01 평가, Dated Brent는 북해 현물, Dubai는 아시아 Mo01 평가로 시장별 평가 시점과 거래 조건이 다릅니다.</p>
+        </div>
+      </section>
+
+      <div class="report-footer">
+        <span>ASIA ENERGY &amp; PETROCHEMICALS WEEKLY · 2026-10-26 — 2026-11-01</span>
+        <span>01 / 03</span>
+      </div>
+    </div>
+
+    <div class="report-page">
+      <section id="chains" class="panel">
+        <div class="panel-head">
+          <h2>Value Chain Review · 석유화학 수익성의 연결고리</h2>
+          <small>제품 평가, 설비 여건, 실수요를 함께 분석</small>
+        </div>
+        <div class="panel-body columns">
+          <article class="insight">
+            <h3>원유 → 나프타 → 에틸렌: 높은 도착 비용과 낮은 채산성</h3>
+            <p>Dated Brent는 주간 $9.21/bbl 하락했으나 Dubai Mo01은 $2.96/bbl, 일본 도착 나프타는 $36/mt 상승했습니다. 10월 30일 나프타는 6개월 최고 수준이었으며, 12월 도착 입찰 증가와 서구발 차익거래 물량 감소가 조달 프리미엄을 높였습니다. 에틸렌–나프타 단순 가격 차이는 $147.75/mt로 여전히 손익분기 수준을 밑돕니다. 10월 28일 발행된 아시아 석유화학 스코어카드의 별도 모델은 나프타 크래커 변동마진을 마이너스 $148/mt로 평가했습니다.</p>
+          </article>
+          <article class="insight">
+            <h3>LPG → PDH → 프로필렌·PP: 공급 차질이 원료비 상승을 증폭</h3>
+            <p>CFR 북아시아 프로판은 $97.75/mt 상승했고 프로판–일본 나프타 근월 스프레드는 마이너스 $14.50/mt에서 플러스 $41/mt로 전환되었습니다. 높은 프로판 가격은 혼합원료 크래커의 투입 매력을 낮춥니다. 한편 중국 Zhenhua의 연산 75만 톤 PDH 재가동은 지연됐고 Satellite Chemical의 연산 45만 톤 설비는 10월 28일 비계획 중단됐습니다. 공급 부족으로 프로필렌이 올랐으나 PP 가공업체의 마진 부담이 가격 전가를 제한합니다.</p>
+          </article>
+          <article class="insight">
+            <h3>부타디엔 → 합성고무: 강한 현물 가격과 수요 훼손 우려 병존</h3>
+            <p>한국 FOB 부타디엔은 주간 $150/mt 상승해 주요 제품 중 상승 폭이 가장 컸습니다. 중국 동부 현물가격과 합성고무 선물도 상승했지만, 10월 30일 동북아 CFR SBR–부타디엔 가격 차이는 약 $420/mt로 통상 손익분기 범위 $600~$650/mt를 밑돌았습니다. 일부 수요자는 추가 현물 구매보다 생산 축소가 경제적이라고 평가했습니다. 공급 긴축이 가격을 지지하더라도 타이어·고무업체의 구매량 감소가 후속 위험입니다.</p>
+          </article>
+          <article class="insight">
+            <h3>벤젠 → 스티렌 → PS: 재고 긴축과 하류 구매 저항의 충돌</h3>
+            <p>벤젠 FOB 한국은 $46.67/mt 하락한 반면 스티렌은 $16.50/mt 하락에 그쳤습니다. 중국 동부 스티렌 항만 재고는 10월 30일 2만 4,400톤으로 전주보다 7,100톤 감소해 약 2년 만의 저점에 근접했습니다. 이에 30일 스티렌은 하루 $44.50/mt 반등했으나, 주간 시작 가격에는 못 미쳤습니다. 벤젠 대비 스티렌의 단순 가격 차이는 확대됐어도 PS 구매자의 원료비 수용은 여전히 제한적입니다.</p>
+          </article>
+          <article class="insight">
+            <h3>PX → PTA → 폴리에스터: 현물 프리미엄과 최종 수요의 온도차</h3>
+            <p>PX FOB 한국은 $38.67/mt, 나프타는 $36/mt 상승해 양 품목의 단순 가격 차이는 $265.08/mt로 주초보다 $2.67/mt 확대됐습니다. 10월 30일 PX CFR 대만·중국 12월 실물 가격은 파생상품 가격보다 $102/mt 높아 현물 공급의 빠듯함을 보여줍니다. 중국의 PTA 가동률은 전주 68.2%에서 72.2%, 폴리에스터는 74.3%에서 75.0%로 높아졌지만 인도 PTA 구매는 약세를 유지했습니다.</p>
+          </article>
+          <article class="insight">
+            <h3>에틸렌 → PE / 프로필렌 → PP: 등급별 가격 전가력 차별화</h3>
+            <p>HDPE 필름은 $75/mt 상승해 에틸렌 상승분 $40/mt를 웃돌았지만, LLDPE는 $5/mt 상승했고 LDPE는 보합에 머물렀습니다. 생산비 및 운임 상승과 중동발 배송 지연에도 중국 가공업체는 필요 물량 위주로 구매했습니다. PP 라피아 역시 $50/mt 상승했으나 원료 프로필렌 상승분 $60/mt에는 못 미쳤습니다. 10월 30일 발행된 폴리머 단기 전망은 아시아 HDPE·LLDPE의 에틸렌 대비 스프레드가 8월 중순 이후 마이너스라고 평가했습니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Margin &amp; Structure · 주간 전환 신호</h2>
+          <small>동일 평가 기준 주초와 주말 비교</small>
+        </div>
+        <div class="panel-body strip">
+          <div>
+            <b>에틸렌 − 나프타</b>
+            <strong>$147.75/mt</strong>
+            <span>10월 26일 $143.75 → 30일 $147.75 · 단순 평가가격 차이</span>
+          </div>
+          <div>
+            <b>프로판 − 나프타 근월</b>
+            <strong>+$41.00/mt</strong>
+            <span>마이너스 $14.50 → 플러스 $41.00 · AZWWA01</span>
+          </div>
+          <div>
+            <b>벤젠 − 나프타 근월</b>
+            <strong>+$140.00/mt</strong>
+            <span>+$202.50 → +$140.00 · 직접 평가 AAVNM01</span>
+          </div>
+          <div>
+            <b>나프타 − 두바이 근월 크랙</b>
+            <strong>+$1.77/bbl</strong>
+            <span>마이너스 $0.42 → 플러스 $1.77 · 직접 평가 AAVUD00</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="report-footer">
+        <span>단순 제품–원료 가격 차이와 직접 평가된 파생 스프레드는 산식·인도 조건이 다릅니다. 설비 수익성은 원료 구성, 수율, 부산물 및 운임을 함께 반영합니다.</span>
+        <span>02 / 03</span>
+      </div>
+    </div>
+
+    <div class="report-page">
+      <section id="events" class="panel">
+        <div class="panel-head">
+          <h2>Weekly Event Radar · 설비·조달·물류</h2>
+          <small>기간 내 발표와 해당 기간의 시장·재고 동향</small>
+        </div>
+        <div class="panel-body events">
+          <div class="event alert">
+            <b>10월 26~30일 · 한국 NCC 가동 조정</b>
+            <p>10월 26일 확인된 계획상 YNCC 여수 1·2호기의 11월 가동률은 약 70%로, 10월 약 74%보다 낮습니다. 29일 전해진 LG화학 여수 1호기는 10월 23일 멈춰 12월 11일 재가동 예정이며, 여수 2호기와 대산 설비의 11월 가동 계획은 각각 89%와 72%입니다. 반대로 GS칼텍스는 여수 크래커를 10월 75%에서 11월 80%로 높일 계획입니다.</p>
+          </div>
+          <div class="event">
+            <b>10월 28~29일 · 동남아 설비 공급 복귀</b>
+            <p>말레이시아 PRefChem은 10월 16일 정전으로 중단된 크래커와 PE·PP 설비를 29일 재가동할 계획을 28일 발표했고, 29일 시장에서는 크래커 가동이 확인됐습니다. 크래커의 연간 생산능력은 에틸렌 120만 톤, 프로필렌 60만 톤입니다. 생산 정상화 속도는 동남아 현물 부족 완화의 핵심 변수입니다.</p>
+          </div>
+          <div class="event alert">
+            <b>10월 28~30일 · 12월 나프타 확보 경쟁</b>
+            <p>10월 29일 마감된 입찰에서 LG화학은 12월 상반기 여수·대산 도착 물량을 MOPJ 대비 약 $46.50/mt·$49/mt 프리미엄에 구매했습니다. 일본 AMEC의 12월 상반기 물량은 약 $65/mt 프리미엄으로 전해졌습니다. 30일 일본 도착 나프타 현물 차액은 MOPJ 대비 $57/mt로 2개월 최고 수준입니다.</p>
+          </div>
+          <div class="event">
+            <b>10월 29~30일 · 중동 수송 및 역외 물량</b>
+            <p>호르무즈 해협 통항은 10월 28일 18건에서 29일 26건으로 늘었으나 선박 공격·화재 보고가 이어졌습니다. 10월 30일 공개된 전망상 11월 서구발 극동아시아 나프타 유입은 약 136만 톤으로, 10월 약 191만 톤보다 적습니다. 높은 운임과 선박 부족이 공급 회복 속도를 제한합니다.</p>
+          </div>
+          <div class="event">
+            <b>10월 28~30일 · 중국 방향족 재고와 PTA 수요</b>
+            <p>중국 동부 스티렌 항만 재고는 10월 30일 2만 4,400톤으로 전주보다 7,100톤 감소했습니다. 벤젠 재고는 10월 28일 3만 5천 톤으로 전주 대비 1천 톤 증가했습니다. 재고 방향의 차이가 스티렌과 벤젠의 가격 분화를 키웠으며, 인도 PTA 구매 부진은 PX 강세의 하류 확산을 제약합니다.</p>
+          </div>
+          <div class="event">
+            <b>10월 29~31일 · 발표된 구조적 시사점</b>
+            <p>10월 30일 발행된 폴리머 단기 전망은 아시아 PE 수급 적자가 지속되더라도 약한 수요와 높은 운임이 마진 회복을 제한한다고 평가했습니다. 31일 발행된 글로벌 석유화학 히트맵은 에틸렌·프로필렌·방향족 가치사슬의 가격 흐름을 강세로 분류했으나, 개별 벤젠은 약세로 평가해 품목별 차별화를 확인했습니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="watch" class="panel">
+        <div class="panel-head">
+          <h2>Next-Week Watch · 차주 경영진 관전 포인트</h2>
+          <small>11월 1일 기준의 후속 확인 과제</small>
+        </div>
+        <div class="panel-body watch-list">
+          <article>
+            <b>원료 확보와 가동률</b>
+            <p>12월 도착 나프타 프리미엄과 서구발 유입량, YNCC·LG화학·GS칼텍스 및 PRefChem의 실제 가동률을 함께 점검해야 합니다.</p>
+          </article>
+          <article>
+            <b>C3·C4 가격 전가력</b>
+            <p>Zhenhua·Satellite PDH 정상화 시점, 프로판–나프타 차이, PP와 합성고무의 실구매량을 확인해야 합니다. 공급 주도 가격 상승은 수요 위축에 취약합니다.</p>
+          </article>
+          <article>
+            <b>방향족과 수지의 실수요</b>
+            <p>중국 스티렌·벤젠 항만 재고, PX 현물 프리미엄, PTA·폴리에스터 가동률과 PE 등급별 거래량을 통해 가격 상승의 지속성을 검증해야 합니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="report-footer">
+        <span>시장 범위: 2026-10-26 ~ 2026-11-01 · 주간 가격 비교일: 10월 26일 / 10월 30일 · 기간 내 발행 자료 반영</span>
+        <span>03 / 03</span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bottom">
+    <div class="wrap">
+      <span>PlattsAI Intelligence · Asia Energy &amp; Petrochemicals Weekly</span>
+      <span>USD 기준 · bbl: 배럴 · mt: 미터톤</span>
+    </div>
+  </footer>
+</body>
+</html>
