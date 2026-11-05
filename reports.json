@@ -1,5 +1,19 @@
 [
   {
+    "id": "user-1793919981325",
+    "title": "PLATTS 일간 보고 | 2026-11-04",
+    "category": "daily",
+    "date": "2026-11-05",
+    "provider": "PLATTS",
+    "summary": "국제유가 급락 속 에틸렌 강세·방향족 약세",
+    "tags": [
+      "납사",
+      "에틸렌"
+    ],
+    "author": "PLATTS",
+    "filePath": "./reports/daily/2026-11-05_PLATTS_일간_보고___2026-11-04.html"
+  },
+  {
     "id": "user-1793660329402",
     "title": "PLATTS 아시아 원유·석유화학 월간 보고 | 2026년 10월",
     "category": "monthly",
