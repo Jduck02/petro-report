@@ -1,5 +1,26 @@
 [
   {
+    "id": "user-1793924655884",
+    "title": "PLATTS 일간 보고 | 2026-11-05",
+    "category": "daily",
+    "date": "2026-11-06",
+    "provider": "PLATTS",
+    "summary": "납사 급락에 생산 가중 차액 확대 · 방향족·스티렌은 하락",
+    "tags": [
+      "일간",
+      "시장보고",
+      "원유",
+      "납사",
+      "에틸렌",
+      "프로필렌",
+      "벤젠",
+      "스티렌",
+      "제품"
+    ],
+    "author": "PLATTS",
+    "filePath": "./reports/daily/2026-11-06_PLATTS_일간_보고___2026-11-05.html"
+  },
+  {
     "id": "user-1793919981325",
     "title": "PLATTS 일간 보고 | 2026-11-04",
     "category": "daily",
