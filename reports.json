@@ -1,5 +1,26 @@
 [
   {
+    "id": "user-1794212930760",
+    "title": "PLATTS 일간 보고 | 2026-11-06",
+    "category": "daily",
+    "date": "2026-11-09",
+    "provider": "PLATTS",
+    "summary": "납사 반등에 여천NCC 지정 가중 차액 축소 · LPG·MTBE 상승, 프로필렌·PP 약세",
+    "tags": [
+      "일간",
+      "시장보고",
+      "원유",
+      "납사",
+      "에틸렌",
+      "프로필렌",
+      "벤젠",
+      "스티렌",
+      "제품"
+    ],
+    "author": "PLATTS",
+    "filePath": "./reports/daily/2026-11-09_PLATTS_일간_보고___2026-11-06.html"
+  },
+  {
     "id": "user-1793924655884",
     "title": "PLATTS 일간 보고 | 2026-11-05",
     "category": "daily",
