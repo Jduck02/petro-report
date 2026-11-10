@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/7.8.8/simple-statistics.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1/dist/chartjs-adapter-luxon.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
+<script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    min-height: 0;
+  }
+
+  body {
+    padding: 12px;
+    background: #ffffff;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  canvas {
+    max-width: 100%;
+  }
+
+  .maplibregl-map {
+    font-family: inherit;
+  }
+
+  .maplibregl-popup-content {
+    border-radius: 10px;
+    box-shadow:
+      0 12px 28px rgba(15, 23, 42, 0.16),
+      0 2px 6px rgba(15, 23, 42, 0.08);
+  }
+</style>
+</head>
+<body>
+<script>
+(function installWidgetDataHelpers() {
+  window.__widgetEmbeddedCsvById = {};
+
+  if (!window.getWidgetDataUrl) {
+    window.getWidgetDataUrl = function (fileId) {
+      return "https://api.platts.com" + "/api/images/" + encodeURIComponent(fileId);
+    };
+  }
+
+  if (window.loadCsv) {
+    return;
+  }
+
+  window.__widgetCsvPromises = window.__widgetCsvPromises || {};
+
+  window.loadCsv = function (fileId) {
+    if (!fileId || typeof fileId !== "string") {
+      return Promise.reject(new Error("Missing CSV file id."));
+    }
+
+    if (
+      window.__widgetEmbeddedCsvById &&
+      Object.prototype.hasOwnProperty.call(window.__widgetEmbeddedCsvById, fileId)
+    ) {
+      return Promise.resolve(parseCsv(window.__widgetEmbeddedCsvById[fileId]));
+    }
+
+    if (window.__widgetCsvPromises[fileId]) {
+      return window.__widgetCsvPromises[fileId];
+    }
+
+    var promise = fetch(window.getWidgetDataUrl(fileId))
+      .then(function (res) {
+        if (!res.ok) {
+          throw new Error("Failed to load CSV: " + fileId);
+        }
+        return res.text();
+      })
+      .then(function (text) {
+        return parseCsv(text);
+      })
+      .catch(function (err) {
+        delete window.__widgetCsvPromises[fileId];
+        throw err;
+      });
+
+    window.__widgetCsvPromises[fileId] = promise;
+    return promise;
+  };
+
+  function parseCsv(text) {
+    var rows = [];
+    var row = [];
+    var value = "";
+    var inQuotes = false;
+
+    text = String(text || "").replace(/^\uFEFF/, "");
+
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      var next = text[i + 1];
+
+      if (c === '"' && inQuotes && next === '"') {
+        value += '"';
+        i++;
+      } else if (c === '"') {
+        inQuotes = !inQuotes;
+      } else if (c === "," && !inQuotes) {
+        row.push(value);
+        value = "";
+      } else if ((c === "\n" || c === "\r") && !inQuotes) {
+        if (c === "\r" && next === "\n") {
+          i++;
+        }
+
+        row.push(value);
+
+        if (
+          row.some(function (v) {
+            return String(v).trim() !== "";
+          })
+        ) {
+          rows.push(row);
+        }
+
+        row = [];
+        value = "";
+      } else {
+        value += c;
+      }
+    }
+
+    row.push(value);
+
+    if (
+      row.some(function (v) {
+        return String(v).trim() !== "";
+      })
+    ) {
+      rows.push(row);
+    }
+
+    if (!rows.length) {
+      return [];
+    }
+
+    var headers = rows[0].map(function (h) {
+      return String(h || "").trim();
+    });
+
+    return rows.slice(1).map(function (r) {
+      var obj = {};
+
+      headers.forEach(function (h, idx) {
+        if (!h) {
+          return;
+        }
+
+        obj[h] = r[idx] == null ? "" : String(r[idx]).trim();
+      });
+
+      return obj;
+    });
+  }
+})();
+</script>
+<script>
+(function installWidgetMapHelper() {
+  if (window.renderMap) {
+    return;
+  }
+
+  var CARTO_API_KEY = "cb1_2djc_1_3e36c27cc3db01dc54c63715";
+
+  var CARTO_STYLE_URLS = {
+    light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+    dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+    streets: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
+  };
+
+  window.__widgetMaps = window.__widgetMaps || new WeakMap();
+
+  function resolveStyle(options) {
+    options = options || {};
+
+    if (options.style) {
+      return options.style;
+    }
+
+    var key =
+      options.basemap === "dark"
+        ? "dark"
+        : options.basemap === "streets"
+          ? "streets"
+          : "light";
+
+    return CARTO_STYLE_URLS[key];
+  }
+
+  function cartoTransformRequest(url) {
+    if (
+      CARTO_API_KEY &&
+      url.indexOf("cartocdn.com") !== -1 &&
+      url.indexOf("key=") === -1
+    ) {
+      var sep = url.indexOf("?") === -1 ? "?" : "&";
+      return { url: url + sep + "key=" + encodeURIComponent(CARTO_API_KEY) };
+    }
+
+    return { url: url };
+  }
+
+  window.renderMap = function (el, setup, options) {
+    if (!window.maplibregl || !el) {
+      return null;
+    }
+
+    options = options || {};
+
+    var existing = window.__widgetMaps.get(el);
+    if (existing) {
+      try {
+        existing.resize();
+      } catch (e) {}
+      return existing;
+    }
+
+    if (!el.style.height && !el.style.minHeight) {
+      el.style.height = "360px";
+    }
+
+    var center = options.center || [0, 20];
+    var zoom = options.zoom == null ? 2 : options.zoom;
+
+    var map = new window.maplibregl.Map({
+      container: el,
+      style: resolveStyle(options),
+      center: center,
+      zoom: zoom,
+      attributionControl: false,
+      cooperativeGestures: !!options.cooperativeGestures,
+      transformRequest: cartoTransformRequest
+    });
+
+    if (options.navigationControl !== false) {
+      map.addControl(new window.maplibregl.NavigationControl(), "top-right");
+    }
+
+    window.__widgetMaps.set(el, map);
+
+    var rafResize = null;
+
+    function scheduleResize() {
+      if (rafResize != null) return;
+
+      rafResize = requestAnimationFrame(function () {
+        rafResize = null;
+        try {
+          map.resize();
+        } catch (e) {}
+      });
+    }
+
+    map.on("load", function () {
+      if (typeof setup === "function") {
+        try {
+          setup(map, window.maplibregl);
+        } catch (e) {
+          console.error("Map setup error:", e);
+        }
+      }
+
+      scheduleResize();
+      requestAnimationFrame(scheduleResize);
+      setTimeout(scheduleResize, 100);
+      setTimeout(scheduleResize, 300);
+    });
+
+    map.on("error", function (e) {
+      console.error("MapLibre error:", e && e.error ? e.error : e);
+    });
+
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(scheduleResize);
+      ro.observe(el);
+
+      map.on("remove", function () {
+        try {
+          ro.disconnect();
+        } catch (e) {}
+      });
+    }
+
+    scheduleResize();
+    requestAnimationFrame(scheduleResize);
+    setTimeout(scheduleResize, 100);
+    setTimeout(scheduleResize, 300);
+
+    return map;
+  };
+
+  window.destroyMap = function (el) {
+    if (!window.__widgetMaps || !el) {
+      return;
+    }
+
+    var map = window.__widgetMaps.get(el);
+    if (!map) {
+      return;
+    }
+
+    try {
+      map.remove();
+    } catch (e) {}
+
+    window.__widgetMaps.delete(el);
+  };
+})();
+</script>
+<script>
+  (function installWidgetRegionAtlasHelper() {
+    if (window.loadRegionAtlas) {
+      return;
+    }
+
+    var DATAMAPS_COMMIT = "14c1641273bb52e6f115f99db847ec076c62eb4b";
+    var DATAMAPS_BASE =
+      "https://cdn.jsdelivr.net/gh/markmarkoh/datamaps@" +
+      DATAMAPS_COMMIT +
+      "/src/js/data/";
+
+    var REGION_ATLAS_REGISTRY = {
+      world: {
+        url: "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
+        object: "countries",
+      },
+      "us-states": {
+        url: DATAMAPS_BASE + "usa.topo.json",
+        object: "usa",
+      },
+      "india-states": {
+        url: DATAMAPS_BASE + "ind.topo.json",
+        object: "ind",
+      },
+      "china-provinces": {
+        url: DATAMAPS_BASE + "chn.topo.json",
+        object: "chn",
+      },
+      "canada-provinces": {
+        url: DATAMAPS_BASE + "can.topo.json",
+        object: "can",
+      },
+      "brazil-states": {
+        url: DATAMAPS_BASE + "bra.topo.json",
+        object: "bra",
+      },
+      "australia-states": {
+        url: DATAMAPS_BASE + "aus.topo.json",
+        object: "aus",
+      },
+      "indonesia-provinces": {
+        url: DATAMAPS_BASE + "idn.topo.json",
+        object: "idn",
+      },
+      "nigeria-states": {
+        url: DATAMAPS_BASE + "nga.topo.json",
+        object: "nga",
+      },
+      "kazakhstan-regions": {
+        url: DATAMAPS_BASE + "kaz.topo.json",
+        object: "kaz",
+      },
+      "mexico-states": {
+        url: DATAMAPS_BASE + "mex.topo.json",
+        object: "mex",
+      },
+      "south-africa-provinces": {
+        url: DATAMAPS_BASE + "zaf.topo.json",
+        object: "zaf",
+      },
+    };
+
+    var regionAtlasPromises = {};
+
+    window.loadRegionAtlas = function (key) {
+      key = key || "world";
+
+      if (regionAtlasPromises[key]) {
+        return regionAtlasPromises[key];
+      }
+
+      var entry = REGION_ATLAS_REGISTRY[key];
+      if (!entry) {
+        return Promise.reject(new Error("Unknown region atlas: " + key));
+      }
+      if (!window.topojson) {
+        return Promise.reject(new Error("topojson-client is unavailable."));
+      }
+
+      var promise = fetch(entry.url)
+        .then(function (res) {
+          if (!res.ok) {
+            throw new Error(
+              'Failed to load region atlas "' + key + '": ' + res.status,
+            );
+          }
+          return res.json();
+        })
+        .then(function (topology) {
+          return window.topojson.feature(
+            topology,
+            topology.objects[entry.object],
+          );
+        })
+        .catch(function (err) {
+          delete regionAtlasPromises[key];
+          throw err;
+        });
+
+      regionAtlasPromises[key] = promise;
+      return promise;
+    };
+
+    window.loadWorldAtlas = function () {
+      return window.loadRegionAtlas("world");
+    };
+  })();
+  </script>
+<script>
+(function installWidgetChartPluginHelpers() {
+  if (!window.Chart || window.__widgetChartPluginHelpersInstalled) {
+    return;
+  }
+
+  window.__widgetChartPluginHelpersInstalled = true;
+
+  var annotationPlugin =
+    window.ChartAnnotation ||
+    window["chartjs-plugin-annotation"];
+
+  if (annotationPlugin && !window.__widgetAnnotationPluginRegistered) {
+    try {
+      window.Chart.register(annotationPlugin);
+      window.__widgetAnnotationPluginRegistered = true;
+    } catch (e) {
+      console.warn("Failed to register chartjs-plugin-annotation:", e);
+    }
+  }
+})();
+</script>
+<script>
+(function installWidgetCanvasToolbar() {
+  if (window.__widgetCanvasToolbarInstalled) {
+    return;
+  }
+
+  window.__widgetCanvasToolbarInstalled = true;
+
+  function postDownloadToParent(filename, dataUrl) {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage(
+        {
+          __widget: "download-file",
+          filename: filename,
+          dataUrl: dataUrl
+        },
+        "*"
+      );
+      return;
+    }
+
+    var a = document.createElement("a");
+    a.href = dataUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  function postCopyToParent(dataUrl) {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage(
+        {
+          __widget: "copy-image",
+          dataUrl: dataUrl
+        },
+        "*"
+      );
+      return;
+    }
+
+    if (!navigator.clipboard || typeof ClipboardItem === "undefined") {
+      console.warn("Clipboard API is not available.");
+      return;
+    }
+
+    fetch(dataUrl)
+      .then(function (res) {
+        return res.blob();
+      })
+      .then(function (blob) {
+        return navigator.clipboard.write([
+          new ClipboardItem({
+            [blob.type || "image/png"]: blob
+          })
+        ]);
+      })
+      .catch(function (err) {
+        console.error("Failed to copy chart image:", err);
+      });
+  }
+
+  function createSvg() {
+    var ns = "http://www.w3.org/2000/svg";
+    var svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("width", "17");
+    svg.setAttribute("height", "17");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("fill", "none");
+    svg.setAttribute("aria-hidden", "true");
+    return svg;
+  }
+
+  function createSvgPath(d) {
+    var ns = "http://www.w3.org/2000/svg";
+    var path = document.createElementNS(ns, "path");
+    path.setAttribute("d", d);
+    path.setAttribute("stroke", "currentColor");
+    path.setAttribute("stroke-width", "2");
+    path.setAttribute("stroke-linecap", "round");
+    path.setAttribute("stroke-linejoin", "round");
+    return path;
+  }
+
+  function createDownloadIcon() {
+    var svg = createSvg();
+    svg.appendChild(createSvgPath("M12 3v11m0 0 4-4m-4 4-4-4"));
+    svg.appendChild(
+      createSvgPath("M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2")
+    );
+    return svg;
+  }
+
+  function createCopyIcon() {
+    var svg = createSvg();
+    svg.appendChild(
+      createSvgPath("M8 8V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2")
+    );
+    svg.appendChild(
+      createSvgPath("M6 8h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z")
+    );
+    return svg;
+  }
+
+  function applyToolbarStyles(toolbar) {
+    toolbar.style.position = "absolute";
+    toolbar.style.top = "-4px";
+    toolbar.style.right = "4px";
+    toolbar.style.zIndex = "30";
+    toolbar.style.display = "inline-flex";
+    toolbar.style.alignItems = "center";
+    toolbar.style.gap = "8px";
+    toolbar.style.opacity = "0";
+    toolbar.style.pointerEvents = "none";
+    toolbar.style.transform = "translateY(-2px) scale(0.96)";
+    toolbar.style.transition = "opacity 140ms ease, transform 140ms ease";
+  }
+
+  function applyButtonStyles(btn) {
+    btn.style.width = "36px";
+    btn.style.height = "36px";
+    btn.style.display = "inline-flex";
+    btn.style.alignItems = "center";
+    btn.style.justifyContent = "center";
+    btn.style.border = "1px solid rgba(148, 163, 184, 0.45)";
+    btn.style.borderRadius = "999px";
+    btn.style.background = "rgba(255, 255, 255, 0.9)";
+    btn.style.color = "#475569";
+    btn.style.cursor = "pointer";
+    btn.style.boxShadow =
+      "0 8px 20px rgba(15, 23, 42, 0.10), 0 1px 2px rgba(15, 23, 42, 0.08)";
+    btn.style.backdropFilter = "blur(8px)";
+    btn.style.webkitBackdropFilter = "blur(8px)";
+    btn.style.transition =
+      "background 140ms ease, color 140ms ease, border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease";
+  }
+
+  function showToolbar(toolbar) {
+    toolbar.style.opacity = "1";
+    toolbar.style.pointerEvents = "auto";
+    toolbar.style.transform = "translateY(0) scale(1)";
+  }
+
+  function hideToolbar(toolbar) {
+    toolbar.style.opacity = "0";
+    toolbar.style.pointerEvents = "none";
+    toolbar.style.transform = "translateY(-2px) scale(0.96)";
+  }
+
+  function setButtonHoverState(btn) {
+    btn.style.background = "#2563eb";
+    btn.style.color = "#ffffff";
+    btn.style.borderColor = "#2563eb";
+    btn.style.transform = "translateY(-1px)";
+    btn.style.opacity = "1";
+    btn.style.boxShadow =
+      "0 10px 24px rgba(37, 99, 235, 0.25), 0 2px 4px rgba(15, 23, 42, 0.10)";
+  }
+
+  function clearButtonHoverState(btn) {
+    btn.style.background = "rgba(255, 255, 255, 0.9)";
+    btn.style.color = "#475569";
+    btn.style.opacity = "1";
+    btn.style.borderColor = "rgba(148, 163, 184, 0.45)";
+    btn.style.transform = "translateY(0)";
+    btn.style.boxShadow =
+      "0 8px 20px rgba(15, 23, 42, 0.10), 0 1px 2px rgba(15, 23, 42, 0.08)";
+  }
+
+  function createIconButton(title, icon) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.title = title;
+    btn.setAttribute("aria-label", title);
+    btn.appendChild(icon);
+
+    applyButtonStyles(btn);
+
+    btn.addEventListener("mouseenter", function () {
+      setButtonHoverState(btn);
+    });
+
+    btn.addEventListener("mouseleave", function () {
+      clearButtonHoverState(btn);
+    });
+
+    return btn;
+  }
+
+  function getCanvasPngDataUrl(canvas) {
+    var off = document.createElement("canvas");
+    off.width = canvas.width;
+    off.height = canvas.height;
+
+    var ctx = off.getContext("2d");
+    if (ctx) {
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, off.width, off.height);
+      ctx.drawImage(canvas, 0, 0);
+    }
+
+    return off.toDataURL("image/png");
+  }
+
+  function isMapLibreCanvas(canvas) {
+    return !!(
+      canvas &&
+      canvas.classList &&
+      canvas.classList.contains("maplibregl-canvas")
+    );
+  }
+
+  function attachToolbarToCanvas(canvas) {
+    if (!canvas || isMapLibreCanvas(canvas)) return;
+
+    var parentEl = canvas.parentElement;
+    if (!parentEl) return;
+
+    var parentStyle = window.getComputedStyle(parentEl);
+    if (parentStyle.position === "static") {
+      parentEl.style.position = "relative";
+    }
+
+    if (parentEl.querySelector(".widget-canvas-toolbar")) {
+      return;
+    }
+
+    var toolbar = document.createElement("div");
+    toolbar.className = "widget-canvas-toolbar";
+    applyToolbarStyles(toolbar);
+
+    var copyBtn = createIconButton("Copy chart image", createCopyIcon());
+    var downloadBtn = createIconButton(
+      "Download chart as PNG",
+      createDownloadIcon()
+    );
+
+    copyBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      try {
+        var currentCanvas = parentEl.querySelector("canvas:not(.maplibregl-canvas)");
+        if (currentCanvas) {
+          postCopyToParent(getCanvasPngDataUrl(currentCanvas));
+        }
+      } catch (err) {
+        console.error("Failed to copy chart image:", err);
+      }
+    });
+
+    downloadBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      try {
+        var currentCanvas = parentEl.querySelector("canvas:not(.maplibregl-canvas)");
+        if (currentCanvas) {
+          postDownloadToParent("chart.png", getCanvasPngDataUrl(currentCanvas));
+        }
+      } catch (err) {
+        console.error("Failed to download chart image:", err);
+      }
+    });
+
+    toolbar.appendChild(copyBtn);
+    toolbar.appendChild(downloadBtn);
+
+    parentEl.addEventListener("mouseenter", function () {
+      showToolbar(toolbar);
+    });
+
+    parentEl.addEventListener("mouseleave", function () {
+      hideToolbar(toolbar);
+      clearButtonHoverState(copyBtn);
+      clearButtonHoverState(downloadBtn);
+    });
+
+    parentEl.appendChild(toolbar);
+  }
+
+  function attachCanvasToolbars() {
+    var canvases = document.querySelectorAll("canvas:not(.maplibregl-canvas)");
+
+    canvases.forEach(function (canvas) {
+      try {
+        attachToolbarToCanvas(canvas);
+      } catch (err) {
+        console.warn("Failed to attach canvas toolbar:", err);
+      }
+    });
+  }
+
+  function attachCanvasToolbarsSoon() {
+    attachCanvasToolbars();
+    setTimeout(attachCanvasToolbars, 0);
+    setTimeout(attachCanvasToolbars, 50);
+    setTimeout(attachCanvasToolbars, 150);
+    setTimeout(attachCanvasToolbars, 300);
+    setTimeout(attachCanvasToolbars, 600);
+  }
+
+  window.__widgetAttachChartToolbars = attachCanvasToolbarsSoon;
+
+  if (window.MutationObserver) {
+    var observer = new MutationObserver(function () {
+      attachCanvasToolbarsSoon();
+    });
+
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  attachCanvasToolbarsSoon();
+})();
+</script>
+<div id="pa-report-20261029" class="pa-report">
+<style>
+#pa-report-20261029{--ink:#11233e;--muted:#61738b;--line:#dce5ef;--blue:#1e40af;--red:#b91c1c;--green:#047857;--bg:#f3f6fa;font-family:system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;max-width:1100px;margin:auto;padding:16px}#pa-report-20261029 *{box-sizing:border-box}#pa-report-20261029 .sheet{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 12px 34px rgba(17,35,62,.07)}#pa-report-20261029 .hero{padding:28px 32px;background:#132745;color:#fff}#pa-report-20261029 .brand{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#b9c9df;font-weight:700}#pa-report-20261029 .meta{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12px;color:#cbd8e9;margin:12px 0 18px}#pa-report-20261029 .updated{margin-left:auto;text-align:right}#pa-report-20261029 h1{font-size:clamp(24px,3vw,34px);line-height:1.25;margin:0 0 10px}#pa-report-20261029 .hero p{max-width:850px;margin:0;color:#d4e1f1;font-size:14px}#pa-report-20261029 .nav{position:sticky;top:0;z-index:10;display:flex;gap:7px;align-items:center;flex-wrap:wrap;padding:10px 20px;background:#fff;border-bottom:1px solid var(--line)}#pa-report-20261029 .nav a,#pa-report-20261029 .nav button{font:600 12px system-ui,sans-serif;text-decoration:none;color:#1e40af;border:1px solid #d8e4f6;border-radius:8px;background:#f8fbff;padding:7px 10px;cursor:pointer}#pa-report-20261029 .nav .all{margin-left:auto}#pa-report-20261029 main{padding:26px 30px 34px}#pa-report-20261029 section{scroll-margin-top:88px;margin:0 0 34px}#pa-report-20261029 h2{font-size:21px;letter-spacing:-.025em;margin:0 0 5px}#pa-report-20261029 h3{font-size:15px;margin:0 0 11px}#pa-report-20261029 .sub{color:var(--muted);font-size:12px;margin:0 0 16px}#pa-report-20261029 .group{margin:18px 0 25px}#pa-report-20261029 .group-title{font-size:13px;font-weight:800;color:#345375;margin:0 0 11px;text-transform:uppercase;letter-spacing:.035em}#pa-report-20261029 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:9px}#pa-report-20261029 .kpi{border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#fff;min-height:100px}#pa-report-20261029 .kpi-name{font-size:11px;line-height:1.35;min-height:28px;font-weight:750;letter-spacing:.015em}#pa-report-20261029 .kpi-value{font-size:19px;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums;white-space:nowrap;margin:4px 0 1px}#pa-report-20261029 .kpi-value small{font-size:11px;letter-spacing:0;font-weight:500}#pa-report-20261029 .kpi-meta{font-size:11px;color:var(--muted);line-height:1.4}#pa-report-20261029 .up{color:var(--green)}#pa-report-20261029 .down{color:#c03950}#pa-report-20261029 .flat{color:#586b80}#pa-report-20261029 .comment-grid,#pa-report-20261029 .outlook-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#pa-report-20261029 .comment,#pa-report-20261029 .outlook{border:1px solid var(--line);background:#fff;border-radius:9px;padding:12px 13px;font-size:12px}#pa-report-20261029 .comment strong{display:block;font-size:13px;margin-bottom:5px}#pa-report-20261029 .comment p{margin:0}#pa-report-20261029 .comment .detail{color:var(--muted);font-size:11px;margin-top:7px}#pa-report-20261029 .chartbox{border:1px solid var(--line);border-radius:12px;padding:18px;background:#fff;margin:20px 0 27px}#pa-report-20261029 .charthead{display:flex;justify-content:space-between;gap:12px;align-items:start;flex-wrap:wrap}#pa-report-20261029 .seg{display:inline-flex;gap:2px;padding:3px;background:#eef2f7;border-radius:7px}#pa-report-20261029 .seg button{border:0;background:transparent;color:#54657d;border-radius:5px;padding:6px 11px;cursor:pointer;font-weight:700;font-size:12px}#pa-report-20261029 .seg button.active{background:white;color:#132745;box-shadow:0 1px 4px #ccd5e0}#pa-report-20261029 .chartstats{display:flex;gap:17px;flex-wrap:wrap;font-size:12px;margin:13px 0;color:#475569}#pa-report-20261029 .chartstats strong{color:#132745}#pa-report-20261029 .chartcanvas{height:295px;position:relative}#pa-report-20261029 .chartcanvas canvas{width:100%!important;height:100%!important}#pa-report-20261029 .legend{display:flex;gap:15px;flex-wrap:wrap;color:#50627a;font-size:11px;margin-top:11px}#pa-report-20261029 .legend i{display:inline-block;width:12px;height:3px;vertical-align:middle;margin-right:5px}#pa-report-20261029 .note{font-size:11px;color:var(--muted);margin:11px 0 0}#pa-report-20261029 .driver-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#pa-report-20261029 .driver{border:1px solid var(--line);border-radius:11px;padding:16px}#pa-report-20261029 .driver.bull{border-top:3px solid #059669}#pa-report-20261029 .driver.bear{border-top:3px solid #e11d48}#pa-report-20261029 .driver h4{font-size:12px;margin:11px 0 5px}#pa-report-20261029 .driver ul{padding-left:18px;margin:0;color:#334761;font-size:12px}#pa-report-20261029 .driver li+li{margin-top:6px}#pa-report-20261029 .outlook{line-height:1.6}#pa-report-20261029 .outlook strong{font-weight:750}#pa-report-20261029 .info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}#pa-report-20261029 .info{border:1px solid var(--line);border-radius:10px;background:#f8fafc;padding:15px}#pa-report-20261029 .info p,#pa-report-20261029 .info li{font-size:12px;margin:0 0 9px}#pa-report-20261029 .info ul{padding-left:18px;margin:0}#pa-report-20261029 .footer{border-top:1px solid var(--line);padding:17px 30px 25px;color:#667891;font-size:11px}#pa-report-20261029 .error{padding:35px 10px;color:#64748b;text-align:center;font-size:13px}@media(max-width:740px){#pa-report-20261029{padding:0}#pa-report-20261029 .hero{padding:24px 18px}#pa-report-20261029 main{padding:20px 15px}#pa-report-20261029 .comment-grid,#pa-report-20261029 .outlook-grid,#pa-report-20261029 .driver-grid,#pa-report-20261029 .info-grid{grid-template-columns:1fr}#pa-report-20261029 .footer{padding:16px}#pa-report-20261029 .nav .all{margin-left:0}}@media print{#pa-report-20261029{max-width:none;padding:0;background:#fff}#pa-report-20261029 .sheet{border:0;box-shadow:none}#pa-report-20261029 .nav{position:static}#pa-report-20261029 button{display:none!important}#pa-report-20261029 section,#pa-report-20261029 .comment,#pa-report-20261029 .info{break-inside:avoid}#pa-report-20261029 .chartcanvas{height:230px}}
+</style>
+<div class="sheet" id="pa-top"><header class="hero"><div class="brand">S&amp;P Global Energy · Platts | Asia-Pacific / Petrochemicals &amp; Crude Daily Review</div><div class="meta"><span>발행일자: 2026-10-29 (목) · 보고서 번호: PA-20261029-ASIA</span><span class="updated">최종 업데이트: 2026-10-29 16:23 (KST)</span></div><h1>아시아 원유·석유화학 데일리 시황</h1><p>원유 시장은 지정학적 물류 위험과 역내 공급 회복 기대가 맞서는 가운데, 석유화학 시장은 높은 원료비와 제한적인 최종 수요로 품목별 차별화가 이어지고 있습니다. 가격은 10월 28일 기준 최근 확인 평가입니다.</p></header><nav class="nav" aria-label="빠른 이동"><a href="#pa-summary">1. 일간 시황 요약</a><a href="#pa-drivers">2. 핵심 변동 요인</a><a href="#pa-outlook">3. 단기 가격 전망</a><a href="#pa-extra">4. 추가 주요 정보</a><a class="all" href="#pa-top">↑ 한번에 보기</a><button type="button" data-print>인쇄 / PDF</button></nav><main><section aria-label="일간 주요 가격 및 지표 현황"><h2>일간 주요 가격 및 지표 현황</h2><p class="sub">Platts 최근 평가: 2026-10-28 · 증감은 직전 평가 대비 · 스티렌은 2026-10-23 주간 평가 및 전주 대비</p><div id="pa-kpis" aria-live="polite"><div class="error">가격 데이터를 불러오는 중입니다.</div></div></section><section id="pa-summary"><h2>1. 일간 시황 요약 <span class="sub">Daily Market Commentary</span></h2><p class="sub">품목별 평가 흐름과 수급 해석 · 대부분 10월 28일 평가 기준</p><div class="group"><h3 class="group-title">원유 &amp; 원료</h3><div class="comment-grid"><article class="comment"><strong>WTI Cushing Mo01</strong><p>10월 28일 평가가 직전일보다 상승하며 미국 원유 가격의 반등이 확인되었습니다.<br>중동 통항 위험이 하단을 지지하는 한편, 수출 회복 기대가 추가 상승을 견제하고 있습니다.</p></article><article class="comment"><strong>Dated Brent</strong><p>전일 대비 상승하였으나 현물 프리미엄과 근월 구조는 변동성이 확대되었습니다.<br>물류 위험의 영향과 역내 공급 회복 기대가 맞물려 방향성 확인이 요구됩니다.</p></article><article class="comment"><strong>Dubai Mo01</strong><p>전일 대비 하락하며 WTI·Dated Brent와 엇갈렸습니다.<br>Dubai 현물-선도 프리미엄 완화는 중동산 원유 조달 긴장 일부 완화를 시사합니다.</p></article><article class="comment"><strong>Naphtha C+F Japan</strong><p>10월 28일 평가가 하락하였지만 역외 물량 유입을 제약하는 운임 부담은 여전합니다.<br>12월 도착분 조달 입찰이 이어지는 가운데, 크래커의 낮은 가공경제성이 수요를 억제하고 있습니다.</p></article><article class="comment"><strong>US Ethane, Mont Belvieu</strong><p>직전 평가 대비 소폭 상승하였습니다.<br>수출 수요가 가격을 지지하는 반면 미국 생산·재고 여력은 추가 상승폭을 제한하고 있습니다.</p></article><article class="comment"><strong>C3 LPG CFR North Asia</strong><p>4거래일 상승 후 10월 28일 하락으로 전환하였습니다.<br>중동 공급·운임 위험에도 중국 PDH와 혼합원료 크래커의 높은 투입비 부담이 구매를 제약합니다.</p></article><article class="comment"><strong>C4 LPG CFR North Asia</strong><p>프로판과 함께 전일 대비 하락하였으나 부탄의 상대적 프리미엄은 유지되었습니다.<br>수송 제약 및 블렌딩용 물량 경쟁이 공급 측면을 지지하고 있습니다.</p></article></div></div><div class="group"><h3 class="group-title">제품 · 기초유분 및 방향족</h3><div class="comment-grid"><article class="comment"><strong>Ethylene CFR NE Asia</strong><p>10월 28일 평가가 상승하여 역내 현물 타이트와 매도 호가 강세를 반영하였습니다.<br>납사 대비 단순 차액은 $164/mt로 전일보다 확대됐지만 원가 회수 압박은 지속됩니다.</p></article><article class="comment"><strong>Propylene Poly Grade FOB Korea</strong><p>높은 원료비와 역내 가격 상승에 따라 전일 대비 오름세를 기록하였습니다.<br>PP 가공 마진 저하로 최종 수요의 가격 수용력은 제한적입니다.</p></article><article class="comment"><strong>Butadiene FOB Korea</strong><p>현물 공급 제약과 중국 내수·합성고무 관련 지표 강세에 힘입어 상승하였습니다.<br>GS Caltex 증산 계획은 일부 완충 요인이나 타이어·유도품의 비용 전가에는 제약이 있습니다.</p></article><article class="comment"><strong>MTBE FOB Singapore</strong><p>전일 대비 하락하며 원유 강세와 다른 흐름을 보였습니다.<br>역내 휘발유 블렌딩 수요가 미진하고 중국 물량 소화도 더뎌 단기 매수심리가 약합니다.</p></article><article class="comment"><strong>Styrene FOB Korea</strong><p>10월 28일 시장 보도에서 전일 대비 약세가 확인되며 공급 완화 가능성이 거론되었습니다.<br>별도 KPI의 $1,472.50/mt는 10월 23일 주간 평가이므로 최신 보도 가격과 기준일이 다릅니다.</p></article><article class="comment"><strong>Benzene FOB Korea Marker</strong><p>4거래일 연속 상승 뒤 하락 전환하였습니다.<br>중국 동부 항만 재고가 10월 28일 소폭 증가하고 스티렌 체인의 마진 부담이 부각됐습니다.</p></article><article class="comment"><strong>Toluene FOB Korea Marker</strong><p>전일과 동일한 가격을 유지하였습니다.<br>현물 물량이 제한적인 반면 용제·휘발유 블렌딩 수요 둔화가 상단을 제약합니다.</p></article><article class="comment"><strong>Paraxylene FOB Korea Marker</strong><p>중국 동부 PX 설비의 가동 축소 가능성에 힘입어 전일 대비 상승하였습니다.<br>하이난 재가동과 폴리에스터·PTA 수요 둔화가 추가 상승의 제약 요인입니다.</p></article></div></div><div class="group"><h3 class="group-title">유도품 · 폴리머</h3><div class="comment-grid"><article class="comment"><strong>HDPE Film CFR FE Asia</strong><p>최근 확인 평가에서 큰 폭의 상승이 관측됐습니다.<br>판매가격의 상승과 별개로 높은 에틸렌 원가, 제한적인 구매 및 공급 복귀 가능성이 채산성을 압박합니다.</p></article><article class="comment"><strong>PP Raffia CFR FE Asia</strong><p>프로필렌 가격 강세에 따른 원가 전가로 전일 대비 상승하였습니다.<br>공급업체의 호가 인상에도 가공업체의 저항과 말레이시아 설비 재가동 계획을 점검해야 합니다.</p></article><article class="comment"><strong>LLDPE Butene CFR FE Asia</strong><p>10월 28일 평가가 보합을 유지하였습니다.<br>농업용 필름 수요의 계절적 지지에도 전반적인 실수요 부진이 신규 상승을 억제합니다.</p></article><article class="comment"><strong>LDPE G-P CFR FE Asia</strong><p>10월 28일 평가가 변동 없이 마감하였습니다.<br>중동산 인도 불확실성이 가격을 지지하지만 동남아 생산 복귀와 약한 가공 수요가 맞서고 있습니다.</p></article></div></div><div class="chartbox"><div class="charthead"><div><h3>에틸렌 · 납사 가격 및 차액 추이</h3><div class="sub">CFR 동북아 에틸렌 − C+F 일본 납사 · 동시 평가일 · 단위: USD/mt</div></div><div class="seg" role="group" aria-label="차트 기간"><button type="button" data-days="7">7일</button><button type="button" data-days="30" class="active">30일</button><button type="button" data-days="90">90일</button></div></div><div class="chartstats" id="pa-chart-stats">2026-10-28 기준 · 에틸렌 $1,210.00/mt · 납사 $1,046.00/mt · 차액 <strong>$164.00/mt</strong></div><div class="chartcanvas"><canvas id="pa-en-chart" aria-label="에틸렌 납사 가격 및 차액 추이 그래프" role="img"></canvas><div id="pa-chart-message" class="error" hidden>시계열을 표시할 수 없습니다.</div></div><div class="legend"><span><i style="background:#1e40af"></i>에틸렌 CFR NE Asia</span><span><i style="background:#b91c1c"></i>납사 C+F Japan</span><span><i style="background:#059669"></i>에틸렌 − 납사 (우측 축)</span></div><p class="note">7·30·90일은 2026-10-29을 포함한 역산 기간입니다. 휴장일은 연결해 보이며 평가값을 채워 넣지 않습니다. 최신 공통 평가일은 10월 28일입니다.</p></div></section><section id="pa-drivers"><h2>2. 핵심 변동 요인 <span class="sub">Key Price Drivers</span></h2><p class="sub">공급·수요로 구분한 단기 상방 및 하방 변수</p><div class="driver-grid"><article class="driver bull"><h3>상승 요인 · Bullish Drivers</h3><h4>[공급 측면 / Supply Side]</h4><ul><li>호르무즈 통항·선박 보험·운임 부담은 중동발 원유, 납사, LPG 및 수지의 역내 도착 물량을 제약합니다.</li><li>한국 크래커 감산과 일부 설비 보수는 에틸렌·프로필렌·부타디엔 현물 공급을 제한합니다.</li><li>중국 동부 PX 공급 축소 가능성과 낮은 일부 방향족 항만 재고는 현물 가격을 지지합니다.</li></ul><h4>[수요 측면 / Demand Side]</h4><ul><li>12월 도착 납사 구매 입찰과 일부 역내 조달은 근월 원료 수요를 유지하고 있습니다.</li><li>중국 북부 농업용 필름 계절 수요가 LLDPE의 하방을 일부 지지하고 있습니다.</li></ul></article><article class="driver bear"><h3>하락 요인 · Bearish Drivers</h3><h4>[공급 측면 / Supply Side]</h4><ul><li>GS Caltex의 11월 가동률 인상과 PRefChem의 10월 29일 재가동 계획은 일부 올레핀·수지의 공급 복귀 변수입니다.</li><li>하이난 PX 설비 재가동 및 중국 MTBE 생산 물량은 해당 제품 가격 상단을 제약합니다.</li><li>중동 원유 수출 회복과 정부 보유 원유 방출은 유가 위험 프리미엄을 낮출 수 있습니다.</li></ul><h4>[수요 측면 / Demand Side]</h4><ul><li>에틸렌–납사 차액 축소와 낮은 유도품 마진으로 크래커·가공업체의 원료 구매가 신중합니다.</li><li>MTBE·톨루엔의 블렌딩 수요가 약하고, 스티렌·PE·PP 가공업체는 가격 상승을 온전히 전가하지 못하고 있습니다.</li><li>PX의 폴리에스터·PTA 수요 둔화와 중국 정유사의 가공 축소 검토가 체인 전반의 매수 심리를 제약합니다.</li></ul></article></div></section><section id="pa-outlook"><h2>3. 단기 가격 전망 <span class="sub">Short-term Outlook</span></h2><p class="sub">향후 1~2주 · 수급과 평가 움직임을 반영한 방향성 판단</p><div class="outlook-grid"><div class="outlook"><strong>WTI Cushing Mo01 - 보합 :</strong> 중동 통항 위험이 가격을 지지하나 수출 정상화 기대가 상단을 제한할 전망입니다.</div><div class="outlook"><strong>Dated Brent - 보합 :</strong> 공급 위험과 근월 수요 완화가 맞서 높은 변동성 속 횡보가 예상됩니다.</div><div class="outlook"><strong>Dubai Mo01 - 약보합 :</strong> 중동산 원유의 현물 프리미엄 완화가 이어지면 상승 탄력이 제한될 것으로 판단됩니다.</div><div class="outlook"><strong>Naphtha C+F Japan - 강보합 :</strong> 높은 운임과 역외 공급 제약이 뒷받침하나 크래커 감산이 상승폭을 억제할 전망입니다.</div><div class="outlook"><strong>US Ethane Mont Belvieu - 강보합 :</strong> 높은 수출 흐름이 가격을 지지하되 생산·재고 여력이 급등을 제한할 것으로 예상됩니다.</div><div class="outlook"><strong>C3 LPG CFR North Asia - 보합 :</strong> 운송 리스크와 중국의 가격 민감형 구매가 맞서 제한적인 등락이 예상됩니다.</div><div class="outlook"><strong>C4 LPG CFR North Asia - 강보합 :</strong> 상대적으로 제한된 공급과 블렌딩용 수요가 하방을 지지할 것으로 판단됩니다.</div><div class="outlook"><strong>Ethylene CFR NE Asia - 강보합 :</strong> 역내 현물 부족이 단기 가격을 받치지만 높은 납사 비용과 약한 유도품 수요가 제약합니다.</div><div class="outlook"><strong>Propylene FOB Korea - 강보합 :</strong> 원가와 일부 가동률 조정이 지지하나 PP 수요의 가격 저항이 전망의 핵심 변수입니다.</div><div class="outlook"><strong>Butadiene FOB Korea - 강보합 :</strong> 근월 현물 제약은 지속되겠으나 합성고무 수요 부진과 생산 복귀 가능성을 점검해야 합니다.</div><div class="outlook"><strong>MTBE FOB Singapore - 약세 :</strong> 중국발 물량 경쟁과 부진한 역내 블렌딩 수요로 가격 압박이 이어질 전망입니다.</div><div class="outlook"><strong>Styrene FOB Korea - 약보합 :</strong> 최근 시장가격 약세와 재고 증가 가능성이 반영되며 하류 구매 회복 전까지 상단이 제한됩니다.</div><div class="outlook"><strong>Benzene FOB Korea - 보합 :</strong> 낮은 재고가 지지하나 최근 재고 반등과 유도품 마진 악화로 가격은 혼조가 예상됩니다.</div><div class="outlook"><strong>Toluene FOB Korea - 보합 :</strong> 타이트한 현물 공급과 약한 용제·블렌딩 수요가 균형을 이룰 전망입니다.</div><div class="outlook"><strong>Paraxylene FOB Korea - 강보합 :</strong> 일부 설비 감산 가능성이 지지하나 재가동과 약한 PTA 수요가 추가 상승폭을 제한합니다.</div><div class="outlook"><strong>HDPE Film CFR FE Asia - 보합 :</strong> 원가 상승분 전가와 공급 복귀가 맞서 단기 강세의 지속 여부는 실수요에 달렸습니다.</div><div class="outlook"><strong>PP Raffia CFR FE Asia - 강보합 :</strong> 프로필렌 원가 부담이 호가를 지지하나 가공업체의 가격 저항이 상승폭을 제한합니다.</div><div class="outlook"><strong>LLDPE Butene CFR FE Asia - 보합 :</strong> 농업용 필름의 계절 수요에도 공급 여력과 보수적 구매가 시세를 묶을 전망입니다.</div><div class="outlook"><strong>LDPE G-P CFR FE Asia - 보합 :</strong> 중동산 도착 불확실성은 지지 요인이나 역내 설비 복귀가 상승을 제약합니다.</div></div></section><section id="pa-extra"><h2>4. 추가 주요 정보 <span class="sub">Additional Market Information</span></h2><p class="sub">스프레드 · 설비 · 물류 및 재고</p><div class="info-grid"><article class="info"><h3>주요 크랙 / 스프레드</h3><p><strong>에틸렌–납사:</strong> 10월 28일 동일 평가일 기준 $164/mt로 전일 $140.75/mt 대비 $23.25/mt 확대되었습니다. 통합업체의 일반적인 손익분기 참고 수준인 약 $250/mt에는 여전히 못 미칩니다.</p><p><strong>프로판–납사:</strong> 현물 평가 단순 차액은 약 −$4/mt입니다. 별도 선물 스프레드는 프로판 프리미엄으로 전환돼 LPG 대체투입 경제성을 약화시키고 있습니다.</p><p><strong>PX–납사:</strong> 서로 다른 인도조건의 단순 가격차는 약 $286.67/mt이며, PTA 수요 둔화가 추가 개선을 제약합니다.</p></article><article class="info"><h3>설비 가동률 및 정기보수</h3><ul><li>YNCC 여수 1·2호기: 11월 가동률 약 70% 계획, 10월 약 74% 대비 하락. 3호기는 가동 중단 상태로 알려졌습니다.</li><li>GS Caltex 여수 크래커: 11월 약 80% 가동 계획, 10월 75%에서 인상됩니다.</li><li>말레이시아 PRefChem: 10월 16일 정전으로 중단된 크래커·PE·PP 설비의 10월 29일 재가동이 계획됐습니다. 실제 재가동 여부를 확인해야 합니다.</li><li>중국 국유 정유사 일부는 높은 원유·운임 비용으로 11월 추가 감산을 검토하고 있습니다.</li></ul></article><article class="info"><h3>물류 / 재고 동향</h3><ul><li>10월 27일 호르무즈 통과 유조선은 하루 9척으로 평시 약 45척보다 현저히 적었습니다.</li><li>중동–일본 VLGC 운임은 10월 26일까지 월평균 약 $256/mt로 9월 평균보다 높았습니다.</li><li>중국 동부 벤젠 항만 재고는 10월 28일 3만5,000mt로 전주 대비 1,000mt 증가하였습니다.</li><li>한국 납사 재고는 9월 말 1,482.6만 배럴로 전월 대비 3.1% 증가했습니다. 물류·재고 수치마다 기준일이 상이합니다.</li></ul></article></div></section></main><footer class="footer">S&amp;P Global Energy · Platts 평가 및 시장 분석 | 발행 기준 2026-10-29 · 가격 최종 평가 2026-10-28, 스티렌 KPI는 2026-10-23 주간 평가. 표시 가격은 각 평가의 거래조건·인도지역 기준입니다. 본 자료는 내부 시황 검토용이며 투자 또는 거래 권유가 아닙니다. © 2026 S&amp;P Global.</footer></div></div>
+<script>(function(){var root=document.getElementById('pa-report-20261029');if(!root||root.dataset.bound==='yes')return;root.dataset.bound='yes';var p=root.querySelector('[data-print]');if(p)p.addEventListener('click',function(){window.print()});var csvAssess='csv-riEwmU7qrTtBrJkSF6INZ',csvHistory='csv-fmAC02KtHa3Sjz6XHUvOf';var groups=[['원유 & 원료 (Crude & Feedstocks)',[['PCACG00','WTI CRUDE · Cushing Mo01'],['PCAAS00','BRENT CRUDE · Dated'],['PCAAT00','DUBAI CRUDE · Mo01'],['PAAAD00','NAPHTHA C+F JAPAN'],['PMUDB05','ETHANE US · Mt Belvieu'],['PMAAV00','C3 LPG CFR NORTH ASIA'],['PMAAF00','C4 LPG CFR NORTH ASIA']]],['제품 (Monomers & Aromatics)',[['AAOTM00','ETHYLENE CFR NEA'],['AAUXJ00','PROPYLENE FOB KOREA'],['AAWWM00','BUTADIENE FOB KOREA'],['PHALF11','MTBE FOB SINGAPORE'],['PHASU05','STYRENE FOB KOREA · WEEKLY'],['PHASM05','BENZENE FOB KOREA'],['PHASO05','TOLUENE FOB KOREA'],['PHASS05','PARAXYLENE FOB KOREA']]],['유도품 (Derivatives / Polymers)',[['AATYE00','HDPE FILM CFR FEA'],['PHBIK00','PP RAFFIA CFR FEA'],['PHAGZ00','LLDPE BUTENE CFR FEA'],['PHAHT00','LDPE G-P CFR FEA']]]];function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}function fmt(v,dec){return Number(v).toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})}function unit(r){return r.currency==='USC'?'¢/gal':r.uom==='BBL'?'$/bbl':'$/mt'}function price(r){return (r.currency==='USC'?'¢':'$')+fmt(r.latest_observation_value,2)}function sign(v){var n=Number(v);return n>0?'+':n<0?'−':''}function norm(s){if(!s)return '';var v=String(s).slice(0,10);return /^\d{4}-\d{2}-\d{2}$/.test(v)?v:''}function renderAssess(rows){var host=root.querySelector('#pa-kpis');if(!host)return;var dict={};(rows||[]).forEach(function(r){dict[r.symbol]=r});host.innerHTML=groups.map(function(g){return '<div class="group"><div class="group-title">'+esc(g[0])+' · '+g[1].length+'개 품목</div><div class="kpis">'+g[1].map(function(item){var r=dict[item[0]];if(!r)return '<div class="kpi"><div class="kpi-name">'+esc(item[1])+' · '+esc(item[0])+'</div><div class="kpi-meta">평가값 확인 필요</div></div>';var n=Number(r.absolute_change),pct=Number(r.percent_change),cls=n>0?'up':n<0?'down':'flat',u=r.currency==='USC'?'¢':'$';return '<div class="kpi"><div class="kpi-name">'+esc(item[1])+'<br><span class="kpi-meta">'+esc(r.symbol)+' · '+esc(r.description)+'</span></div><div class="kpi-value">'+price(r)+' <small>/'+(r.uom==='BBL'?'bbl':r.uom==='GAL'?'gal':'mt')+'</small></div><div class="kpi-meta '+cls+'">'+sign(n)+u+fmt(Math.abs(n),2)+' · '+sign(pct)+fmt(Math.abs(pct),2)+'%'+(r.assessment_frequency==='Weekly'?' 전주 대비':' 전일 대비')+'</div><div class="kpi-meta">평가 '+esc(norm(r.latest_observation_date))+(r.assessment_frequency==='Weekly'?' · 주간 평가':'')+'</div></div>'}).join('')+'</div></div>'}).join('')}if(!window.loadCsv){root.querySelector('#pa-kpis').innerHTML='<div class="error">가격 자료 연결이 필요합니다.</div>';return}loadCsv(csvAssess).then(renderAssess).catch(function(){var e=root.querySelector('#pa-kpis');if(e)e.innerHTML='<div class="error">가격 자료를 표시할 수 없습니다.</div>'});var chart=null,all=[];var canvas=root.querySelector('#pa-en-chart');var msg=root.querySelector('#pa-chart-message');var stats=root.querySelector('#pa-chart-stats');function filtered(days){var min=new Date(Date.UTC(2026,9,30-days)).toISOString().slice(0,10);return all.filter(function(r){return r.date>=min&&r.date<='2026-10-29'})}function redraw(days){var d=filtered(days);if(!d.length)return;var first=d[0],last=d[d.length-1],spread=last.s,delta=spread-first.s;stats.innerHTML='평가 '+esc(first.date)+' ~ '+esc(last.date)+' · 공통 평가일 '+d.length+'개 · 최근 차액 <strong>$'+fmt(spread,2)+'/mt</strong> · 기간 첫 평가일 대비 <strong class="'+(delta>0?'up':delta<0?'down':'flat')+'">'+sign(delta)+'$'+fmt(Math.abs(delta),2)+'/mt</strong>';chart.data.datasets[0].data=d.map(function(r){return {x:r.date,y:r.e}});chart.data.datasets[1].data=d.map(function(r){return {x:r.date,y:r.n}});chart.data.datasets[2].data=d.map(function(r){return {x:r.date,y:r.s}});chart.options.scales.x.min=new Date(d[0].date+'T00:00:00Z').valueOf();chart.options.scales.x.max=new Date(d[d.length-1].date+'T23:59:59Z').valueOf();chart.update('none')}if(!window.Chart||!window.loadCsv||!canvas){if(msg)msg.hidden=false;return}loadCsv(csvHistory).then(function(rows){all=(rows||[]).map(function(r){var dt=norm(r.assessDate),e=Number(r.ethylene_usd_mt),n=Number(r.naphtha_usd_mt),s=Number(r.ethylene_minus_naphtha_spread_usd_mt);return {date:dt,e:e,n:n,s:s,paired:String(r.both_assessed).toLowerCase()==='true'}}).filter(function(r){return r.date&&r.paired&&Number.isFinite(r.e)&&Number.isFinite(r.n)&&Number.isFinite(r.s)}).sort(function(a,b){return a.date.localeCompare(b.date)});if(!all.length){if(msg)msg.hidden=false;return}var existing=Chart.getChart(canvas);if(existing)existing.destroy();chart=new Chart(canvas,{type:'line',data:{datasets:[{label:'에틸렌 CFR NE Asia ($/mt)',data:[],yAxisID:'y',borderColor:'#1e40af',backgroundColor:'#1e40af',borderWidth:2.2,pointRadius:0,pointHoverRadius:4,tension:.12},{label:'납사 C+F Japan ($/mt)',data:[],yAxisID:'y',borderColor:'#b91c1c',backgroundColor:'#b91c1c',borderWidth:2.2,pointRadius:0,pointHoverRadius:4,tension:.12},{label:'에틸렌−납사 차액 ($/mt, 우측)',data:[],yAxisID:'yr',borderColor:'#059669',backgroundColor:'#059669',borderWidth:2.3,pointRadius:0,pointHoverRadius:4,tension:.12}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'x',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{title:function(items){return items.length?new Date(items[0].parsed.x).toLocaleDateString('ko-KR',{timeZone:'UTC',year:'numeric',month:'long',day:'numeric'}):''},label:function(ctx){return ctx.dataset.label+': $'+fmt(ctx.parsed.y,2)+'/mt'}}}},scales:{x:{type:'time',time:{unit:'day',displayFormats:{day:'MMM d'}},ticks:{maxTicksLimit:8,color:'#64748b'},grid:{color:'#edf1f6'}},y:{position:'left',title:{display:true,text:'평가 가격 · USD/mt',color:'#475569'},ticks:{color:'#475569'},grid:{color:'#e2e8f0'}},yr:{position:'right',title:{display:true,text:'차액 · USD/mt',color:'#059669'},ticks:{color:'#047857'},grid:{drawOnChartArea:false}}}}});redraw(30);root.querySelectorAll('[data-days]').forEach(function(btn){btn.addEventListener('click',function(){root.querySelectorAll('[data-days]').forEach(function(b){b.classList.toggle('active',b===btn)});redraw(Number(btn.dataset.days))})})}).catch(function(){if(msg)msg.hidden=false})})();</script>
+</body>
+</html>
