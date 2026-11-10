@@ -64,6 +64,7 @@
     .falling{color:#07847c}
     .unchanged{color:#697990}
     .spread-badge{margin-top:9px;padding:6px 7px;border-radius:8px;color:#1c509b;font-size:11px;text-align:center;font-weight:850;background:linear-gradient(145deg,#f9fcff,#e7f0ff);border:1px solid #b9d1fb;box-shadow:inset 0 1px 2px #fff,0 3px 7px rgba(43,97,177,.13);min-height:32px}
+    .spread-badge small{display:block;color:#64748b;font-size:10px;font-weight:650}
     .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
     .pane{background:#f7fafd;border:1px solid var(--line);padding:18px;border-radius:12px}
     .market-item{padding:10px 0;border-bottom:1px solid #dce4ee}
@@ -146,7 +147,7 @@
     <div class="kpis" id="productCards"></div>
     <div class="group-title">③ 유도품 · 4개</div>
     <div class="kpis" id="polymerCards"></div>
-    <div class="notice">11월 9일 평가값이 있는 카드는 해당일 가격과 11월 6일 대비 변화를 표시함. 가격 공란은 11월 9일 값이며, 카드 하단에 11월 6일 직전 실제 평가값을 별도로 명시함. 제품 스프레드 배지는 당일 동일 평가일 가격과 납사가 모두 있을 때만 표시함. 11월 6일 제품별 차액은 아래 차트의 마지막 관측값에 반영됨. 미국 에탄 단위는 미국 센트/갤런임.</div>
+    <div class="notice">11월 9일 평가값이 있는 카드는 해당일 가격과 11월 6일 대비 변화를 표시함. 가격 공란은 11월 9일 값이며, 카드 하단에 11월 6일 직전 실제 평가값을 별도로 명시함. 제품 카드의 스프레드는 <strong>11월 6일 제품 평가가격 − 같은 날 납사 $928.25/mt</strong>임. 11월 9일 스프레드로 해석하지 않음. 미국 에탄 단위는 미국 센트/갤런임.</div>
   </section>
 
   <section id="spreads">
@@ -437,7 +438,12 @@ for(const item of items){
   const card=document.createElement("article");
   card.className="kpi "+(item.change>0?"upmove":item.change<0?"downmove":"");
   const cls=item.change>0?"rising":item.change<0?"falling":"unchanged";
-  const spread='<div class="spread-badge" aria-label="당일 동일 평가일 가격 미확정"></div>';
+
+  const spreadValue=item.group==="products"?item.lastValue-naphthaLast:null;
+  const spread=item.group==="products"
+    ?`<div class="spread-badge">스프레드 : ${spreadValue>=0?"+":"−"}$${fmt(Math.abs(spreadValue))}<small>11/06 공통 평가 기준 · USD/mt</small></div>`
+    :"";
+
   const lastActual=item.price===null
     ?`직전 실제 평가 ${item.lastDate.slice(5).replace("-","/")} · ${priceText(item,item.lastValue)}`
     :`평가 ${reportDate.slice(5).replace("-","/")}`;
@@ -445,7 +451,7 @@ for(const item of items){
     <div class="name">${item.name}</div>
     <div class="price">${priceText(item,item.price)}</div>
     <div class="delta ${cls}">${item.change===null?"":`${changeText(item)} (${signed(item.pct)}%)`}</div>
-    ${item.group==="products"?spread:""}
+    ${spread}
     <span class="symbol">${item.symbol} · ${item.unit}<br />${lastActual}</span>`;
   document.getElementById(item.group==="raw"?"rawCards":item.group==="products"?"productCards":"polymerCards").appendChild(card);
   const summary=document.createElement("div");
