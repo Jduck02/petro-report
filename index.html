@@ -16,70 +16,89 @@
   <style>
     body { font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif; transition: background-color 0.2s ease, color 0.2s ease; }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #262626; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #404040; }
 
-    /* Comprehensive Light Mode (일반모드) Styling */
+    /* Comprehensive Light Mode (일반모드) — GPIC Yellow & Black Styling */
     html.light,
     body.light-mode {
-      background-color: #f8fafc !important;
-      color: #0f172a !important;
+      background-color: #fafafa !important;
+      color: #111111 !important;
     }
+    body.light-mode ::-webkit-scrollbar-track { background: #f4f4f5; }
+    body.light-mode ::-webkit-scrollbar-thumb { background: #d4d4d8; }
+    body.light-mode ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+
     body.light-mode header {
       background-color: #ffffff !important;
-      border-color: #e2e8f0 !important;
-      color: #0f172a !important;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
+      border-color: #e5e5e5 !important;
+      color: #111111 !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
     }
     body.light-mode header h1 {
-      color: #0f172a !important;
+      color: #111111 !important;
     }
-    body.light-mode .gpic-badge {
+    body.light-mode .gpic-badge,
+    body.light-mode .bg-yellow-400 {
       background-color: #facc15 !important;
       color: #000000 !important;
       border-color: #eab308 !important;
     }
+    body.light-mode .bg-yellow-400:hover {
+      background-color: #fde047 !important;
+      color: #000000 !important;
+    }
+    body.light-mode .gpic-dark-pill {
+      background-color: #111111 !important;
+      color: #facc15 !important;
+      border-color: #111111 !important;
+    }
+
     body.light-mode .cat-tabs-bar,
     body.light-mode #categoryTabsContainer {
       background-color: #ffffff !important;
-      border-color: #e2e8f0 !important;
-      color: #0f172a !important;
+      border-color: #e5e5e5 !important;
+      color: #111111 !important;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
     }
-    body.light-mode .cat-tabs-bar button.cat-tab:not(.bg-blue-600) {
-      color: #334155 !important;
+    body.light-mode .cat-tabs-bar button.cat-tab:not(.bg-yellow-400):not(.bg-emerald-600):not(.bg-cyan-600):not(.bg-amber-600):not(.bg-purple-600) {
+      color: #262626 !important;
       background-color: transparent !important;
     }
-    body.light-mode .cat-tabs-bar button.cat-tab:not(.bg-blue-600):hover {
-      background-color: #f1f5f9 !important;
-      color: #0f172a !important;
+    body.light-mode .cat-tabs-bar button.cat-tab:not(.bg-yellow-400):not(.bg-emerald-600):not(.bg-cyan-600):not(.bg-amber-600):not(.bg-purple-600):hover {
+      background-color: #fefce8 !important;
+      color: #111111 !important;
     }
     body.light-mode .search-toolbar,
     body.light-mode #searchToolbarContainer {
       background-color: #ffffff !important;
-      border-color: #e2e8f0 !important;
+      border-color: #e5e5e5 !important;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
     }
     body.light-mode .report-card {
       background-color: #ffffff !important;
-      border-color: #e2e8f0 !important;
-      color: #0f172a !important;
+      border-color: #e5e5e5 !important;
+      color: #111111 !important;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
     }
     body.light-mode .report-card:hover {
       background-color: #ffffff !important;
-      border-color: #cbd5e1 !important;
-      box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.08) !important;
+      border-color: #eab308 !important;
+      box-shadow: 0 8px 18px -4px rgba(234, 179, 8, 0.14) !important;
     }
     body.light-mode .report-card h3 {
-      color: #0f172a !important;
+      color: #111111 !important;
+    }
+    body.light-mode .report-card:hover h3 {
+      color: #a16207 !important;
     }
     body.light-mode .report-card p {
-      color: #475569 !important;
+      color: #525252 !important;
     }
 
     /* ALL CONTAINERS, CARDS, TOOLBARS & CREATOR BOXES IN LIGHT MODE */
+    body.light-mode [class*="bg-neutral-9"],
     body.light-mode [class*="bg-slate-9"],
     body.light-mode #viewCreator > div,
     body.light-mode .cat-tabs-bar,
@@ -90,31 +109,46 @@
     body.light-mode .creator-card,
     body.light-mode .creator-box {
       background-color: #ffffff !important;
-      border-color: #e2e8f0 !important;
-      color: #0f172a !important;
+      border-color: #e5e5e5 !important;
+      color: #111111 !important;
     }
 
-    body.light-mode [class*="bg-slate-8"] {
-      background-color: #f1f5f9 !important;
-      border-color: #e2e8f0 !important;
-      color: #1e293b !important;
+    body.light-mode [class*="bg-neutral-8"]:not(.gpic-dark-pill),
+    body.light-mode [class*="bg-slate-8"]:not(.gpic-dark-pill) {
+      background-color: #f4f4f5 !important;
+      border-color: #e4e4e7 !important;
+      color: #18181b !important;
     }
 
+    body.light-mode [class*="border-neutral-"],
     body.light-mode [class*="border-slate-"] {
-      border-color: #e2e8f0 !important;
+      border-color: #e5e5e5 !important;
     }
 
-    body.light-mode .text-white,
+    body.light-mode .text-white:not(.bg-emerald-600):not(.bg-cyan-600):not(.bg-amber-600):not(.bg-purple-600),
+    body.light-mode .text-neutral-100,
     body.light-mode .text-slate-100 {
-      color: #0f172a !important;
+      color: #111111 !important;
     }
+    body.light-mode .text-neutral-200,
+    body.light-mode .text-neutral-300,
     body.light-mode .text-slate-200,
     body.light-mode .text-slate-300 {
-      color: #1e293b !important;
+      color: #262626 !important;
     }
+    body.light-mode .text-neutral-400,
+    body.light-mode .text-neutral-500,
     body.light-mode .text-slate-400,
     body.light-mode .text-slate-500 {
-      color: #64748b !important;
+      color: #525252 !important;
+    }
+    body.light-mode .text-yellow-300,
+    body.light-mode .text-yellow-400 {
+      color: #a16207 !important;
+    }
+    body.light-mode .gpic-dark-pill,
+    body.light-mode .gpic-dark-pill span {
+      color: #facc15 !important;
     }
     body.light-mode .text-cyan-300,
     body.light-mode .text-cyan-400 {
@@ -130,33 +164,39 @@
     body.light-mode #reportDateInput,
     body.light-mode #reportSummaryInput,
     body.light-mode #reportTagsInput,
-    body.light-mode #reportAuthorInput,
+    body.light-mode #reportProviderInput,
     body.light-mode #ghPatInput,
     body.light-mode #syncPatInput,
     body.light-mode #searchInput {
       background-color: #ffffff !important;
-      color: #0f172a !important;
-      border-color: #cbd5e1 !important;
+      color: #111111 !important;
+      border-color: #d4d4d8 !important;
+    }
+    body.light-mode input:focus,
+    body.light-mode textarea:focus,
+    body.light-mode select:focus {
+      border-color: #eab308 !important;
     }
 
-    body.light-mode #htmlCodeInput {
-      background-color: #ffffff !important;
-      color: #0369a1 !important;
-      border-color: #cbd5e1 !important;
+    body.light-mode #htmlCodeInput,
+    body.light-mode #editReportHtml {
+      background-color: #fefce8 !important;
+      color: #111111 !important;
+      border-color: #e5e5e5 !important;
       font-family: monospace;
     }
 
     body.light-mode input::placeholder,
     body.light-mode textarea::placeholder {
-      color: #94a3b8 !important;
+      color: #a3a3a3 !important;
     }
 
     body.light-mode select option {
       background-color: #ffffff !important;
-      color: #0f172a !important;
+      color: #111111 !important;
     }
 
-    /* Quick Template Buttons in Light Mode */
+    /* Quick Template Buttons in Light Mode (Keep per-category distinct colors) */
     body.light-mode .bg-emerald-950/60 {
       background-color: #ecfdf5 !important;
       color: #047857 !important;
@@ -174,118 +214,126 @@
     }
 
     /* Helper info blocks in Light Mode */
+    body.light-mode .bg-neutral-950/60,
     body.light-mode .bg-slate-950/60 {
-      background-color: #f1f5f9 !important;
-      border-color: #e2e8f0 !important;
-      color: #334155 !important;
+      background-color: #fefce8 !important;
+      border-color: #fde047 !important;
+      color: #713f12 !important;
+    }
+    body.light-mode .bg-yellow-950/30,
+    body.light-mode .bg-yellow-950/40 {
+      background-color: #fefce8 !important;
+      border-color: #fde047 !important;
+      color: #713f12 !important;
     }
 
     /* Modals in Light Mode */
     body.light-mode #readerModal > div,
-    body.light-mode #syncModal > div {
+    body.light-mode #syncModal > div,
+    body.light-mode #editModal > div,
+    body.light-mode #adminPasswordModal > div {
       background-color: #ffffff !important;
-      border-color: #e2e8f0 !important;
-      color: #0f172a !important;
+      border-color: #e5e5e5 !important;
+      color: #111111 !important;
     }
-    body.light-mode #readerModal .bg-slate-950,
-    body.light-mode #syncModal .bg-slate-950 {
-      background-color: #f8fafc !important;
-      border-color: #e2e8f0 !important;
-      color: #0f172a !important;
+    body.light-mode #readerModal .bg-neutral-950,
+    body.light-mode #syncModal .bg-neutral-950,
+    body.light-mode #editModal .bg-neutral-950,
+    body.light-mode #adminPasswordModal .bg-neutral-950 {
+      background-color: #fafafa !important;
+      border-color: #e5e5e5 !important;
+      color: #111111 !important;
     }
     body.light-mode #syncModalReportList {
-      background-color: #f8fafc !important;
-      border-color: #e2e8f0 !important;
+      background-color: #fafafa !important;
+      border-color: #e5e5e5 !important;
     }
     body.light-mode #syncModalReportList > div {
       background-color: #ffffff !important;
-      border-color: #e2e8f0 !important;
+      border-color: #e5e5e5 !important;
     }
 
     /* Buttons in Light Mode */
-    body.light-mode button.bg-slate-800,
-    body.light-mode a.bg-slate-800,
-    body.light-mode label.bg-slate-800 {
-      background-color: #f1f5f9 !important;
-      color: #1e293b !important;
-      border-color: #cbd5e1 !important;
+    body.light-mode button.bg-neutral-800:not(.gpic-dark-pill),
+    body.light-mode a.bg-neutral-800,
+    body.light-mode label.bg-neutral-800,
+    body.light-mode button.bg-neutral-900:not(.gpic-dark-pill),
+    body.light-mode a.bg-neutral-900 {
+      background-color: #f4f4f5 !important;
+      color: #18181b !important;
+      border-color: #d4d4d8 !important;
     }
-    body.light-mode button.bg-slate-800:hover,
-    body.light-mode a.bg-slate-800:hover,
-    body.light-mode label.bg-slate-800:hover {
-      background-color: #e2e8f0 !important;
-    }
-    body.light-mode button.bg-slate-900 {
-      background-color: #f8fafc !important;
-      color: #475569 !important;
-      border-color: #cbd5e1 !important;
-    }
-    body.light-mode button.bg-slate-900:hover {
-      background-color: #e2e8f0 !important;
-      color: #0f172a !important;
+    body.light-mode button.bg-neutral-800:not(.gpic-dark-pill):hover,
+    body.light-mode a.bg-neutral-800:hover,
+    body.light-mode label.bg-neutral-800:hover,
+    body.light-mode button.bg-neutral-900:not(.gpic-dark-pill):hover,
+    body.light-mode a.bg-neutral-900:hover {
+      background-color: #fef08a !important;
+      color: #000000 !important;
+      border-color: #eab308 !important;
     }
 
     body.light-mode footer {
       background-color: #ffffff !important;
-      border-color: #e2e8f0 !important;
-      color: #64748b !important;
+      border-color: #e5e5e5 !important;
+      color: #525252 !important;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white">
+<body class="bg-neutral-950 text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-yellow-400 selection:text-black">
 
   <!-- Header -->
-  <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
+  <header class="sticky top-0 z-40 bg-neutral-950/95 backdrop-blur-md border-b border-neutral-800 shadow-xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col lg:flex-row items-center justify-between gap-2.5">
       <div class="flex items-center gap-2.5 cursor-pointer shrink-0" onclick="switchNav('archive')">
-        <div title="Global Petchem-market Intelligence Center" class="gpic-badge h-9 px-1.5 rounded-xl bg-yellow-400 text-black flex items-center justify-center shadow-lg shadow-yellow-900/20 border border-yellow-300 font-black text-xs tracking-tighter shrink-0 whitespace-nowrap">
+        <div title="Global Petchem-market Intelligence Center" class="gpic-badge h-9 px-1.5 rounded-xl bg-yellow-400 text-black flex items-center justify-center shadow-lg shadow-yellow-400/20 border border-yellow-300 font-black text-xs tracking-tighter shrink-0 whitespace-nowrap">
           GPIC
         </div>
         <div class="min-w-0">
           <div class="flex items-center gap-2">
             <h1 class="text-sm sm:text-base font-extrabold text-white tracking-tight whitespace-nowrap">글로벌 석유화학시장 정보 센터</h1>
-            <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-400 border border-cyan-800 uppercase whitespace-nowrap shrink-0">GitHub Pages</span>
+            <span class="gpic-dark-pill px-1.5 py-0.5 rounded text-[10px] font-bold bg-neutral-900 text-yellow-400 border border-yellow-400/50 uppercase whitespace-nowrap shrink-0">GitHub Pages</span>
           </div>
-          <p class="text-[11px] text-slate-400 whitespace-nowrap">일간 · 스페셜 리포트 보관소 &amp; 전 기기 실시간 공유</p>
+          <p class="text-[11px] text-neutral-400 whitespace-nowrap">일간 · 스페셜 리포트 보관소 &amp; 전 기기 실시간 공유</p>
         </div>
       </div>
 
       <!-- Navigation Tabs -->
       <div class="flex items-center flex-wrap justify-center lg:justify-end gap-1.5 shrink-0">
-        <button id="navBtnArchive" onclick="switchNav('archive')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-md transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+        <button id="navBtnArchive" onclick="switchNav('archive')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-yellow-400 hover:bg-yellow-300 text-black shadow-md transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
           <span>📑 보관소</span>
-          <span id="navReportCount" class="px-1.5 py-0.5 rounded-full text-[10px] bg-white/20">0</span>
+          <span id="navReportCount" class="px-1.5 py-0.5 rounded-full text-[10px] bg-black text-yellow-400 font-bold">0</span>
         </button>
 
-        <button id="navBtnCreator" onclick="switchNav('creator')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-cyan-600/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-600 hover:text-white transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+        <button id="navBtnCreator" onclick="switchNav('creator')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-yellow-400/15 text-yellow-300 border border-yellow-400/40 hover:bg-yellow-400 hover:text-black transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
           <span>➕ 새 리포트 생성 (HTML 입력)</span>
         </button>
 
         <!-- Team/Mobile writer link button -->
-        <button id="navBtnShareWriter" onclick="copyTeamWriterLink()" title="타인의 핸드폰/PC에서 보고서를 작성할 수 있는 권한 링크 복사" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-cyan-950/60 text-cyan-300 border border-cyan-800/80 hover:bg-cyan-900/60 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0">
+        <button id="navBtnShareWriter" onclick="copyTeamWriterLink()" title="타인의 핸드폰/PC에서 보고서를 작성할 수 있는 권한 링크 복사" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 text-yellow-300 border border-neutral-700 hover:border-yellow-400/60 hover:bg-neutral-800 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0">
           <span>🔗</span>
           <span class="hidden md:inline">팀원/모바일 작성 링크</span>
         </button>
 
         <!-- Refresh / Sync remote button -->
-        <button id="navBtnRefresh" onclick="fetchRemoteReports(true)" title="GitHub 최신 보고서 실시간 동기화" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0">
+        <button id="navBtnRefresh" onclick="fetchRemoteReports(true)" title="GitHub 최신 보고서 실시간 동기화" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-yellow-400 border border-neutral-700 hover:border-yellow-400/60 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0">
           <span id="refreshIcon">🔄</span>
           <span class="hidden md:inline">동기화</span>
         </button>
 
         <!-- Local uncommitted reports sync button -->
-        <button id="navBtnSyncLocal" onclick="openSyncModal()" title="이 PC의 로컬 보고서를 GitHub에 일괄 동기화" class="hidden px-2.5 py-1.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition flex items-center gap-1 shadow-md whitespace-nowrap shrink-0">
+        <button id="navBtnSyncLocal" onclick="openSyncModal()" title="이 PC의 로컬 보고서를 GitHub에 일괄 동기화" class="hidden px-2.5 py-1.5 rounded-xl text-xs font-bold bg-yellow-400 hover:bg-yellow-300 text-black transition flex items-center gap-1 shadow-md whitespace-nowrap shrink-0">
           <span>☁️ 로컬</span>
-          <span id="navSyncLocalCount" class="px-1.5 py-0.5 rounded-full text-[10px] bg-slate-950 text-amber-300 font-mono">0</span>
+          <span id="navSyncLocalCount" class="px-1.5 py-0.5 rounded-full text-[10px] bg-black text-yellow-400 font-mono font-bold">0</span>
           <span class="hidden lg:inline">동기화</span>
         </button>
 
-        <a href="https://github.com/jduck02/petro-report" target="_blank" rel="noreferrer" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1 transition whitespace-nowrap shrink-0">
+        <a href="https://github.com/jduck02/petro-report" target="_blank" rel="noreferrer" class="px-2.5 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-700 text-xs font-semibold flex items-center gap-1 transition whitespace-nowrap shrink-0">
           <span>GitHub 저장소</span> ↗
         </a>
 
         <!-- Dark/Light Theme Toggle Button -->
-        <button id="themeToggleBtn" onclick="toggleTheme()" title="모드 전환 (다크모드 / 일반모드)" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0">
+        <button id="themeToggleBtn" onclick="toggleTheme()" title="모드 전환 (다크모드 / 일반모드)" class="gpic-dark-pill px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-yellow-400 border border-neutral-700 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0">
           <span id="themeIcon">☀️</span>
           <span id="themeLabel" class="hidden sm:inline">일반모드</span>
         </button>
@@ -300,72 +348,72 @@
     <div id="viewArchive" class="space-y-6">
 
       <!-- Unsynced Local Reports Notice Banner -->
-      <div id="localSyncAlert" class="hidden bg-amber-950/40 border border-amber-600/50 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-amber-200 shadow-lg">
+      <div id="localSyncAlert" class="hidden bg-yellow-950/30 border border-yellow-400/40 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-yellow-200 shadow-lg">
         <div class="flex items-center gap-3">
           <span class="text-2xl">⚠️</span>
           <div>
             <div class="font-bold text-xs sm:text-sm text-white flex items-center gap-2">
               <span>현재 컴퓨터 브라우저에만 저장된 로컬 보고서가 있습니다</span>
-              <span id="localReportAlertCount" class="px-2 py-0.5 rounded-full text-[11px] bg-amber-500 text-slate-950 font-bold">0</span>
+              <span id="localReportAlertCount" class="px-2 py-0.5 rounded-full text-[11px] bg-yellow-400 text-black font-bold">0</span>
             </div>
-            <p class="text-[11px] text-slate-300 mt-0.5">다른 기기(스마트폰, 다른 PC 등)에서도 이 보고서들을 보려면 GitHub 저장소 및 중앙 목록(reports.json)에 동기화해야 합니다.</p>
+            <p class="text-[11px] text-neutral-300 mt-0.5">다른 기기(스마트폰, 다른 PC 등)에서도 이 보고서들을 보려면 GitHub 저장소 및 중앙 목록(reports.json)에 동기화해야 합니다.</p>
           </div>
         </div>
-        <button onclick="openSyncModal()" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shrink-0 flex items-center gap-1.5 shadow-md transition">
+        <button onclick="openSyncModal()" class="px-4 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-xs shrink-0 flex items-center gap-1.5 shadow-md transition">
           <span>☁️ 지금 GitHub에 일괄 동기화</span>
         </button>
       </div>
 
       <!-- Admin Mode Active Banner -->
-      <div id="adminModeBanner" class="hidden bg-gradient-to-r from-amber-950/70 via-slate-900 to-amber-950/70 border border-amber-500/50 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl">
+      <div id="adminModeBanner" class="hidden bg-gradient-to-r from-yellow-950/50 via-neutral-900 to-yellow-950/50 border border-yellow-400/50 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl">
         <div class="flex items-center gap-3">
           <span class="text-2xl">🛡️</span>
           <div>
             <div class="font-bold text-xs sm:text-sm text-white flex items-center gap-2">
               <span>관리자 모드 활성화됨</span>
-              <span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500 text-slate-950 font-extrabold uppercase">Admin Active</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-yellow-400 text-black font-extrabold uppercase">Admin Active</span>
             </div>
-            <p class="text-[11px] text-amber-200/90 mt-0.5">
+            <p class="text-[11px] text-yellow-200/90 mt-0.5">
               기존에 올렸던 모든 문서의 수정(✏️) 및 삭제(🗑️)가 가능합니다. 수정/삭제 시 변경사항이 GitHub 중앙 저장소에 즉시 커밋되어 다른 모든 기기(스마트폰, 다른 PC 등)에 실시간 반영됩니다.
             </p>
           </div>
         </div>
-        <button onclick="exitAdminMode()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold shrink-0 cursor-pointer transition">
+        <button onclick="exitAdminMode()" class="px-3.5 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white border border-neutral-700 text-xs font-semibold shrink-0 cursor-pointer transition">
           관리자 모드 끄기
         </button>
       </div>
 
       <!-- Category Tabs -->
-      <div id="categoryTabsContainer" class="cat-tabs-bar bg-slate-900/90 border border-slate-800 rounded-2xl p-2 sm:p-3 shadow-lg flex flex-wrap gap-2">
-        <button onclick="setCategory('all')" id="tab-all" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white transition flex items-center gap-2">
-          전체 보고서 <span id="count-all" class="px-2 py-0.5 rounded-full text-[11px] bg-white/20">0</span>
+      <div id="categoryTabsContainer" class="cat-tabs-bar bg-neutral-900/90 border border-neutral-800 rounded-2xl p-2 sm:p-3 shadow-lg flex flex-wrap gap-2">
+        <button onclick="setCategory('all')" id="tab-all" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-yellow-400 text-black transition flex items-center gap-2 shadow-md">
+          전체 보고서 <span id="count-all" class="px-2 py-0.5 rounded-full text-[11px] bg-black text-yellow-400 font-bold">0</span>
         </button>
-        <button onclick="setCategory('daily')" id="tab-daily" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
-          ☀️ 일간 보고서 <span id="count-daily" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-emerald-400">0</span>
+        <button onclick="setCategory('daily')" id="tab-daily" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-neutral-300 hover:text-white hover:bg-neutral-800 transition flex items-center gap-2">
+          ☀️ 일간 보고서 <span id="count-daily" class="px-2 py-0.5 rounded-full text-[11px] bg-neutral-800 text-emerald-400">0</span>
         </button>
-        <button onclick="setCategory('weekly')" id="tab-weekly" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
-          📊 주간 보고서 <span id="count-weekly" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-cyan-400">0</span>
+        <button onclick="setCategory('weekly')" id="tab-weekly" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-neutral-300 hover:text-white hover:bg-neutral-800 transition flex items-center gap-2">
+          📊 주간 보고서 <span id="count-weekly" class="px-2 py-0.5 rounded-full text-[11px] bg-neutral-800 text-cyan-400">0</span>
         </button>
-        <button onclick="setCategory('monthly')" id="tab-monthly" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
-          📅 월간 보고서 <span id="count-monthly" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-amber-400">0</span>
+        <button onclick="setCategory('monthly')" id="tab-monthly" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-neutral-300 hover:text-white hover:bg-neutral-800 transition flex items-center gap-2">
+          📅 월간 보고서 <span id="count-monthly" class="px-2 py-0.5 rounded-full text-[11px] bg-neutral-800 text-amber-400">0</span>
         </button>
-        <button onclick="setCategory('special')" id="tab-special" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2">
-          💡 스페셜 기획 <span id="count-special" class="px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-purple-400">0</span>
+        <button onclick="setCategory('special')" id="tab-special" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-neutral-300 hover:text-white hover:bg-neutral-800 transition flex items-center gap-2">
+          💡 스페셜 기획 <span id="count-special" class="px-2 py-0.5 rounded-full text-[11px] bg-neutral-800 text-purple-400">0</span>
         </button>
       </div>
 
       <!-- Search Toolbar -->
-      <div id="searchToolbarContainer" class="search-toolbar bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div id="searchToolbarContainer" class="search-toolbar bg-neutral-900/80 border border-neutral-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="relative w-full sm:flex-1">
-          <input type="text" id="searchInput" oninput="renderReports()" placeholder="제목, 키워드, 유종 검색 (예: 나프타, 에틸렌, Brent, BEP, 마진)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+          <input type="text" id="searchInput" oninput="renderReports()" placeholder="제목, 키워드, 유종 검색 (예: 나프타, 에틸렌, Brent, BEP, 마진)" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2 text-xs sm:text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-yellow-400">
         </div>
         <div class="flex items-center gap-3 shrink-0">
-          <div id="resultsCount" class="text-xs text-slate-400 whitespace-nowrap"></div>
-          <button id="adminModeBtn" onclick="toggleAdminMode()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer">
+          <div id="resultsCount" class="text-xs text-neutral-400 whitespace-nowrap"></div>
+          <button id="adminModeBtn" onclick="toggleAdminMode()" class="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-yellow-400 border border-neutral-700 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer">
             <span id="adminModeIcon">🔒</span>
             <span id="adminModeText">관리자 모드</span>
           </button>
-          <button onclick="switchNav('creator')" class="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs flex items-center gap-1 transition">
+          <button onclick="switchNav('creator')" class="px-3 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-xs flex items-center gap-1 transition shadow-sm">
             ➕ 새 리포트 작성
           </button>
         </div>
@@ -375,11 +423,11 @@
       <div id="reportsList" class="space-y-3.5"></div>
 
       <!-- Empty State -->
-      <div id="emptyState" class="hidden bg-slate-900/60 border border-dashed border-slate-800 rounded-2xl p-12 text-center space-y-3">
+      <div id="emptyState" class="hidden bg-neutral-900/60 border border-dashed border-neutral-800 rounded-2xl p-12 text-center space-y-3">
         <div class="text-3xl">🔍</div>
         <h3 class="text-base font-bold text-white">해당 조건의 보고서가 없습니다</h3>
-        <p class="text-xs text-slate-400">검색어를 변경하거나 다른 카테고리를 선택해보세요.</p>
-        <button onclick="switchNav('creator')" class="px-4 py-2 bg-cyan-600 text-white rounded-xl text-xs font-bold">
+        <p class="text-xs text-neutral-400">검색어를 변경하거나 다른 카테고리를 선택해보세요.</p>
+        <button onclick="switchNav('creator')" class="px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-xl text-xs font-bold transition">
           새 HTML 리포트 생성하기
         </button>
       </div>
@@ -388,20 +436,20 @@
     <!-- VIEW 2: REPORT CREATOR VIEW -->
     <div id="viewCreator" class="hidden space-y-6">
       <!-- Creator Banner -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+      <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-5 shadow-xl space-y-4">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
               <span>새 석유화학 리포트 생성 (HTML 직접 입력)</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-1">
+            <p class="text-xs text-neutral-400 mt-1">
               작성하신 HTML 코드를 입력하면 온전한 보고서로 렌더링되어 보관소에 저장되고 GitHub에 커밋됩니다.
             </p>
           </div>
 
           <!-- Quick Templates & Upload -->
           <div class="flex flex-wrap items-center gap-2">
-            <span class="text-[11px] text-slate-400 font-semibold mr-1">빠른 템플릿:</span>
+            <span class="text-[11px] text-neutral-400 font-semibold mr-1">빠른 템플릿:</span>
             <button type="button" onclick="loadTemplate('daily')" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-950/60 text-emerald-400 border border-emerald-800/80 hover:bg-emerald-900/60 transition">
               ☀️ 데일리 템플릿
             </button>
@@ -411,7 +459,7 @@
             <button type="button" onclick="loadTemplate('special')" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-purple-950/60 text-purple-400 border border-purple-800/80 hover:bg-purple-900/60 transition">
               💡 스페셜 템플릿
             </button>
-            <label class="cursor-pointer px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1 transition">
+            <label class="cursor-pointer px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-800 hover:bg-neutral-700 text-neutral-200 border border-neutral-700 flex items-center gap-1 transition">
               <span>📁 .html 업로드</span>
               <input type="file" accept=".html,.htm" onchange="handleFileUpload(event)" class="hidden">
             </label>
@@ -424,31 +472,31 @@
         <!-- Left: HTML Input & Form (6 cols) -->
         <div class="lg:col-span-6 space-y-4">
           <!-- Code Box -->
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3 shadow-lg">
+          <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-4 space-y-3 shadow-lg">
             <div class="flex items-center justify-between">
-              <label class="text-xs font-bold text-slate-300 uppercase tracking-wider">HTML 소스 코드 입력</label>
-              <button type="button" onclick="autoAnalyzeHtml()" class="px-3 py-1 rounded-lg text-xs font-bold bg-cyan-600 hover:bg-cyan-500 text-white shadow-sm transition">
+              <label class="text-xs font-bold text-neutral-300 uppercase tracking-wider">HTML 소스 코드 입력</label>
+              <button type="button" onclick="autoAnalyzeHtml()" class="px-3 py-1 rounded-lg text-xs font-bold bg-yellow-400 hover:bg-yellow-300 text-black shadow-sm transition">
                 ⚡ 스마트 HTML 자동 분석
               </button>
             </div>
-            <textarea id="htmlCodeInput" oninput="updateLivePreview()" rows="14" placeholder="<!DOCTYPE html>&#10;<html>&#10;<head><title>석유화학 시황 리포트</title></head>&#10;<body>&#10;  <!-- 직접 작성한 HTML 코드를 붙여넣으세요 -->&#10;</body>&#10;</html>" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-cyan-300 placeholder-slate-600 focus:outline-none focus:border-cyan-500 leading-relaxed resize-y"></textarea>
+            <textarea id="htmlCodeInput" oninput="updateLivePreview()" rows="14" placeholder="<!DOCTYPE html>&#10;<html>&#10;<head><title>석유화학 시황 리포트</title></head>&#10;<body>&#10;  <!-- 직접 작성한 HTML 코드를 붙여넣으세요 -->&#10;</body>&#10;</html>" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3.5 text-xs font-mono text-yellow-300 placeholder-neutral-600 focus:outline-none focus:border-yellow-400 leading-relaxed resize-y"></textarea>
           </div>
 
           <!-- Metadata Form -->
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-lg">
-            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider pb-2 border-b border-slate-800">
+          <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-5 space-y-4 shadow-lg">
+            <h3 class="text-xs font-bold text-neutral-300 uppercase tracking-wider pb-2 border-b border-neutral-800">
               리포트 정보 설정 (자동 분석 또는 직접 수정)
             </h3>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">보고서 제목 *</label>
-              <input type="text" id="reportTitleInput" placeholder="예: 아시아 원유·석유화학 데일리 시황 | 2026-10-27" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+              <label class="block text-xs font-semibold text-neutral-300 mb-1">보고서 제목 *</label>
+              <input type="text" id="reportTitleInput" placeholder="예: 아시아 원유·석유화학 데일리 시황 | 2026-10-27" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-yellow-400">
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">리포트 분류 *</label>
-                <select id="reportCategoryInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                <label class="block text-xs font-semibold text-neutral-300 mb-1">리포트 분류 *</label>
+                <select id="reportCategoryInput" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-400">
                   <option value="daily">☀️ 일간 보고서 (Daily)</option>
                   <option value="weekly">📊 주간 보고서 (Weekly)</option>
                   <option value="monthly">📅 월간 보고서 (Monthly)</option>
@@ -456,24 +504,24 @@
                 </select>
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">발행일 / 기준일 *</label>
-                <input type="date" id="reportDateInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                <label class="block text-xs font-semibold text-neutral-300 mb-1">발행일 / 기준일 *</label>
+                <input type="date" id="reportDateInput" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-400">
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">핵심 요약 / 브리프</label>
-              <textarea id="reportSummaryInput" rows="2" placeholder="원유·나프타 강세 지속 및 NCC 에틸렌 마진 점검." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500"></textarea>
+              <label class="block text-xs font-semibold text-neutral-300 mb-1">핵심 요약 / 브리프</label>
+              <textarea id="reportSummaryInput" rows="2" placeholder="원유·나프타 강세 지속 및 NCC 에틸렌 마진 점검." class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-yellow-400"></textarea>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">태그 (쉼표 구분)</label>
-                <input type="text" id="reportTagsInput" placeholder="나프타, 에틸렌, Brent, BEP" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                <label class="block text-xs font-semibold text-neutral-300 mb-1">태그 (쉼표 구분)</label>
+                <input type="text" id="reportTagsInput" placeholder="나프타, 에틸렌, Brent, BEP" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-400">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">정보지 업체 분류 *</label>
-                <select id="reportProviderInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                <label class="block text-xs font-semibold text-neutral-300 mb-1">정보지 업체 분류 *</label>
+                <select id="reportProviderInput" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-400">
                   <option value="PLATTS">PLATTS</option>
                   <option value="ICIS">ICIS</option>
                   <option value="ARGUS">ARGUS</option>
@@ -483,36 +531,36 @@
             </div>
 
             <!-- Author Authentication / Multi-device Sharing -->
-            <div class="pt-3 border-t border-slate-800 space-y-2">
+            <div class="pt-3 border-t border-neutral-800 space-y-2">
               <div class="flex items-center justify-between">
-                <label class="block text-xs font-bold text-cyan-300 flex items-center gap-1.5">
+                <label class="block text-xs font-bold text-yellow-400 flex items-center gap-1.5">
                   <span>🔑 작성자 권한 (GitHub 연동 &amp; 전 기기 공유)</span>
                 </label>
                 <div class="flex items-center gap-2">
-                  <button type="button" onclick="copyTeamWriterLink()" class="text-[11px] text-cyan-400 hover:text-cyan-300 font-semibold flex items-center gap-1 underline">
+                  <button type="button" onclick="copyTeamWriterLink()" class="text-[11px] text-yellow-400 hover:text-yellow-300 font-semibold flex items-center gap-1 underline">
                     <span>🔗 모바일/팀원 작성 링크 복사</span>
                   </button>
-                  <a href="https://github.com/settings/tokens/new?scopes=repo&description=petro-report" target="_blank" class="text-[11px] text-slate-400 hover:text-slate-300">
+                  <a href="https://github.com/settings/tokens/new?scopes=repo&description=petro-report" target="_blank" class="text-[11px] text-neutral-400 hover:text-neutral-300">
                     토큰 발급 ↗
                   </a>
                 </div>
               </div>
-              <input type="password" id="ghPatInput" placeholder="ghp_xxxxxxxxxxxx (작성 권한 토큰)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono">
-              <p class="text-[11px] text-slate-400 leading-relaxed bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
-                💡 <b>다른 사람의 핸드폰이나 새 컴퓨터에서 작성하시나요?</b> 관리자가 공유한 <b>[모바일/팀원 작성 링크]</b>로 접속하셨으면 이미 권한이 등록되어 있습니다. 등록되어 있지 않아도 아래 <span class="text-blue-400 font-bold">[🚀 중앙 보관소에 발행]</span>을 누르면 1회 인증 후 모든 기기에 즉시 저장됩니다!
+              <input type="password" id="ghPatInput" placeholder="ghp_xxxxxxxxxxxx (작성 권한 토큰)" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-400 font-mono">
+              <p class="text-[11px] text-neutral-400 leading-relaxed bg-neutral-950/60 p-2.5 rounded-xl border border-neutral-800/80">
+                💡 <b>다른 사람의 핸드폰이나 새 컴퓨터에서 작성하시나요?</b> 관리자가 공유한 <b>[모바일/팀원 작성 링크]</b>로 접속하셨으면 이미 권한이 등록되어 있습니다. 등록되어 있지 않아도 아래 <span class="text-yellow-400 font-bold">[🚀 중앙 보관소에 발행]</span>을 누르면 1회 인증 후 모든 기기에 즉시 저장됩니다!
               </p>
             </div>
           </div>
 
           <!-- Submit Buttons -->
           <div class="flex flex-wrap items-center gap-3">
-            <button type="button" onclick="saveReport(true)" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-900/40 transition flex items-center gap-1.5">
+            <button type="button" onclick="saveReport(true)" class="px-5 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-xs sm:text-sm shadow-lg transition flex items-center gap-1.5">
               <span>🚀 중앙 보관소에 발행 (전 기기 실시간 공유)</span>
             </button>
-            <button type="button" onclick="saveReport(false)" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs sm:text-sm transition">
+            <button type="button" onclick="saveReport(false)" class="px-3.5 py-2.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-200 hover:text-white border border-neutral-700 text-xs sm:text-sm transition">
               💾 이 기기 로컬에만 임시 저장
             </button>
-            <button type="button" onclick="switchNav('archive')" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 text-xs sm:text-sm transition ml-auto">
+            <button type="button" onclick="switchNav('archive')" class="px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-800 text-xs sm:text-sm transition ml-auto">
               취소
             </button>
           </div>
@@ -520,16 +568,16 @@
 
         <!-- Right: Real-time Live Preview (6 cols) -->
         <div class="lg:col-span-6 space-y-3">
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col h-full min-h-[600px]">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-800 mb-2">
-              <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">👁️ 실시간 렌더링 미리보기</span>
-              <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
-                <button onclick="setViewport('100%')" class="px-2 py-0.5 rounded bg-blue-600 text-white">데스크톱</button>
-                <button onclick="setViewport('768px')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white">태블릿</button>
-                <button onclick="setViewport('375px')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white">모바일</button>
+          <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-4 shadow-lg flex flex-col h-full min-h-[600px]">
+            <div class="flex items-center justify-between pb-2 border-b border-neutral-800 mb-2">
+              <span class="text-xs font-bold text-neutral-300 uppercase tracking-wider">👁️ 실시간 렌더링 미리보기</span>
+              <div class="flex items-center gap-1 bg-neutral-950 p-1 rounded-lg border border-neutral-800 text-xs">
+                <button id="vpBtn100" onclick="setViewport('100%')" class="px-2 py-0.5 rounded bg-yellow-400 text-black font-bold">데스크톱</button>
+                <button id="vpBtn768" onclick="setViewport('768px')" class="px-2 py-0.5 rounded text-neutral-400 hover:text-white">태블릿</button>
+                <button id="vpBtn375" onclick="setViewport('375px')" class="px-2 py-0.5 rounded text-neutral-400 hover:text-white">모바일</button>
               </div>
             </div>
-            <div class="flex-1 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 p-1 flex justify-center">
+            <div class="flex-1 bg-neutral-950 rounded-xl overflow-hidden border border-neutral-800 p-1 flex justify-center">
               <iframe id="livePreviewFrame" class="w-full h-full min-h-[550px] bg-white rounded-lg border-none" sandbox="allow-scripts allow-same-origin"></iframe>
             </div>
           </div>
@@ -541,24 +589,24 @@
 
   <!-- Modal Reader -->
   <div id="readerModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-2 sm:p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden shadow-2xl">
+    <div class="bg-neutral-900 border border-neutral-800 rounded-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden shadow-2xl">
       <!-- Modal Top -->
-      <div class="bg-slate-950 border-b border-slate-800 px-4 py-3 flex items-center justify-between gap-3 shrink-0">
+      <div class="bg-neutral-950 border-b border-neutral-800 px-4 py-3 flex items-center justify-between gap-3 shrink-0">
         <h3 id="modalTitle" class="text-sm sm:text-base font-bold text-white truncate max-w-xl"></h3>
         <div class="flex items-center gap-2">
-          <button onclick="printReport()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1 transition">
+          <button onclick="printReport()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-800 hover:bg-neutral-700 text-neutral-200 border border-neutral-700 flex items-center gap-1 transition">
             🖨️ 인쇄 / PDF
           </button>
-          <a id="modalExternalLink" href="#" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1 transition">
+          <a id="modalExternalLink" href="#" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-800 hover:bg-neutral-700 text-neutral-200 border border-neutral-700 flex items-center gap-1 transition">
             새 창으로 열기 ↗
           </a>
-          <button id="modalEditBtn" onclick="editCurrentModalReport()" class="hidden px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 flex items-center gap-1 transition cursor-pointer">
+          <button id="modalEditBtn" onclick="editCurrentModalReport()" class="hidden px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-yellow-400/20 text-yellow-300 border border-yellow-400/40 hover:bg-yellow-400 hover:text-black flex items-center gap-1 transition cursor-pointer">
             ✏️ 수정
           </button>
           <button id="modalDeleteBtn" onclick="deleteCurrentModalReport()" class="hidden px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-red-950/60 text-red-300 border border-red-800/80 hover:bg-red-800 hover:text-white flex items-center gap-1 transition cursor-pointer">
             🗑️ 삭제
           </button>
-          <button onclick="closeModal()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-red-950/60 transition text-lg font-bold">
+          <button onclick="closeModal()" class="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-red-950/60 transition text-lg font-bold">
             ✕
           </button>
         </div>
@@ -572,28 +620,28 @@
 
   <!-- Modal: Admin Password Verification -->
   <div id="adminPasswordModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-3 sm:p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm flex flex-col overflow-hidden shadow-2xl">
-      <div class="bg-slate-950 border-b border-slate-800 px-5 py-4 flex items-center justify-between">
+    <div class="bg-neutral-900 border border-neutral-800 rounded-2xl w-full max-w-sm flex flex-col overflow-hidden shadow-2xl">
+      <div class="bg-neutral-950 border-b border-neutral-800 px-5 py-4 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <span class="text-xl">🔒</span>
           <h3 class="text-sm sm:text-base font-bold text-white">관리자 모드 인증</h3>
         </div>
-        <button onclick="closeAdminPasswordModal()" class="text-slate-400 hover:text-white text-base font-bold p-1 cursor-pointer">✕</button>
+        <button onclick="closeAdminPasswordModal()" class="text-neutral-400 hover:text-white text-base font-bold p-1 cursor-pointer">✕</button>
       </div>
       <form onsubmit="handleAdminLoginSubmit(event)" class="p-5 space-y-4">
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1.5">관리자 비밀번호를 입력하세요</label>
-          <input type="password" id="adminPasswordInput" placeholder="비밀번호 입력 (기본: admin1234)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-400 font-mono">
+          <label class="block text-xs font-semibold text-neutral-300 mb-1.5">관리자 비밀번호를 입력하세요</label>
+          <input type="password" id="adminPasswordInput" placeholder="비밀번호 입력 (기본: admin1234)" class="w-full bg-neutral-950 border border-neutral-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400 font-mono">
           <div id="adminPasswordError" class="hidden text-xs text-red-400 mt-1.5 font-medium"></div>
-          <p class="text-[11px] text-slate-500 mt-1.5">
-            기본 비밀번호는 <code class="text-amber-400 font-mono">admin1234</code> 입니다.
+          <p class="text-[11px] text-neutral-500 mt-1.5">
+            기본 비밀번호는 <code class="text-yellow-400 font-mono">admin1234</code> 입니다.
           </p>
         </div>
-        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
-          <button type="button" onclick="closeAdminPasswordModal()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition cursor-pointer">
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-neutral-800">
+          <button type="button" onclick="closeAdminPasswordModal()" class="px-3.5 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs font-semibold transition cursor-pointer">
             취소
           </button>
-          <button type="submit" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md transition cursor-pointer">
+          <button type="submit" class="px-4 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-xs shadow-md transition cursor-pointer">
             인증 및 시작
           </button>
         </div>
@@ -603,30 +651,30 @@
 
   <!-- Modal: Edit Existing Report -->
   <div id="editModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-3 sm:p-4 overflow-y-auto">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden shadow-2xl">
-      <div class="bg-slate-950 border-b border-slate-800 px-5 py-4 flex items-center justify-between shrink-0">
+    <div class="bg-neutral-900 border border-neutral-800 rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="bg-neutral-950 border-b border-neutral-800 px-5 py-4 flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2.5">
           <span class="text-xl">✏️</span>
           <div>
             <h3 class="text-base font-bold text-white">보고서 수정 및 전 기기 실시간 반영</h3>
-            <p class="text-xs text-slate-400">저장 시 GitHub 중앙 저장소 및 reports.json에 즉시 커밋되어 다른 모든 기기에도 실시간 반영됩니다.</p>
+            <p class="text-xs text-neutral-400">저장 시 GitHub 중앙 저장소 및 reports.json에 즉시 커밋되어 다른 모든 기기에도 실시간 반영됩니다.</p>
           </div>
         </div>
-        <button onclick="closeEditModal()" class="text-slate-400 hover:text-white text-base font-bold p-1 cursor-pointer">✕</button>
+        <button onclick="closeEditModal()" class="text-neutral-400 hover:text-white text-base font-bold p-1 cursor-pointer">✕</button>
       </div>
       <div class="p-5 space-y-4 overflow-y-auto flex-1">
         <input type="hidden" id="editReportId">
         <input type="hidden" id="editReportFilePath">
 
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">보고서 제목 *</label>
-          <input type="text" id="editReportTitle" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-cyan-500">
+          <label class="block text-xs font-semibold text-neutral-300 mb-1">보고서 제목 *</label>
+          <input type="text" id="editReportTitle" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">리포트 분류 *</label>
-            <select id="editReportCategory" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+            <label class="block text-xs font-semibold text-neutral-300 mb-1">리포트 분류 *</label>
+            <select id="editReportCategory" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-400">
               <option value="daily">☀️ 일간 보고서 (Daily)</option>
               <option value="weekly">📊 주간 보고서 (Weekly)</option>
               <option value="monthly">📅 월간 보고서 (Monthly)</option>
@@ -634,12 +682,12 @@
             </select>
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">발행일 / 기준일 *</label>
-            <input type="date" id="editReportDate" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+            <label class="block text-xs font-semibold text-neutral-300 mb-1">발행일 / 기준일 *</label>
+            <input type="date" id="editReportDate" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-400">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">정보지 업체 분류 *</label>
-            <select id="editReportProvider" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+            <label class="block text-xs font-semibold text-neutral-300 mb-1">정보지 업체 분류 *</label>
+            <select id="editReportProvider" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-400">
               <option value="PLATTS">PLATTS</option>
               <option value="ICIS">ICIS</option>
               <option value="ARGUS">ARGUS</option>
@@ -649,27 +697,27 @@
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">핵심 요약 / 브리프</label>
-          <textarea id="editReportSummary" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500"></textarea>
+          <label class="block text-xs font-semibold text-neutral-300 mb-1">핵심 요약 / 브리프</label>
+          <textarea id="editReportSummary" rows="2" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-yellow-400"></textarea>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">태그 (쉼표 구분)</label>
-          <input type="text" id="editReportTags" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+          <label class="block text-xs font-semibold text-neutral-300 mb-1">태그 (쉼표 구분)</label>
+          <input type="text" id="editReportTags" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-400">
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">HTML 소스 코드 수정</label>
-          <textarea id="editReportHtml" rows="12" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-500 leading-relaxed resize-y"></textarea>
+          <label class="block text-xs font-semibold text-neutral-300 mb-1">HTML 소스 코드 수정</label>
+          <textarea id="editReportHtml" rows="12" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-xs font-mono text-yellow-300 focus:outline-none focus:border-yellow-400 leading-relaxed resize-y"></textarea>
         </div>
       </div>
-      <div class="bg-slate-950 border-t border-slate-800 px-5 py-3.5 flex items-center justify-between shrink-0">
-        <span id="editModalStatus" class="text-xs text-cyan-400 font-mono"></span>
+      <div class="bg-neutral-950 border-t border-neutral-800 px-5 py-3.5 flex items-center justify-between shrink-0">
+        <span id="editModalStatus" class="text-xs text-yellow-400 font-mono"></span>
         <div class="flex items-center gap-2 ml-auto">
-          <button type="button" onclick="closeEditModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition cursor-pointer">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs font-semibold transition cursor-pointer">
             취소
           </button>
-          <button type="button" id="btnSaveEditedReport" onclick="saveEditedReport()" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-blue-900/40 transition cursor-pointer">
+          <button type="button" id="btnSaveEditedReport" onclick="saveEditedReport()" class="px-5 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-xs flex items-center gap-1.5 shadow-lg transition cursor-pointer">
             <span>💾 수정사항 저장 및 모든 기기 실시간 반영</span>
           </button>
         </div>
@@ -679,23 +727,23 @@
 
   <!-- Modal: Sync Local Reports to GitHub -->
   <div id="syncModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-3 sm:p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl flex flex-col overflow-hidden shadow-2xl">
-      <div class="bg-slate-950 border-b border-slate-800 px-5 py-4 flex items-center justify-between">
+    <div class="bg-neutral-900 border border-neutral-800 rounded-2xl w-full max-w-xl flex flex-col overflow-hidden shadow-2xl">
+      <div class="bg-neutral-950 border-b border-neutral-800 px-5 py-4 flex items-center justify-between">
         <div class="flex items-center gap-2.5">
           <span class="text-xl">☁️</span>
           <div>
             <h3 class="text-base font-bold text-white">로컬 보고서 GitHub 일괄 동기화</h3>
-            <p class="text-xs text-slate-400">현재 PC에만 저장된 보고서를 GitHub에 업로드하여 모든 기기에 공유합니다.</p>
+            <p class="text-xs text-neutral-400">현재 PC에만 저장된 보고서를 GitHub에 업로드하여 모든 기기에 공유합니다.</p>
           </div>
         </div>
-        <button onclick="closeSyncModal()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-base font-bold">✕</button>
+        <button onclick="closeSyncModal()" class="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 text-base font-bold">✕</button>
       </div>
       <div class="p-5 space-y-4 text-xs sm:text-sm">
-        <div class="bg-blue-950/40 border border-blue-800/60 rounded-xl p-3.5 space-y-1.5 text-blue-200">
+        <div class="bg-yellow-950/30 border border-yellow-400/30 rounded-xl p-3.5 space-y-1.5 text-yellow-200">
           <p class="font-bold flex items-center gap-1.5">
             <span>ℹ️ 왜 다른 디바이스에 보고서가 안 떴을까요?</span>
           </p>
-          <p class="text-[11px] text-slate-300 leading-relaxed">
+          <p class="text-[11px] text-neutral-300 leading-relaxed">
             보고서가 현재 컴퓨터 브라우저 로컬 스토리지에만 저장되어 있었기 때문입니다.
             아래 동기화를 진행하면 보고서 HTML 파일이 GitHub에 영구 보존되고,
             중앙 목록인 <code>reports.json</code>이 갱신되어 <strong>스마트폰, 태블릿, 다른 컴퓨터 등 어떤 기기에서 접속해도 동일하게 열람</strong>할 수 있습니다!
@@ -703,27 +751,27 @@
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1.5">동기화 대상 로컬 보고서</label>
-          <div id="syncModalReportList" class="max-h-36 overflow-y-auto space-y-1.5 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-xs"></div>
+          <label class="block text-xs font-semibold text-neutral-300 mb-1.5">동기화 대상 로컬 보고서</label>
+          <div id="syncModalReportList" class="max-h-36 overflow-y-auto space-y-1.5 bg-neutral-950 p-2.5 rounded-xl border border-neutral-800 text-xs"></div>
         </div>
 
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label class="block text-xs font-semibold text-slate-300">GitHub Personal Access Token (PAT) *</label>
-            <a href="https://github.com/settings/tokens/new?scopes=repo&description=petro-report" target="_blank" class="text-[11px] text-cyan-400 hover:underline">
+            <label class="block text-xs font-semibold text-neutral-300">GitHub Personal Access Token (PAT) *</label>
+            <a href="https://github.com/settings/tokens/new?scopes=repo&description=petro-report" target="_blank" class="text-[11px] text-yellow-400 hover:underline">
               🔑 토큰 1초 발급 바로가기 ↗
             </a>
           </div>
-          <input type="password" id="syncPatInput" placeholder="ghp_xxxxxxxxxxxx" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono">
+          <input type="password" id="syncPatInput" placeholder="ghp_xxxxxxxxxxxx" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-yellow-400 font-mono">
         </div>
 
-        <div id="syncProgressStatus" class="text-xs text-cyan-400 font-mono min-h-4"></div>
+        <div id="syncProgressStatus" class="text-xs text-yellow-400 font-mono min-h-4"></div>
 
-        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
-          <button onclick="closeSyncModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition">
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-neutral-800">
+          <button onclick="closeSyncModal()" class="px-4 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs font-semibold transition">
             취소
           </button>
-          <button id="btnExecuteSync" onclick="syncAllLocalReportsToGitHub()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-lg transition">
+          <button id="btnExecuteSync" onclick="syncAllLocalReportsToGitHub()" class="px-5 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-xs flex items-center gap-1.5 shadow-lg transition">
             <span>🚀 GitHub로 일괄 동기화 실행</span>
           </button>
         </div>
@@ -732,13 +780,13 @@
   </div>
 
   <!-- Toast Message -->
-  <div id="toast" class="hidden fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl text-xs sm:text-sm font-semibold text-white animate-fade-in flex items-center gap-2">
+  <div id="toast" class="hidden fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-neutral-900 border border-yellow-400/40 shadow-2xl text-xs sm:text-sm font-semibold text-white animate-fade-in flex items-center gap-2">
     <span id="toastText"></span>
   </div>
 
   <!-- Footer -->
-  <footer class="bg-slate-950 border-t border-slate-900 py-6 text-center text-xs text-slate-500 mt-auto">
-    <p>© 2026 Petrochemical Market Intelligence Group | Hosted on GitHub Pages</p>
+  <footer class="bg-neutral-950 border-t border-neutral-900 py-6 text-center text-xs text-neutral-500 mt-auto">
+    <p>© 2026 글로벌 석유화학시장 정보 센터 (GPIC) | Hosted on GitHub Pages</p>
   </footer>
 
   <script>
@@ -775,6 +823,7 @@
     let remoteReportsLoaded = false;
 
     let currentTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'dark';
+    let currentNavTab = 'archive';
 
     function applyTheme(theme) {
       currentTheme = theme;
@@ -788,22 +837,22 @@
         document.documentElement.classList.add('light');
         document.documentElement.classList.remove('dark');
         document.body.classList.add('light-mode');
-        document.body.classList.remove('bg-slate-950', 'text-slate-100');
-        document.body.classList.add('bg-slate-50', 'text-slate-900');
+        document.body.classList.remove('bg-neutral-950', 'text-neutral-100', 'bg-slate-950', 'text-slate-100');
+        document.body.classList.add('bg-neutral-50', 'text-neutral-900');
         if (icon) icon.innerText = '🌙';
         if (label) label.innerText = '다크모드';
         if (btn) {
-          btn.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 transition flex items-center gap-1.5 shadow-sm';
+          btn.className = 'gpic-dark-pill px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-black hover:bg-neutral-800 text-yellow-400 border border-black transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0';
         }
       } else {
         document.documentElement.classList.add('dark');
         document.documentElement.classList.remove('light');
-        document.body.classList.remove('light-mode', 'bg-slate-50', 'text-slate-900');
-        document.body.classList.add('bg-slate-950', 'text-slate-100');
+        document.body.classList.remove('light-mode', 'bg-neutral-50', 'text-neutral-900', 'bg-slate-50', 'text-slate-900');
+        document.body.classList.add('bg-neutral-950', 'text-neutral-100');
         if (icon) icon.innerText = '☀️';
         if (label) label.innerText = '일반모드';
         if (btn) {
-          btn.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 transition flex items-center gap-1.5 shadow-sm';
+          btn.className = 'gpic-dark-pill px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-yellow-400 border border-neutral-700 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0';
         }
       }
 
@@ -811,44 +860,68 @@
       const tabsBox = document.getElementById('categoryTabsContainer');
       if (tabsBox) {
         tabsBox.className = isLight
-          ? 'cat-tabs-bar bg-white border border-slate-200 rounded-2xl p-2 sm:p-3 shadow-sm flex flex-wrap gap-2 transition-colors'
-          : 'cat-tabs-bar bg-slate-900/90 border border-slate-800 rounded-2xl p-2 sm:p-3 shadow-lg flex flex-wrap gap-2 transition-colors';
+          ? 'cat-tabs-bar bg-white border border-neutral-200 rounded-2xl p-2 sm:p-3 shadow-sm flex flex-wrap gap-2 transition-colors'
+          : 'cat-tabs-bar bg-neutral-900/90 border border-neutral-800 rounded-2xl p-2 sm:p-3 shadow-lg flex flex-wrap gap-2 transition-colors';
       }
 
       const searchBox = document.getElementById('searchToolbarContainer');
       if (searchBox) {
         searchBox.className = isLight
-          ? 'search-toolbar bg-white border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm transition-colors'
-          : 'search-toolbar bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 transition-colors';
+          ? 'search-toolbar bg-white border border-neutral-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm transition-colors'
+          : 'search-toolbar bg-neutral-900/80 border border-neutral-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 transition-colors';
       }
 
       const searchInput = document.getElementById('searchInput');
       if (searchInput) {
         searchInput.className = isLight
-          ? 'w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500'
-          : 'w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500';
+          ? 'w-full bg-white border border-neutral-300 rounded-xl px-4 py-2 text-xs sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-yellow-500'
+          : 'w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2 text-xs sm:text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-yellow-400';
       }
 
-      // Update header buttons
+      // Update header buttons while preserving active tab & single-line layout
+      const archiveBtn = document.getElementById('navBtnArchive');
       const creatorBtn = document.getElementById('navBtnCreator');
-      if (creatorBtn) {
-        creatorBtn.className = isLight
-          ? 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-100 hover:bg-cyan-200 text-cyan-900 border border-cyan-300 transition flex items-center gap-1.5'
-          : 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-600/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-600 hover:text-white transition flex items-center gap-1.5';
+      const navCount = document.getElementById('navReportCount');
+      if (currentNavTab === 'archive') {
+        if (archiveBtn) {
+          archiveBtn.className = 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-yellow-400 hover:bg-yellow-300 text-black shadow-md transition flex items-center gap-1.5 whitespace-nowrap shrink-0';
+        }
+        if (navCount) {
+          navCount.className = 'px-1.5 py-0.5 rounded-full text-[10px] bg-black text-yellow-400 font-bold';
+        }
+        if (creatorBtn) {
+          creatorBtn.className = isLight
+            ? 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-neutral-900 hover:bg-neutral-800 text-yellow-400 border border-neutral-900 transition flex items-center gap-1.5 whitespace-nowrap shrink-0'
+            : 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-yellow-400/15 text-yellow-300 border border-yellow-400/40 hover:bg-yellow-400 hover:text-black transition flex items-center gap-1.5 whitespace-nowrap shrink-0';
+        }
+      } else {
+        if (archiveBtn) {
+          archiveBtn.className = isLight
+            ? 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-neutral-100 text-neutral-700 hover:text-black hover:bg-yellow-100 border border-neutral-200 transition flex items-center gap-1.5 whitespace-nowrap shrink-0'
+            : 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-neutral-900 text-neutral-300 hover:text-white hover:bg-neutral-800 border border-neutral-800 transition flex items-center gap-1.5 whitespace-nowrap shrink-0';
+        }
+        if (navCount) {
+          navCount.className = isLight
+            ? 'px-1.5 py-0.5 rounded-full text-[10px] bg-neutral-200 text-neutral-800 font-bold'
+            : 'px-1.5 py-0.5 rounded-full text-[10px] bg-neutral-800 text-yellow-400 font-bold';
+        }
+        if (creatorBtn) {
+          creatorBtn.className = 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-yellow-400 hover:bg-yellow-300 text-black shadow-md transition flex items-center gap-1.5 whitespace-nowrap shrink-0';
+        }
       }
 
       const writerBtn = document.getElementById('navBtnShareWriter');
       if (writerBtn) {
         writerBtn.className = isLight
-          ? 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center gap-1.5 shadow-sm'
-          : 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-cyan-950/60 text-cyan-300 border border-cyan-800/80 hover:bg-cyan-900/60 transition flex items-center gap-1.5 shadow-sm';
+          ? 'px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-100 hover:bg-yellow-100 text-neutral-800 border border-neutral-300 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0'
+          : 'px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 text-yellow-300 border border-neutral-700 hover:border-yellow-400/60 hover:bg-neutral-800 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0';
       }
 
       const refreshBtn = document.getElementById('navBtnRefresh');
       if (refreshBtn) {
         refreshBtn.className = isLight
-          ? 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center gap-1.5 shadow-sm'
-          : 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 transition flex items-center gap-1.5 shadow-sm';
+          ? 'px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-100 hover:bg-yellow-100 text-neutral-800 border border-neutral-300 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0'
+          : 'px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-yellow-400 border border-neutral-700 hover:border-yellow-400/60 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0';
       }
 
       updateCounts();
@@ -987,8 +1060,8 @@
         if (isAdminMode) {
           banner.classList.remove('hidden');
           banner.className = isLight 
-            ? 'mb-4 bg-amber-50 border border-amber-300 rounded-2xl p-3.5 sm:p-4 text-xs sm:text-sm text-amber-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm'
-            : 'mb-4 bg-amber-950/40 border border-amber-500/40 rounded-2xl p-3.5 sm:p-4 text-xs sm:text-sm text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg';
+            ? 'mb-4 bg-yellow-50 border border-yellow-400 rounded-2xl p-3.5 sm:p-4 text-xs sm:text-sm text-neutral-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm'
+            : 'mb-4 bg-yellow-950/30 border border-yellow-400/50 rounded-2xl p-3.5 sm:p-4 text-xs sm:text-sm text-yellow-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg';
         } else {
           banner.classList.add('hidden');
         }
@@ -998,15 +1071,13 @@
       const text = document.getElementById('adminModeText');
       if (btn) {
         if (isAdminMode) {
-          btn.className = isLight
-            ? 'px-3 py-1.5 rounded-lg bg-amber-100 text-amber-900 border border-amber-400 hover:bg-amber-200 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer'
-            : 'px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/50 hover:bg-amber-500 hover:text-slate-950 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer';
+          btn.className = 'px-3 py-1.5 rounded-lg bg-yellow-400 text-black border border-yellow-300 hover:bg-yellow-300 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer';
           if (icon) icon.innerText = '🛡️';
           if (text) text.innerText = '관리자 활성중 (종료)';
         } else {
           btn.className = isLight
-            ? 'px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-amber-700 border border-amber-300 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer'
-            : 'px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer';
+            ? 'px-3 py-1.5 rounded-lg bg-neutral-100 hover:bg-yellow-100 text-neutral-900 border border-neutral-300 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer'
+            : 'px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-yellow-400 border border-neutral-700 font-bold text-xs flex items-center gap-1 transition shadow-sm cursor-pointer';
           if (icon) icon.innerText = '🔒';
           if (text) text.innerText = '관리자 모드';
         }
@@ -1591,15 +1662,15 @@
 
       const listEl = document.getElementById('syncModalReportList');
       if (unsynced.length === 0) {
-        listEl.innerHTML = '<div class="text-slate-400 p-2 text-center">동기화할 로컬 보고서가 없습니다. 모든 보고서가 이미 GitHub에 반영되어 있습니다.</div>';
+        listEl.innerHTML = '<div class="text-neutral-400 p-2 text-center">동기화할 로컬 보고서가 없습니다. 모든 보고서가 이미 GitHub에 반영되어 있습니다.</div>';
       } else {
         listEl.innerHTML = unsynced.map(r => 
-          '<div class="flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-slate-800">' +
+          '<div class="flex items-center justify-between p-2 rounded-lg bg-neutral-900 border border-neutral-800">' +
             '<div class="truncate mr-2">' +
               '<span class="font-bold text-white">' + r.title + '</span>' +
-              '<span class="text-slate-400 text-[11px] ml-2">' + r.date + '</span>' +
+              '<span class="text-neutral-400 text-[11px] ml-2">' + r.date + '</span>' +
             '</div>' +
-            '<span class="px-2 py-0.5 rounded text-[10px] bg-amber-950 text-amber-300 border border-amber-800 shrink-0">로컬 전용</span>' +
+            '<span class="px-2 py-0.5 rounded text-[10px] bg-yellow-400/15 text-yellow-300 border border-yellow-400/40 shrink-0">로컬 전용</span>' +
           '</div>'
         ).join('');
       }
@@ -1624,23 +1695,33 @@
     }
 
     function switchNav(tab) {
+      currentNavTab = tab;
       const isLight = currentTheme === 'light';
+      const navCount = document.getElementById('navReportCount');
       if (tab === 'archive') {
         document.getElementById('viewArchive').classList.remove('hidden');
         document.getElementById('viewCreator').classList.add('hidden');
-        document.getElementById('navBtnArchive').className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md transition flex items-center gap-1.5';
+        document.getElementById('navBtnArchive').className = 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-yellow-400 hover:bg-yellow-300 text-black shadow-md transition flex items-center gap-1.5 whitespace-nowrap shrink-0';
+        if (navCount) {
+          navCount.className = 'px-1.5 py-0.5 rounded-full text-[10px] bg-black text-yellow-400 font-bold';
+        }
         document.getElementById('navBtnCreator').className = isLight
-          ? 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-100 text-cyan-900 border border-cyan-300 hover:bg-cyan-200 transition flex items-center gap-1.5'
-          : 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-600/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-600 hover:text-white transition flex items-center gap-1.5';
+          ? 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-neutral-900 hover:bg-neutral-800 text-yellow-400 border border-neutral-900 transition flex items-center gap-1.5 whitespace-nowrap shrink-0'
+          : 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-yellow-400/15 text-yellow-300 border border-yellow-400/40 hover:bg-yellow-400 hover:text-black transition flex items-center gap-1.5 whitespace-nowrap shrink-0';
         updateCounts();
         renderReports();
       } else {
         document.getElementById('viewArchive').classList.add('hidden');
         document.getElementById('viewCreator').classList.remove('hidden');
         document.getElementById('navBtnArchive').className = isLight
-          ? 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5'
-          : 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-slate-300 hover:text-white transition flex items-center gap-1.5';
-        document.getElementById('navBtnCreator').className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-600 text-white shadow-md transition flex items-center gap-1.5';
+          ? 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-neutral-100 text-neutral-700 hover:text-black hover:bg-yellow-100 border border-neutral-200 transition flex items-center gap-1.5 whitespace-nowrap shrink-0'
+          : 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-neutral-900 text-neutral-300 hover:text-white hover:bg-neutral-800 border border-neutral-800 transition flex items-center gap-1.5 whitespace-nowrap shrink-0';
+        if (navCount) {
+          navCount.className = isLight
+            ? 'px-1.5 py-0.5 rounded-full text-[10px] bg-neutral-200 text-neutral-800 font-bold'
+            : 'px-1.5 py-0.5 rounded-full text-[10px] bg-neutral-800 text-yellow-400 font-bold';
+        }
+        document.getElementById('navBtnCreator').className = 'px-2.5 py-1.5 rounded-xl text-xs font-bold bg-yellow-400 hover:bg-yellow-300 text-black shadow-md transition flex items-center gap-1.5 whitespace-nowrap shrink-0';
         if (!document.getElementById('reportDateInput').value) {
           document.getElementById('reportDateInput').value = new Date().toISOString().split('T')[0];
         }
@@ -1658,7 +1739,7 @@
           case 'weekly': return { name: '주간 보고서', bg: 'bg-cyan-50', color: 'text-cyan-700', border: 'border-cyan-300', borderL: 'border-l-cyan-500 hover:border-l-cyan-600', icon: '📊' };
           case 'monthly': return { name: '월간 보고서', bg: 'bg-amber-50', color: 'text-amber-800', border: 'border-amber-300', borderL: 'border-l-amber-500 hover:border-l-amber-600', icon: '📅' };
           case 'special': return { name: '스페셜 기획', bg: 'bg-purple-50', color: 'text-purple-700', border: 'border-purple-300', borderL: 'border-l-purple-500 hover:border-l-purple-600', icon: '💡' };
-          default: return { name: '보고서', bg: 'bg-slate-100', color: 'text-slate-700', border: 'border-slate-300', borderL: 'border-l-blue-500', icon: '📄' };
+          default: return { name: '보고서', bg: 'bg-neutral-100', color: 'text-neutral-800', border: 'border-neutral-300', borderL: 'border-l-yellow-500', icon: '📄' };
         }
       }
       switch(cat) {
@@ -1666,7 +1747,7 @@
         case 'weekly': return { name: '주간 보고서', bg: 'bg-cyan-500/10', color: 'text-cyan-400', border: 'border-cyan-500/30', borderL: 'border-l-cyan-500 hover:border-l-cyan-400', icon: '📊' };
         case 'monthly': return { name: '월간 보고서', bg: 'bg-amber-500/10', color: 'text-amber-400', border: 'border-amber-500/30', borderL: 'border-l-amber-500 hover:border-l-amber-400', icon: '📅' };
         case 'special': return { name: '스페셜 기획', bg: 'bg-purple-500/10', color: 'text-purple-400', border: 'border-purple-500/30', borderL: 'border-l-purple-500 hover:border-l-purple-400', icon: '💡' };
-        default: return { name: '보고서', bg: 'bg-slate-800', color: 'text-slate-300', border: 'border-slate-700', borderL: 'border-l-blue-500', icon: '📄' };
+        default: return { name: '보고서', bg: 'bg-neutral-800', color: 'text-neutral-300', border: 'border-neutral-700', borderL: 'border-l-yellow-400', icon: '📄' };
       }
     }
 
@@ -1680,14 +1761,28 @@
       document.getElementById('count-monthly').innerText = all.filter(r => r.category === 'monthly').length;
       document.getElementById('count-special').innerText = all.filter(r => r.category === 'special').length;
 
+      const countAll = document.getElementById('count-all');
       const daily = document.getElementById('count-daily');
       const weekly = document.getElementById('count-weekly');
       const monthly = document.getElementById('count-monthly');
       const special = document.getElementById('count-special');
-      if (daily) daily.className = isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-emerald-50 text-emerald-700 border border-emerald-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-emerald-400';
-      if (weekly) weekly.className = isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-cyan-50 text-cyan-700 border border-cyan-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-cyan-400';
-      if (monthly) monthly.className = isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-amber-50 text-amber-700 border border-amber-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-amber-400';
-      if (special) special.className = isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-purple-50 text-purple-700 border border-purple-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-slate-800 text-purple-400';
+      if (countAll) {
+        countAll.className = currentCategory === 'all'
+          ? 'px-2 py-0.5 rounded-full text-[11px] bg-black text-yellow-400 font-bold'
+          : (isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-neutral-200 text-neutral-800' : 'px-2 py-0.5 rounded-full text-[11px] bg-neutral-800 text-neutral-300');
+      }
+      if (daily) daily.className = currentCategory === 'daily'
+        ? 'px-2 py-0.5 rounded-full text-[11px] bg-white/20 text-white font-bold'
+        : (isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-emerald-50 text-emerald-700 border border-emerald-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-neutral-800 text-emerald-400');
+      if (weekly) weekly.className = currentCategory === 'weekly'
+        ? 'px-2 py-0.5 rounded-full text-[11px] bg-white/20 text-white font-bold'
+        : (isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-cyan-50 text-cyan-700 border border-cyan-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-neutral-800 text-cyan-400');
+      if (monthly) monthly.className = currentCategory === 'monthly'
+        ? 'px-2 py-0.5 rounded-full text-[11px] bg-white/20 text-white font-bold'
+        : (isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-amber-50 text-amber-700 border border-amber-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-neutral-800 text-amber-400');
+      if (special) special.className = currentCategory === 'special'
+        ? 'px-2 py-0.5 rounded-full text-[11px] bg-white/20 text-white font-bold'
+        : (isLight ? 'px-2 py-0.5 rounded-full text-[11px] bg-purple-50 text-purple-700 border border-purple-200' : 'px-2 py-0.5 rounded-full text-[11px] bg-neutral-800 text-purple-400');
     }
 
     function setCategory(cat) {
@@ -1695,15 +1790,23 @@
       const isLight = currentTheme === 'light';
       document.querySelectorAll('.cat-tab').forEach(b => {
         if (isLight) {
-          b.className = 'cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-2';
+          b.className = 'cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-neutral-700 hover:text-black hover:bg-yellow-50 transition flex items-center gap-2';
         } else {
-          b.className = 'cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-2';
+          b.className = 'cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-neutral-300 hover:text-white hover:bg-neutral-800 transition flex items-center gap-2';
         }
       });
       const activeBtn = document.getElementById('tab-' + cat);
       if (activeBtn) {
-        activeBtn.className = 'cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white transition flex items-center gap-2 shadow-md';
+        const activeColorMap = {
+          all: 'bg-yellow-400 text-black shadow-md',
+          daily: 'bg-emerald-600 text-white shadow-md',
+          weekly: 'bg-cyan-600 text-white shadow-md',
+          monthly: 'bg-amber-600 text-white shadow-md',
+          special: 'bg-purple-600 text-white shadow-md'
+        };
+        activeBtn.className = 'cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 ' + (activeColorMap[cat] || activeColorMap.all);
       }
+      updateCounts();
       renderReports();
     }
 
@@ -1745,22 +1848,22 @@
       emptyState.classList.add('hidden');
       list.innerHTML = filtered.map(r => {
         const badge = getCategoryBadge(r.category);
-        const tagsHtml = (r.tags || []).map(t => '<span class="px-2 py-0.5 rounded-md text-[11px] ' + (isLight ? 'bg-slate-100 text-slate-700 border border-slate-200' : 'bg-slate-950 text-slate-400 border border-slate-800') + '">#' + t + '</span>').join('');
+        const tagsHtml = (r.tags || []).map(t => '<span class="px-2 py-0.5 rounded-md text-[11px] ' + (isLight ? 'bg-neutral-100 text-neutral-800 border border-neutral-200' : 'bg-neutral-950 text-neutral-400 border border-neutral-800') + '">#' + t + '</span>').join('');
         const isCustom = Boolean(r.isCustom);
         const encId = encodeURIComponent(r.id);
-        const prov = r.provider || (r.author && r.author.includes('ICIS') ? 'ICIS' : r.author && r.author.includes('ARGUS') ? 'ARGUS' : 'PLATTS');
-        const providerBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold ' + 
-          (isLight ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-blue-950/80 text-blue-300 border border-blue-800') + '">🏢 ' + prov + '</span>';
+        const prov = r.provider || (r.author && r.author.includes('ICIS') ? 'ICIS' : reportAuthorIsArgus(r.author) ? 'ARGUS' : 'PLATTS');
+        const providerBadge = '<span class="gpic-dark-pill inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold ' + 
+          (isLight ? 'bg-black text-yellow-400 border border-black' : 'bg-neutral-950 text-yellow-400 border border-yellow-400/40') + '">🏢 ' + prov + '</span>';
 
         const cardBgClass = isLight
-          ? 'bg-white hover:bg-white border-slate-200 hover:border-slate-300 text-slate-800 shadow-sm hover:shadow-md'
-          : 'bg-slate-900/90 hover:bg-slate-900 border-slate-800 hover:border-slate-700 text-slate-100 shadow-lg';
-        const titleClass = isLight ? 'text-slate-900 group-hover:text-blue-600' : 'text-white group-hover:text-cyan-300';
-        const summaryClass = isLight ? 'text-slate-600' : 'text-slate-400';
-        const authorClass = isLight ? 'text-slate-500' : 'text-slate-400';
+          ? 'bg-white hover:bg-white border-neutral-200 hover:border-yellow-500 text-neutral-900 shadow-sm hover:shadow-md'
+          : 'bg-neutral-900/90 hover:bg-neutral-900 border-neutral-800 hover:border-yellow-400/40 text-neutral-100 shadow-lg';
+        const titleClass = isLight ? 'text-neutral-900 group-hover:text-amber-700' : 'text-white group-hover:text-yellow-400';
+        const summaryClass = isLight ? 'text-neutral-600' : 'text-neutral-400';
+        const authorClass = isLight ? 'text-neutral-500' : 'text-neutral-400';
         const btnClass = isLight
-          ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'
-          : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700';
+          ? 'bg-neutral-100 hover:bg-yellow-100 text-neutral-800 border-neutral-300'
+          : 'bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border-neutral-700';
 
         return `
           <div onclick="openReportModal('${encId}')" class="report-card group w-full ${cardBgClass} border rounded-2xl p-4 sm:p-5 transition-all duration-200 cursor-pointer flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-l-4 ${badge.borderL} hover:-translate-y-0.5">
@@ -1770,38 +1873,42 @@
                   <span>${badge.icon}</span> ${badge.name}
                 </span>
                 <span class="text-xs ${authorClass} font-mono">🕒 ${r.date}</span>
-                ${isCustom ? '<span class="px-1.5 py-0.5 rounded text-[10px] ' + (isLight ? 'bg-cyan-50 text-cyan-700 border border-cyan-200' : 'bg-cyan-950 text-cyan-300 border border-cyan-800') + ' font-medium">직접 추가됨</span>' : ''}
+                ${isCustom ? '<span class="px-1.5 py-0.5 rounded text-[10px] ' + (isLight ? 'bg-yellow-50 text-amber-800 border border-yellow-300' : 'bg-yellow-400/15 text-yellow-300 border border-yellow-400/40') + ' font-medium">직접 추가됨</span>' : ''}
               </div>
               <div class="flex-1 min-w-0 space-y-1.5">
                 <h3 class="text-base sm:text-lg font-bold ${titleClass} transition-colors line-clamp-1">${r.title}</h3>
                 <p class="text-xs sm:text-sm ${summaryClass} line-clamp-2 leading-relaxed">${r.summary}</p>
                 <div class="flex flex-wrap items-center gap-2 pt-1">
                   ${providerBadge}
-                  <span class="${isLight ? 'text-slate-300' : 'text-slate-700'}">•</span>
+                  <span class="${isLight ? 'text-neutral-300' : 'text-neutral-700'}">•</span>
                   <div class="flex flex-wrap gap-1.5">${tagsHtml}</div>
                 </div>
               </div>
             </div>
-            <div class="flex items-center justify-between lg:justify-end gap-2 pt-3 lg:pt-0 ${isLight ? 'border-t border-slate-200' : 'border-t border-slate-800/80'} lg:border-t-0 shrink-0" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between lg:justify-end gap-2 pt-3 lg:pt-0 ${isLight ? 'border-t border-neutral-200' : 'border-t border-neutral-800/80'} lg:border-t-0 shrink-0" onclick="event.stopPropagation()">
               <button onclick="downloadReportById('${encId}')" title="HTML 다운로드" class="p-2 rounded-xl text-xs font-semibold ${btnClass} border transition cursor-pointer">
                 💾 다운로드
               </button>
               ${r.filePath ? '<a href="' + r.filePath + '" target="_blank" class="px-3 py-2 rounded-xl text-xs font-semibold ' + btnClass + ' border transition">새 창 열기 ↗</a>' : ''}
               ${isAdminMode ? `
-                <button onclick="openEditModal('${encId}')" title="보고서 수정" class="px-3 py-2 rounded-xl text-xs font-semibold bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 transition flex items-center gap-1 cursor-pointer">
+                <button onclick="openEditModal('${encId}')" title="보고서 수정" class="px-3 py-2 rounded-xl text-xs font-semibold bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 border border-yellow-400/40 transition flex items-center gap-1 cursor-pointer">
                   ✏️ 수정
                 </button>
                 <button onclick="deleteReportByAdmin('${encId}')" title="보고서 영구 삭제" class="px-3 py-2 rounded-xl text-xs font-semibold bg-red-950/60 hover:bg-red-900/60 text-red-300 border border-red-800/80 transition flex items-center gap-1 cursor-pointer">
                   🗑️ 삭제
                 </button>
-              ` : `<button onclick="deleteReportByAdmin('${encId}')" title="보고서 영구 삭제" class="p-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-red-500 ${isLight ? 'hover:bg-slate-100' : 'hover:bg-slate-800'} transition cursor-pointer">🗑️</button>`}
-              <button onclick="openReportModal('${encId}')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-900/30 transition cursor-pointer">
+              ` : `<button onclick="deleteReportByAdmin('${encId}')" title="보고서 영구 삭제" class="p-2 rounded-xl text-xs font-semibold text-neutral-400 hover:text-red-500 ${isLight ? 'hover:bg-neutral-100' : 'hover:bg-neutral-800'} transition cursor-pointer">🗑️</button>`}
+              <button onclick="openReportModal('${encId}')" class="gpic-primary-btn px-4 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-xs flex items-center gap-1.5 shadow-md transition cursor-pointer">
                 <span>열람하기</span> →
               </button>
             </div>
           </div>
         `;
       }).join('');
+    }
+
+    function reportAuthorIsArgus(author) {
+      return Boolean(author && author.includes('ARGUS'));
     }
 
     function openReportModal(reportId) {
@@ -1886,6 +1993,14 @@
 
     function setViewport(w) {
       document.getElementById('livePreviewFrame').style.maxWidth = w;
+      const map = { '100%': 'vpBtn100', '768px': 'vpBtn768', '375px': 'vpBtn375' };
+      Object.keys(map).forEach((k) => {
+        const el = document.getElementById(map[k]);
+        if (!el) return;
+        el.className = k === w
+          ? 'px-2 py-0.5 rounded bg-yellow-400 text-black font-bold'
+          : 'px-2 py-0.5 rounded text-neutral-400 hover:text-white';
+      });
     }
 
     function autoAnalyzeHtml() {
