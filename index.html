@@ -236,56 +236,56 @@
 
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="flex items-center gap-3 cursor-pointer" onclick="switchNav('archive')">
-        <div title="Global Petchem-market Intelligence Center" class="gpic-badge h-9 px-1.5 rounded-xl bg-yellow-400 text-black flex items-center justify-center shadow-lg shadow-yellow-900/20 border border-yellow-300 font-black text-xs tracking-tighter shrink-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col lg:flex-row items-center justify-between gap-2.5">
+      <div class="flex items-center gap-2.5 cursor-pointer shrink-0" onclick="switchNav('archive')">
+        <div title="Global Petchem-market Intelligence Center" class="gpic-badge h-9 px-1.5 rounded-xl bg-yellow-400 text-black flex items-center justify-center shadow-lg shadow-yellow-900/20 border border-yellow-300 font-black text-xs tracking-tighter shrink-0 whitespace-nowrap">
           GPIC
         </div>
-        <div>
+        <div class="min-w-0">
           <div class="flex items-center gap-2">
-            <h1 class="text-base sm:text-lg font-extrabold text-white tracking-tight">글로벌 석유화학시장 정보 센터</h1>
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-400 border border-cyan-800 uppercase">GitHub Pages</span>
+            <h1 class="text-sm sm:text-base font-extrabold text-white tracking-tight whitespace-nowrap">글로벌 석유화학시장 정보 센터</h1>
+            <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-400 border border-cyan-800 uppercase whitespace-nowrap shrink-0">GitHub Pages</span>
           </div>
-          <p class="text-[11px] text-slate-400">일간 · 스페셜 리포트 보관소 &amp; 전 기기 실시간 공유</p>
+          <p class="text-[11px] text-slate-400 whitespace-nowrap">일간 · 스페셜 리포트 보관소 &amp; 전 기기 실시간 공유</p>
         </div>
       </div>
 
       <!-- Navigation Tabs -->
-      <div class="flex items-center gap-2">
-        <button id="navBtnArchive" onclick="switchNav('archive')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md transition flex items-center gap-1.5">
+      <div class="flex items-center flex-wrap justify-center lg:justify-end gap-1.5 shrink-0">
+        <button id="navBtnArchive" onclick="switchNav('archive')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-md transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
           <span>📑 보관소</span>
           <span id="navReportCount" class="px-1.5 py-0.5 rounded-full text-[10px] bg-white/20">0</span>
         </button>
 
-        <button id="navBtnCreator" onclick="switchNav('creator')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-600/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-600 hover:text-white transition flex items-center gap-1.5">
+        <button id="navBtnCreator" onclick="switchNav('creator')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-cyan-600/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-600 hover:text-white transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
           <span>➕ 새 리포트 생성 (HTML 입력)</span>
         </button>
 
         <!-- Team/Mobile writer link button -->
-        <button id="navBtnShareWriter" onclick="copyTeamWriterLink()" title="타인의 핸드폰/PC에서 보고서를 작성할 수 있는 권한 링크 복사" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-cyan-950/60 text-cyan-300 border border-cyan-800/80 hover:bg-cyan-900/60 transition flex items-center gap-1.5 shadow-sm">
+        <button id="navBtnShareWriter" onclick="copyTeamWriterLink()" title="타인의 핸드폰/PC에서 보고서를 작성할 수 있는 권한 링크 복사" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-cyan-950/60 text-cyan-300 border border-cyan-800/80 hover:bg-cyan-900/60 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0">
           <span>🔗</span>
           <span class="hidden md:inline">팀원/모바일 작성 링크</span>
         </button>
 
         <!-- Refresh / Sync remote button -->
-        <button id="navBtnRefresh" onclick="fetchRemoteReports(true)" title="GitHub 최신 보고서 실시간 동기화" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+        <button id="navBtnRefresh" onclick="fetchRemoteReports(true)" title="GitHub 최신 보고서 실시간 동기화" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0">
           <span id="refreshIcon">🔄</span>
           <span class="hidden md:inline">동기화</span>
         </button>
 
         <!-- Local uncommitted reports sync button -->
-        <button id="navBtnSyncLocal" onclick="openSyncModal()" title="이 PC의 로컬 보고서를 GitHub에 일괄 동기화" class="hidden px-3 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition flex items-center gap-1.5 shadow-md">
+        <button id="navBtnSyncLocal" onclick="openSyncModal()" title="이 PC의 로컬 보고서를 GitHub에 일괄 동기화" class="hidden px-2.5 py-1.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition flex items-center gap-1 shadow-md whitespace-nowrap shrink-0">
           <span>☁️ 로컬</span>
           <span id="navSyncLocalCount" class="px-1.5 py-0.5 rounded-full text-[10px] bg-slate-950 text-amber-300 font-mono">0</span>
           <span class="hidden lg:inline">동기화</span>
         </button>
 
-        <a href="https://github.com/jduck02/petro-report" target="_blank" rel="noreferrer" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1 transition">
+        <a href="https://github.com/jduck02/petro-report" target="_blank" rel="noreferrer" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1 transition whitespace-nowrap shrink-0">
           <span>GitHub 저장소</span> ↗
         </a>
 
         <!-- Dark/Light Theme Toggle Button -->
-        <button id="themeToggleBtn" onclick="toggleTheme()" title="모드 전환 (다크모드 / 일반모드)" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+        <button id="themeToggleBtn" onclick="toggleTheme()" title="모드 전환 (다크모드 / 일반모드)" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 transition flex items-center gap-1 shadow-sm whitespace-nowrap shrink-0">
           <span id="themeIcon">☀️</span>
           <span id="themeLabel" class="hidden sm:inline">일반모드</span>
         </button>
