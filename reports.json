@@ -1,5 +1,26 @@
 [
   {
+    "id": "user-1794962735795",
+    "title": "PLATTS 일간 보고 | 2026-11-17",
+    "category": "daily",
+    "date": "2026-11-18",
+    "provider": "PLATTS",
+    "summary": "납사 급락에 여천NCC 가중 차액 확대 · 방향족·MTBE 약세와 유도품 구매 둔화",
+    "tags": [
+      "일간",
+      "시장보고",
+      "원유",
+      "납사",
+      "에틸렌",
+      "프로필렌",
+      "벤젠",
+      "스티렌",
+      "제품"
+    ],
+    "author": "PLATTS",
+    "filePath": "./reports/daily/2026-11-18_PLATTS_일간_보고___2026-11-17.html"
+  },
+  {
     "id": "user-1794875371541",
     "title": "PLATTS 일간 보고 | 2026-11-16",
     "category": "daily",
