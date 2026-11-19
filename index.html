@@ -23,6 +23,13 @@
     .gpic-emblem {
       background-color: transparent !important;
     }
+    .gpic-emblem-bg { fill: #FFFFFF; transition: fill 0.2s ease; }
+    .gpic-emblem-ring { stroke: #0B0B0D; transition: stroke 0.2s ease; }
+    .gpic-emblem-text { fill: #0B0B0D; transition: fill 0.2s ease; }
+
+    body.light-mode .gpic-emblem-bg { fill: #0B0B0D !important; }
+    body.light-mode .gpic-emblem-ring { stroke: #F4EFE6 !important; }
+    body.light-mode .gpic-emblem-text { fill: #F4EFE6 !important; }
 
     /* Comprehensive Light Mode (일반모드) — GPIC 5-Color Harmony (#0B0B0D · #1F1F23 · #FF6A00 · #FFB000 · #F4EFE6) */
     html.light,
@@ -282,11 +289,11 @@
       <div class="flex items-center gap-3 cursor-pointer shrink-0" onclick="switchNav('archive')">
         <div title="Global Petchem-market Intelligence Center" class="gpic-emblem shrink-0 flex items-center justify-center">
           <svg viewBox="0 0 184 78" class="h-10 sm:h-11 w-auto block drop-shadow-sm" role="img" aria-label="GPIC Global Petchem-Market Intelligence Center">
-            <rect x="0" y="0" width="184" height="78" rx="39" fill="#0B0B0D" />
-            <rect x="3.5" y="3.5" width="177" height="71" rx="35.5" fill="none" stroke="#F4EFE6" stroke-width="3" />
-            <text x="92" y="19.5" text-anchor="middle" fill="#F4EFE6" font-size="9.8" font-weight="800" letter-spacing="0.3" font-family="Inter, 'Noto Sans KR', sans-serif">GLOBAL PETCHEM-MARKET</text>
-            <text x="92" y="49" text-anchor="middle" fill="#F4EFE6" font-size="33" font-weight="900" letter-spacing="1.2" font-family="Inter, 'Noto Sans KR', sans-serif">GPIC</text>
-            <text x="92" y="63.5" text-anchor="middle" fill="#F4EFE6" font-size="9.8" font-weight="800" letter-spacing="0.5" font-family="Inter, 'Noto Sans KR', sans-serif">INTELLIGENCE CENTER</text>
+            <rect class="gpic-emblem-bg" x="0" y="0" width="184" height="78" rx="39" fill="#FFFFFF" />
+            <rect class="gpic-emblem-ring" x="3.5" y="3.5" width="177" height="71" rx="35.5" fill="none" stroke="#0B0B0D" stroke-width="3" />
+            <text class="gpic-emblem-text" x="92" y="19.5" text-anchor="middle" fill="#0B0B0D" font-size="9.8" font-weight="800" letter-spacing="0.3" font-family="Inter, 'Noto Sans KR', sans-serif">GLOBAL PETCHEM-MARKET</text>
+            <text class="gpic-emblem-text" x="92" y="49" text-anchor="middle" fill="#0B0B0D" font-size="33" font-weight="900" letter-spacing="1.2" font-family="Inter, 'Noto Sans KR', sans-serif">GPIC</text>
+            <text class="gpic-emblem-text" x="92" y="63.5" text-anchor="middle" fill="#0B0B0D" font-size="9.8" font-weight="800" letter-spacing="0.5" font-family="Inter, 'Noto Sans KR', sans-serif">INTELLIGENCE CENTER</text>
           </svg>
         </div>
         <div class="min-w-0">
