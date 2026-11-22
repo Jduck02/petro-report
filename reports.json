@@ -1,5 +1,26 @@
 [
   {
+    "id": "user-1795390558878",
+    "title": "PLATTS 일간 보고 | 2026-11-20",
+    "category": "daily",
+    "date": "2026-11-23",
+    "provider": "PLATTS",
+    "summary": "납사 하락에도 프로필렌 급락으로 가중 차액 축소 · LPG 강세와 에틸렌 공급 제한 지속",
+    "tags": [
+      "일간",
+      "시장보고",
+      "원유",
+      "납사",
+      "에틸렌",
+      "프로필렌",
+      "벤젠",
+      "스티렌",
+      "제품"
+    ],
+    "author": "PLATTS",
+    "filePath": "./reports/daily/2026-11-23_PLATTS_일간_보고___2026-11-20.html"
+  },
+  {
     "id": "user-1795046523159",
     "title": "PLATTS 일간 보고 | 2026-11-18",
     "category": "daily",
