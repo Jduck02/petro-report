@@ -1,5 +1,26 @@
 [
   {
+    "id": "user-1795479226997",
+    "title": "PLATTS 일간 보고 | 2026-11-23",
+    "category": "daily",
+    "date": "2026-11-24",
+    "provider": "PLATTS",
+    "summary": "원유·에틸렌·방향족 약세, LPG 상승 · 지정 가중 차액 축소",
+    "tags": [
+      "일간",
+      "시장보고",
+      "원유",
+      "납사",
+      "에틸렌",
+      "프로필렌",
+      "벤젠",
+      "스티렌",
+      "제품"
+    ],
+    "author": "PLATTS",
+    "filePath": "./reports/daily/2026-11-24_PLATTS_일간_보고___2026-11-23.html"
+  },
+  {
     "id": "user-1795390558878",
     "title": "PLATTS 일간 보고 | 2026-11-20",
     "category": "daily",
